@@ -20,7 +20,6 @@ before_install:
 - echo yes | android update sdk --filter sysimg-17 --no-ui --all --force > /dev/null
 - echo yes | android update sdk --filter extra-android-support --no-ui --all --force > /dev/null
 
-- which tree
 - find $ANDROID_HOME
 
 # aapt path fix
