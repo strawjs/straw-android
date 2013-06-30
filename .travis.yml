@@ -26,14 +26,16 @@ before_install:
 # aapt path fix
 - cd $ANDROID_HOME/platform-tools
 - chmod 777 ../build-tools/17.0.0/aapt
-- ln -s ../build-tools/17.0.0/aapt ./aapt
 - chmod 777 ../build-tools/17.0.0/aidl
-- ln -s ../build-tools/17.0.0/aidl ./aidl
 - chmod 777 ../build-tools/17.0.0/lib
-- ln -s ../build-tools/17.0.0/lib ./lib
+
+- cp -r ../build-tools/17.0.0/* ./
+
+#- ln -s ../build-tools/17.0.0/aapt ./aapt
+#- ln -s ../build-tools/17.0.0/aidl ./aidl
+#- ln -s ../build-tools/17.0.0/lib ./lib
 
 - ls -la
-- ls -la ../build-tools/17.0.0
 - which adb
 - which aapt
 
