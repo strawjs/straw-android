@@ -21,7 +21,7 @@ before_install:
 - echo yes | android update sdk --filter extra-android-support --no-ui --all --force > /dev/null
 
 # aapt path fix
-- cd -s $ANDROID_HOME/platform-tools
+- cd $ANDROID_HOME/platform-tools
 - ln -s ../build-tools/17.0.0/aapt ./aapt
 - ln -s ../build-tools/17.0.0/aidl ./aidl
 - ln -s ../build-tools/17.0.0/lib ./lib
