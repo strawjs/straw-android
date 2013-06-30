@@ -13,14 +13,14 @@ before_install:
 - mkdir -p $ANDROID_HOME/build-tools/
 - mv $ANDROID_HOME/android-4.2.2 $ANDROID_HOME/build-tools/17.0.0
 
-# aapt
-- ln -s $ANDROID_HOME/build-tools/17.0.0/aapt $ANDROID_HOME/platform-tools/
-- ln -s $ANDROID_HOME/build-tools/17.0.0/aidl $ANDROID_HOME/platform-tools/
-- ln -s $ANDROID_HOME/build-tools/17.0.0/lib $ANDROID_HOME/platform-tools/
-
 # install tools and platforms
 - echo yes | android update sdk --filter platform-tools --no-ui --all --force > /dev/null
 - echo yes | android update sdk --filter android-16 --no-ui --all --force > /dev/null
 - echo yes | android update sdk --filter android-17 --no-ui --all --force > /dev/null
 - echo yes | android update sdk --filter sysimg-17 --no-ui --all --force > /dev/null
 - echo yes | android update sdk --filter extra-android-support --no-ui --all --force > /dev/null
+
+# aapt path fix
+- ln -s $ANDROID_HOME/build-tools/17.0.0/aapt $ANDROID_HOME/platform-tools/
+- ln -s $ANDROID_HOME/build-tools/17.0.0/aidl $ANDROID_HOME/platform-tools/
+- ln -s $ANDROID_HOME/build-tools/17.0.0/lib $ANDROID_HOME/platform-tools/
