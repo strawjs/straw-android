@@ -14,9 +14,9 @@ before_install:
 - mv $ANDROID_HOME/android-4.2.2 $ANDROID_HOME/build-tools/17.0.0
 
 # aapt
-- ln -s $ANDROID_HOME/build-tools/17.0.0/aapt $ANDROID_HOME/platform-tools/aapt
-- ln -s $ANDROID_HOME/build-tools/17.0.0/aidl $ANDROID_HOME/platform-tools/aidl
-- ln -s $ANDROID_HOME/build-tools/17.0.0/lib $ANDROID_HOME/platform-tools/lib
+- ln -s $ANDROID_HOME/build-tools/17.0.0/aapt $ANDROID_HOME/platform-tools/
+- ln -s $ANDROID_HOME/build-tools/17.0.0/aidl $ANDROID_HOME/platform-tools/
+- ln -s $ANDROID_HOME/build-tools/17.0.0/lib $ANDROID_HOME/platform-tools/
 
 # install tools and platforms
 - echo yes | android update sdk --filter platform-tools --no-ui --all --force > /dev/null
