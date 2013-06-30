@@ -20,9 +20,10 @@ before_install:
 - echo yes | android update sdk --filter sysimg-17 --no-ui --all --force > /dev/null
 - echo yes | android update sdk --filter extra-android-support --no-ui --all --force > /dev/null
 
-- find $ANDROID_HOME
-
 # aapt path fix
-- ln -s $ANDROID_HOME/build-tools/17.0.0/aapt $ANDROID_HOME/platform-tools/aapt
-- ln -s $ANDROID_HOME/build-tools/17.0.0/aidl $ANDROID_HOME/platform-tools/aidl
-- ln -s $ANDROID_HOME/build-tools/17.0.0/lib $ANDROID_HOME/platform-tools/lib
+- cd -s $ANDROID_HOME/platform-tools
+- ln -s ../build-tools/17.0.0/aapt ./aapt
+- ln -s ../build-tools/17.0.0/aidl ./aidl
+- ln -s ../build-tools/17.0.0/lib ./lib
+
+- find $ANDROID_HOME/platform-tools
