@@ -38,3 +38,5 @@ before_install:
 - which aapt
 
 - cd ${TRAVIS_BUILD_DIR}
+
+- ls -l /home/travis/build/kt3k/straw-android-maven/android-sdk-linux/platform-tools/aapt
