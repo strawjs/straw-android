@@ -4,10 +4,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
+import android.webkit.WebView;
+import android.os.Handler;
+
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
-import org.kt3k.straw.*;
+import org.kt3k.straw.Straw;
 
 @RunWith(RobolectricTestRunner.class)
 public class StrawTest {
@@ -18,7 +21,10 @@ public class StrawTest {
     }
 
     @Test
-    public void testHello() {
-        assertEquals("hello", Straw.hello());
+    public void testConstuctor() {
+        WebView webView = new android.webkit.WebView(new android.app.Activity());
+        Handler handler = new android.os.Handler();
+        Straw straw = new Straw(webView, handler);
     }
+
 }
