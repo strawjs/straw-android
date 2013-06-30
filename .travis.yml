@@ -29,6 +29,6 @@ before_install:
 - ln -s ../build-tools/17.0.0/aidl ./aidl
 - ln -s ../build-tools/17.0.0/lib ./lib
 
-- find $ANDROID_HOME/platform-tools
+- ls -la
 
 - cd ${TRAVIS_BUILD_DIR}
