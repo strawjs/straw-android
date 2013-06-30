@@ -30,5 +30,8 @@ before_install:
 - ln -s ../build-tools/17.0.0/lib ./lib
 
 - ls -la
+- ls -la ../build-tools/17.0.0
+- which adb
+- which aapt
 
 - cd ${TRAVIS_BUILD_DIR}
