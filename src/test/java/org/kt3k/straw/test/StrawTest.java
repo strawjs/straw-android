@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 import android.webkit.WebView;
+import android.app.Activity;
 import android.os.Handler;
 
 import org.robolectric.Robolectric;
@@ -22,9 +23,10 @@ public class StrawTest {
 
     @Test
     public void testConstuctor() {
-        WebView webView = new android.webkit.WebView(new android.app.Activity());
-        Handler handler = new android.os.Handler();
-        Straw straw = new Straw(webView, handler);
+        Activity activity = new Activity();
+        WebView webView = new WebView(activity);
+        Handler handler = new Handler();
+        Straw straw = new Straw(webView, activity, handler);
     }
 
 }
