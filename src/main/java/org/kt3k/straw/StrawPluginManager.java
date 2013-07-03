@@ -28,21 +28,26 @@ class StrawPluginManager {
     };
 
     private void loadPluginByName(String name) {
-        StrawPlugin plugin = this.getPluginByName(name);
+        StrawPlugin plugin = this.createPluginByName(name);
 
         if (plugin == null) {
             return;
         }
 
-        if (plugin.name == null || plugin.name == "") {
-            System.out.println("Plugin name is empty: " + name);
+        String pluginName = plugin.getName();
+        if (pluginName == null) {
+            System.out.println("Plugin name is null: " + name);
             return;
         }
 
-        this.plugins.put(plugin.name, plugin);
+        this.plugins.put(pluginName, plugin);
     }
 
-    private StrawPlugin getPluginByName(String name) {
+    public StrawPlugin getPluginByName(String name) {
+        return this.plugins.get(name);
+    }
+
+    private StrawPlugin createPluginByName(String name) {
         Class c;
         StrawPlugin plugin = null;
 
@@ -53,13 +58,13 @@ class StrawPluginManager {
                 plugin = this.instantiatePluginClass(c, this.webView, this.context);
             }
         } catch (ClassNotFoundException e) {
-            System.out.println("Error adding plugin: " + name);
+            System.out.println("Error creating plugin class: " + name);
             System.out.println(e);
         } catch (InstantiationException e) {
-            System.out.println("Error adding plugin: " + name);
+            System.out.println("Error creating plugin class: " + name);
             System.out.println(e);
         } catch (IllegalAccessException e) {
-            System.out.println("Error adding plugin: " + name);
+            System.out.println("Error creating plugin class: " + name);
             System.out.println(e);
         }
 

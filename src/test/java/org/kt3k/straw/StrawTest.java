@@ -1,4 +1,4 @@
-package org.kt3k.straw.test;
+package org.kt3k.straw;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,8 +10,6 @@ import android.os.Handler;
 
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-
-import org.kt3k.straw.Straw;
 
 @RunWith(RobolectricTestRunner.class)
 public class StrawTest {

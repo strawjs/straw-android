@@ -5,8 +5,6 @@ import android.content.Context;
 
 abstract public class StrawPlugin {
 
-    public String name = null;
-
     private WebView webView;
 
     private Context context;
@@ -17,6 +15,10 @@ abstract public class StrawPlugin {
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public String getName() {
+        return null;
     }
 
     public void exec(String action, String arguments, String callbackId) {
