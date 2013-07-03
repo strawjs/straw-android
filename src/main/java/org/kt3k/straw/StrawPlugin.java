@@ -5,7 +5,7 @@ import android.content.Context;
 
 abstract public class StrawPlugin {
 
-    public String service = null;
+    public String name = null;
 
     private WebView webView;
 

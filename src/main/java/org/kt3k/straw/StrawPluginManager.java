@@ -11,6 +11,8 @@ class StrawPluginManager {
     private WebView webView;
     private Context context;
 
+    private HashMap<String, StrawPlugin> plugins = new HashMap<String, StrawPlugin>();
+
     public StrawPluginManager(WebView webView, Context context) {
         this.webView = webView;
         this.context = context;
@@ -26,36 +28,49 @@ class StrawPluginManager {
     };
 
     private void loadPluginByName(String name) {
+        StrawPlugin plugin = this.getPluginByName(name);
+
+        if (plugin == null) {
+            return;
+        }
+
+        if (plugin.name == null || plugin.name == "") {
+            System.out.println("Plugin name is empty: " + name);
+            return;
+        }
+
+        this.plugins.put(plugin.name, plugin);
+    }
+
+    private StrawPlugin getPluginByName(String name) {
         Class c;
-        StrawPlugin plugin;
+        StrawPlugin plugin = null;
 
         try {
             c = this.getClassByName(name);
 
             if (this.isStrawPlugin(c)) {
-                plugin = this.instantiatePluginClass(c);
+                plugin = this.instantiatePluginClass(c, this.webView, this.context);
             }
         } catch (ClassNotFoundException e) {
             System.out.println("Error adding plugin: " + name);
             System.out.println(e);
-            return;
         } catch (InstantiationException e) {
             System.out.println("Error adding plugin: " + name);
             System.out.println(e);
-            return;
         } catch (IllegalAccessException e) {
             System.out.println("Error adding plugin: " + name);
             System.out.println(e);
-            return;
         }
 
+        return plugin;
     }
 
-    private StrawPlugin instantiatePluginClass(Class pluginClass) throws InstantiationException, IllegalAccessException {
+    private static StrawPlugin instantiatePluginClass(Class pluginClass, WebView webView, Context context) throws InstantiationException, IllegalAccessException {
         StrawPlugin plugin = (StrawPlugin)pluginClass.newInstance();
 
-        plugin.setWebView(this.webView);
-        plugin.setContext(this.context);
+        plugin.setWebView(webView);
+        plugin.setContext(context);
 
         return plugin;
     }
