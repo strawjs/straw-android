@@ -11,8 +11,11 @@ abstract public class StrawPlugin {
 
     private Context context;
 
-    public StrawPlugin(WebView webView, Context context) {
+    public void setWebView(WebView webView) {
         this.webView = webView;
+    }
+
+    public void setContext(Context context) {
         this.context = context;
     }
 

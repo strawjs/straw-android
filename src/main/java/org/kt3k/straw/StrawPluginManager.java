@@ -27,28 +27,37 @@ class StrawPluginManager {
 
     private void loadPluginByName(String name) {
         Class c;
+        StrawPlugin plugin;
 
         try {
             c = this.getClassByName(name);
+
+            if (this.isStrawPlugin(c)) {
+                plugin = this.instantiatePluginClass(c);
+            }
         } catch (ClassNotFoundException e) {
             System.out.println("Error adding plugin: " + name);
+            System.out.println(e);
+            return;
+        } catch (InstantiationException e) {
+            System.out.println("Error adding plugin: " + name);
+            System.out.println(e);
+            return;
+        } catch (IllegalAccessException e) {
+            System.out.println("Error adding plugin: " + name);
+            System.out.println(e);
             return;
         }
 
-        if (this.isStrawPlugin(c)) {
-            try {
-                this.loadPluginByClass(c);
-            } catch (Exception e) {
-                System.out.println("Error adding plugin: " + name);
-                return;
-            }
-        }
     }
 
-    private void loadPluginByClass(Class pluginClass) throws NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
-        Class<?>[] types = {WebView.class, Context.class};
-        Object[] args = {this.webView, this.context};
-        StrawPlugin plugin = (StrawPlugin)pluginClass.getDeclaredConstructor(types).newInstance(args);
+    private StrawPlugin instantiatePluginClass(Class pluginClass) throws InstantiationException, IllegalAccessException {
+        StrawPlugin plugin = (StrawPlugin)pluginClass.newInstance();
+
+        plugin.setWebView(this.webView);
+        plugin.setContext(this.context);
+
+        return plugin;
     }
 
     public static Class getClassByName(String name) throws ClassNotFoundException {
