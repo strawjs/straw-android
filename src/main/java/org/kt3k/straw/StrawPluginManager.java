@@ -48,21 +48,19 @@ class StrawPluginManager {
     }
 
     private StrawPlugin createPluginByName(String name) {
-        Class c;
         StrawPlugin plugin = null;
 
         try {
-            c = this.getClassByName(name);
+            plugin = this.instantiatePluginClass(this.getClassByName(name), this.webView, this.context);
 
-            if (this.isStrawPlugin(c)) {
-                plugin = this.instantiatePluginClass(c, this.webView, this.context);
-            }
         } catch (ClassNotFoundException e) {
             System.out.println("Error creating plugin class: " + name);
             System.out.println(e);
+
         } catch (InstantiationException e) {
             System.out.println("Error creating plugin class: " + name);
             System.out.println(e);
+
         } catch (IllegalAccessException e) {
             System.out.println("Error creating plugin class: " + name);
             System.out.println(e);
@@ -83,9 +81,5 @@ class StrawPluginManager {
     public static Class getClassByName(String name) throws ClassNotFoundException {
         Class c = Class.forName(name);
         return c;
-    }
-
-    public static Boolean isStrawPlugin(Class c) {
-        return StrawPlugin.class.isAssignableFrom(c);
     }
 }
