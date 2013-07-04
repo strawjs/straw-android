@@ -8,8 +8,6 @@ import java.lang.reflect.Method;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import org.json.JSONArray;
-
 abstract public class StrawPlugin {
 
     private WebView webView;
@@ -17,6 +15,8 @@ abstract public class StrawPlugin {
     private Context context;
 
     private HashMap<String, Method> methodMap = new HashMap<String, Method>();
+
+    private ObjectMapper mapper = new ObjectMapper();
 
     public StrawPlugin() {
         Method[] methods = this.getClass().getMethods();
@@ -37,16 +37,27 @@ abstract public class StrawPlugin {
         return null;
     }
 
-    public JSONArray exec(String action, JSONArray array, String callbackId) {
+    public String exec(String action, String jsonString, String callbackId) {
         try {
+
             Method targetMethod = this.methodMap.get(action);
 
             Class parameterType = this.getFirstParameterClass(targetMethod);
 
-            //targetMethod.invoke(this, ObjectMapper.convertValue(parameterType))
+            Object result = targetMethod.invoke(this, this.mapper.readValue(jsonString, parameterType));
+
+            return this.mapper.writeValueAsString(result);
+
         } catch (SecurityException e) {
-            System.out.println("cannot execute action: " + action + ", arguments: " + array);
+            System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
+        } catch (java.io.IOException e) {
+            System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
+        } catch (IllegalAccessException e) {
+            System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
         }
+
         return null;
     }
 

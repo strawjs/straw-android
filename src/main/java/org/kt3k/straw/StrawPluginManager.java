@@ -27,7 +27,7 @@ class StrawPluginManager {
         }
     };
 
-    private void loadPluginByName(String name) {
+    public void loadPluginByName(String name) {
         StrawPlugin plugin = this.createPluginByName(name);
 
         if (plugin == null) {

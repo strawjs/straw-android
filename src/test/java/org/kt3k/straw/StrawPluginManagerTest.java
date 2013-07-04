@@ -28,12 +28,11 @@ public class StrawPluginManagerTest {
         WebView webView = new WebView(activity);
         StrawPluginManager pm = new StrawPluginManager(webView, activity);
 
-        List<String> list = new ArrayList<String>();
-        list.add("org.kt3k.straw.DummyStrawPlugin");
+        pm.loadPluginByName("org.kt3k.straw.DummyStrawPlugin");
 
-        pm.loadPlugins(list);
-
-        assertNotNull(pm.getPluginByName("dummy"));
+        StrawPlugin dummyPlugin = pm.getPluginByName("dummy");
+        assertNotNull(dummyPlugin);
+        assertEquals("org.kt3k.straw.DummyStrawPlugin", dummyPlugin.getClass().getCanonicalName());
     }
 
 }
