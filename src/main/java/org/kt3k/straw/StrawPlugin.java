@@ -38,13 +38,20 @@ abstract public class StrawPlugin {
     }
 
     public String exec(String action, String jsonString) {
+
         try {
+
+            Object result = null;
 
             Method targetMethod = this.methodMap.get(action);
 
-            Class parameterType = this.getFirstParameterClass(targetMethod);
+            Integer parameterLength = this.getParameterLength(targetMethod);
 
-            Object result = targetMethod.invoke(this, this.mapper.readValue(jsonString, parameterType));
+            if (parameterLength == 0) {
+                result = targetMethod.invoke(this);
+            } else if (parameterLength == 1) {
+                result = targetMethod.invoke(this, this.mapper.readValue(jsonString, this.getFirstParameterType(targetMethod)));
+            }
 
             return this.mapper.writeValueAsString(result);
 
@@ -65,13 +72,16 @@ abstract public class StrawPlugin {
         return null;
     }
 
-    private static Class getFirstParameterClass(Method m) {
+    private static Integer getParameterLength(Method m) {
         Class<?>[] types = m.getParameterTypes();
 
-        if (types.length > 1) {
-            System.out.println("error too many parameter declared.");
-            return null;
-        } else if (types.length == 1) {
+        return types.length;
+    }
+
+    private static Class getFirstParameterType(Method m) {
+        Class<?>[] types = m.getParameterTypes();
+
+        if (types.length >= 1) {
             return types[0];
         }
 

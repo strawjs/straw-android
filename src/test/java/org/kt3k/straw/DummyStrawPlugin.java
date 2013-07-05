@@ -24,4 +24,14 @@ public class DummyStrawPlugin extends StrawPlugin {
         public String d;
     }
 
+    public ActionResult dummyAction2() {
+        return null;
+    }
+
+    public ActionResult dummyAction3() {
+        ActionResult res = new ActionResult();
+        res.c = "ddd";
+        return res;
+    }
+
 }
