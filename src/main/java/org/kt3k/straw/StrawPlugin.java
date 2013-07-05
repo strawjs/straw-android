@@ -37,7 +37,7 @@ abstract public class StrawPlugin {
         return null;
     }
 
-    public String exec(String action, String jsonString, String callbackId) {
+    public String exec(String action, String jsonString) {
         try {
 
             Method targetMethod = this.methodMap.get(action);
@@ -50,12 +50,16 @@ abstract public class StrawPlugin {
 
         } catch (SecurityException e) {
             System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
+            System.out.println(e);
         } catch (java.io.IOException e) {
             System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
+            System.out.println(e);
         } catch (IllegalAccessException e) {
             System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
+            System.out.println(e);
         } catch (java.lang.reflect.InvocationTargetException e) {
             System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
+            System.out.println(e);
         }
 
         return null;

@@ -35,4 +35,16 @@ public class StrawPluginManagerTest {
         assertEquals("org.kt3k.straw.DummyStrawPlugin", dummyPlugin.getClass().getCanonicalName());
     }
 
+    @Test
+    public void testPluginExecution() {
+        Activity activity = new Activity();
+        WebView webView = new WebView(activity);
+        StrawPluginManager pm = new StrawPluginManager(webView, activity);
+
+        pm.loadPluginByName("org.kt3k.straw.DummyStrawPlugin");
+
+        StrawPlugin dummyPlugin = pm.getPluginByName("dummy");
+        assertEquals("{\"c\":\"foo\",\"d\":\"bar\"}", dummyPlugin.exec("dummyAction", "{\"a\":\"foo\",\"b\":\"bar\"}"));
+    }
+
 }
