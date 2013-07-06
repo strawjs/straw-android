@@ -1,4 +1,5 @@
-
-
 # build result directory
 target
+
+# Eclipse setting dir
+.settings
