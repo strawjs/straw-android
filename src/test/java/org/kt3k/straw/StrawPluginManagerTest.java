@@ -48,7 +48,8 @@ public class StrawPluginManagerTest {
         assertEquals("{\"c\":\"baz\",\"d\":\"baz\"}", dummyPlugin.exec("dummyAction", "{\"a\":\"baz\",\"b\":\"baz\"}"));
 
         assertEquals("null", dummyPlugin.exec("dummyAction2", null));
-        assertEquals("{\"c\":\"ddd\",\"d\":null}", dummyPlugin.exec("dummyAction3", null));
+        assertEquals("{\"c\":null,\"d\":null}", dummyPlugin.exec("dummyAction3", null));
+        assertEquals("{\"c\":\"ddd\",\"d\":null}", dummyPlugin.exec("dummyAction4", null));
     }
 
 }

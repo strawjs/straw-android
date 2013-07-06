@@ -30,6 +30,11 @@ public class DummyStrawPlugin extends StrawPlugin {
 
     public ActionResult dummyAction3() {
         ActionResult res = new ActionResult();
+        return res;
+    }
+
+    public ActionResult dummyAction4() {
+        ActionResult res = new ActionResult();
         res.c = "ddd";
         return res;
     }
