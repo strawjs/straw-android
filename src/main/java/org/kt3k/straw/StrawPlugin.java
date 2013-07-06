@@ -20,8 +20,10 @@ abstract public class StrawPlugin {
 
     public StrawPlugin() {
         Method[] methods = this.getClass().getMethods();
-        for (Method m: methods) {
-            this.methodMap.put(m.getName(), m);
+        for (Method method: methods) {
+            if (method.getAnnotation(PluginAction.class) != null) {
+                this.methodMap.put(method.getName(), method);
+            }
         }
     }
 

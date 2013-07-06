@@ -7,6 +7,7 @@ public class DummyStrawPlugin extends StrawPlugin {
         return "dummy";
     };
 
+    @PluginAction
     public ActionResult dummyAction(ActionParam param) {
         ActionResult res = new ActionResult();
         res.c = param.a;
@@ -24,19 +25,26 @@ public class DummyStrawPlugin extends StrawPlugin {
         public String d;
     }
 
-    public ActionResult dummyAction2() {
+    @PluginAction
+    public ActionResult actionReturnsNull() {
         return null;
     }
 
+    @PluginAction
     public ActionResult dummyAction3() {
         ActionResult res = new ActionResult();
         return res;
     }
 
+    @PluginAction
     public ActionResult dummyAction4() {
         ActionResult res = new ActionResult();
         res.c = "ddd";
         return res;
     }
 
+    public ActionResult actionWithoutAnnotation() {
+        ActionResult res = new ActionResult();
+        return res;
+    }
 }
