@@ -39,18 +39,23 @@ abstract public class StrawPlugin {
 
     public String exec(String action, String jsonString) {
 
+        Object result = null;
+
+        Method targetMethod = this.methodMap.get(action);
+
+        if (targetMethod == null) {
+            System.out.println("No Such Plugin Action: " + action + ", arguments: " + jsonString);
+            return null;
+        }
+
+        Class<?>[] parameterTypes = targetMethod.getParameterTypes();
+
         try {
 
-            Object result = null;
-
-            Method targetMethod = this.methodMap.get(action);
-
-            Integer parameterLength = this.getParameterLength(targetMethod);
-
-            if (parameterLength == 0) {
+            if (parameterTypes.length == 0) {
                 result = targetMethod.invoke(this);
-            } else if (parameterLength == 1) {
-                result = targetMethod.invoke(this, this.mapper.readValue(jsonString, this.getFirstParameterType(targetMethod)));
+            } else if (parameterTypes.length == 1) {
+                result = targetMethod.invoke(this, this.mapper.readValue(jsonString, parameterTypes[0]));
             }
 
             return this.mapper.writeValueAsString(result);
@@ -67,22 +72,6 @@ abstract public class StrawPlugin {
         } catch (java.lang.reflect.InvocationTargetException e) {
             System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
             System.out.println(e);
-        }
-
-        return null;
-    }
-
-    private static Integer getParameterLength(Method m) {
-        Class<?>[] types = m.getParameterTypes();
-
-        return types.length;
-    }
-
-    private static Class getFirstParameterType(Method m) {
-        Class<?>[] types = m.getParameterTypes();
-
-        if (types.length >= 1) {
-            return types[0];
         }
 
         return null;
