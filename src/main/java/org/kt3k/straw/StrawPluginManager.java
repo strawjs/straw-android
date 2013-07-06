@@ -69,7 +69,7 @@ class StrawPluginManager {
         return plugin;
     }
 
-    private static StrawPlugin instantiatePluginClass(Class pluginClass, WebView webView, Context context) throws InstantiationException, IllegalAccessException {
+    private static StrawPlugin instantiatePluginClass(Class<StrawPlugin> pluginClass, WebView webView, Context context) throws InstantiationException, IllegalAccessException {
         StrawPlugin plugin = (StrawPlugin)pluginClass.newInstance();
 
         plugin.setWebView(webView);
@@ -78,8 +78,8 @@ class StrawPluginManager {
         return plugin;
     }
 
-    public static Class getClassByName(String name) throws ClassNotFoundException {
-        Class c = Class.forName(name);
+    public static Class<StrawPlugin> getClassByName(String name) throws ClassNotFoundException {
+        Class<StrawPlugin> c = (Class<StrawPlugin>)Class.forName(name);
         return c;
     }
 }
