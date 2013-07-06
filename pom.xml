@@ -62,6 +62,15 @@
 					</sdk>
 				</configuration>
 			</plugin>
+
+			<!--This plugin is used to store Eclipse m2e settings.
+				It has no influence on the Maven build itself. -->
+			<plugin>
+				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+				<version>1.0.0</version>
+			</plugin>
+
 		</plugins>
 	</build>
 </project>
