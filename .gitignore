@@ -1,5 +1,8 @@
 # build result directory
 target
 
+# android generated files directory
+gen
+
 # Eclipse setting dir
 .settings
