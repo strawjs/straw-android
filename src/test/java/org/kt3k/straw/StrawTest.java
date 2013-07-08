@@ -8,7 +8,6 @@ import android.webkit.WebView;
 import android.app.Activity;
 import android.os.Handler;
 
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)

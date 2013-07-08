@@ -9,9 +9,6 @@ import android.app.Activity;
 
 import org.robolectric.RobolectricTestRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RunWith(RobolectricTestRunner.class)
 public class StrawPluginManagerTest {
 
