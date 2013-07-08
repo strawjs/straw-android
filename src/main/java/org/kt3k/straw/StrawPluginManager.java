@@ -9,13 +9,10 @@ import android.content.Context;
 class StrawPluginManager {
 
     private WebView webView;
-    private Context context;
-
     private HashMap<String, StrawPlugin> plugins = new HashMap<String, StrawPlugin>();
 
     public StrawPluginManager(WebView webView, Context context) {
         this.webView = webView;
-        this.context = context;
     }
 
     public void exec(String pluginName, String action, String arguments, String callback) {
@@ -51,7 +48,7 @@ class StrawPluginManager {
         StrawPlugin plugin = null;
 
         try {
-            plugin = StrawPluginManager.instantiatePluginClass(StrawPluginManager.getClassByName(name), this.webView, this.context);
+            plugin = StrawPluginManager.instantiatePluginClass(StrawPluginManager.getClassByName(name), this.webView);
 
         } catch (ClassNotFoundException e) {
             System.out.println("Error creating plugin class: " + name);
@@ -69,11 +66,11 @@ class StrawPluginManager {
         return plugin;
     }
 
-    private static StrawPlugin instantiatePluginClass(Class<? extends StrawPlugin> pluginClass, WebView webView, Context context) throws InstantiationException, IllegalAccessException {
+    private static StrawPlugin instantiatePluginClass(Class<? extends StrawPlugin> pluginClass, WebView webView) throws InstantiationException, IllegalAccessException {
         StrawPlugin plugin = (StrawPlugin)pluginClass.newInstance();
 
         plugin.setWebView(webView);
-        plugin.setContext(context);
+        plugin.setContext(webView.getContext());
 
         return plugin;
     }
