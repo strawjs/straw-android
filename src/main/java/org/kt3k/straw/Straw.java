@@ -1,29 +1,24 @@
 package org.kt3k.straw;
 
 import android.webkit.WebView;
-import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 
 public class Straw {
 
     private WebView webView = null;
-    private Context context = null;
-    private Handler handler = null;
-
     private StrawJavascriptInterface jsInterface = null;
     public static final String JAVASCRIPT_INTERFACE_NAME = "strawNativeInterface";
 
-    public Straw(WebView webView, Handler handler) {
+    public Straw(WebView webView) {
         this.webView = webView;
-        this.context = webView.getContext();
-        this.handler = handler;
 
         this.setUpJsInterface();
         this.insertStrawIntoWebView();
     }
 
     public void sendResult(StrawPluginResponse res) {
-        this.handler.post(new StrawBack(this.webView, res.toJsMessage()));
+        (new Handler(Looper.getMainLooper())).post(new StrawBack(this.webView, res.toJsMessage()));
     }
 
     private void insertStrawIntoWebView() {
