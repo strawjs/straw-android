@@ -1,8 +1,6 @@
 package org.kt3k.straw;
 
 import android.webkit.WebView;
-import android.os.Handler;
-import android.os.Looper;
 
 public class Straw {
 
@@ -18,7 +16,7 @@ public class Straw {
     }
 
     public void sendResult(ActionResult res) {
-        (new Handler(Looper.getMainLooper())).post(new StrawBack(this.webView, res.toJsMessage()));
+        this.webView.post(new StrawBack(this.webView, res.toJsMessage()));
     }
 
     private void insertStrawIntoWebView() {
