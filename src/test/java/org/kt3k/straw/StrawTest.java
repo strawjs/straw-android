@@ -6,8 +6,6 @@ import static org.junit.Assert.*;
 
 import android.webkit.WebView;
 import android.app.Activity;
-import android.os.Handler;
-
 import org.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)
@@ -22,7 +20,6 @@ public class StrawTest {
     public void testConstuctor() {
         Activity activity = new Activity();
         WebView webView = new WebView(activity);
-        Handler handler = new Handler();
         new Straw(webView);
     }
 
