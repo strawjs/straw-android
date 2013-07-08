@@ -51,7 +51,7 @@ class StrawPluginManager {
         StrawPlugin plugin = null;
 
         try {
-            plugin = this.instantiatePluginClass(this.getClassByName(name), this.webView, this.context);
+            plugin = StrawPluginManager.instantiatePluginClass(StrawPluginManager.getClassByName(name), this.webView, this.context);
 
         } catch (ClassNotFoundException e) {
             System.out.println("Error creating plugin class: " + name);
