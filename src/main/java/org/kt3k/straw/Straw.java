@@ -4,60 +4,66 @@ import android.webkit.WebView;
 
 public class Straw {
 
-    private WebView webView = null;
-    private StrawJavascriptInterface jsInterface = null;
-    public static final String JAVASCRIPT_INTERFACE_NAME = "strawNativeInterface";
+	private WebView webView = null;
+	private StrawJavascriptInterface jsInterface = null;
+	private StrawPluginRegistry registry;
+	public static final String JAVASCRIPT_INTERFACE_NAME = "strawNativeInterface";
 
-    public Straw(WebView webView) {
-        this.webView = webView;
+	public Straw(WebView webView) {
+		this.webView = webView;
 
-        this.setUpJsInterface();
-        this.insertStrawIntoWebView();
-    }
+		this.registry = new StrawPluginRegistry(this.webView);
+		this.setUpJsInterface();
+		this.insertStrawIntoWebView();
+	}
 
-    public void sendResult(ActionResult res) {
-        this.webView.post(new StrawBack(this.webView, res.toJsMessage()));
-    }
+	public StrawPluginRegistry getRegistry() {
+		return this.registry;
+	}
 
-    private void insertStrawIntoWebView() {
-        this.webView.addJavascriptInterface(this.jsInterface, JAVASCRIPT_INTERFACE_NAME);
-    }
+	public void sendResult(ActionResult res) {
+		this.webView.post(new StrawBack(this.webView, res.toJsMessage()));
+	}
 
-    private void setUpJsInterface() {
-        final StrawPluginRegistry pluginManager = new StrawPluginRegistry(this.webView);
+	private void insertStrawIntoWebView() {
+		this.webView.addJavascriptInterface(this.jsInterface, JAVASCRIPT_INTERFACE_NAME);
+	}
 
-        this.jsInterface = new StrawJavascriptInterface() {
-            private StrawPluginRegistry pluginManager;
+	private void setUpJsInterface() {
 
-            public void exec(String pluginName, String action, String arguments, String callbackId) {
-                this.pluginManager.exec(pluginName, action, arguments, callbackId);
-            }
+		this.jsInterface = new StrawJavascriptInterface() {
+			private Straw straw;
 
-            public void setPluginManger(StrawPluginRegistry pluginManager) {
-                this.pluginManager = pluginManager;
-            }
-        };
-        this.jsInterface.setPluginManger(pluginManager);
-    }
+			public void exec(String pluginName, String action, String arguments, String callbackId) {
+				ActionContext context = new ActionContext(pluginName, action, arguments, callbackId, this.straw);
+				context.exec();
+			}
+
+			public void setStraw(Straw straw) {
+				this.straw = straw;
+			}
+		};
+		this.jsInterface.setStraw(this);
+	}
 }
 
 class StrawBack implements Runnable {
 
-    WebView webView;
-    String message;
+	WebView webView;
+	String message;
 
-    public StrawBack(WebView webView, String message) {
-        this.webView = webView;
-        this.message = message;
-    }
+	public StrawBack(WebView webView, String message) {
+		this.webView = webView;
+		this.message = message;
+	}
 
-    public void run() {
-        this.webView.loadUrl(this.message);
-    }
+	public void run() {
+		this.webView.loadUrl(this.message);
+	}
 
 }
 
 interface StrawJavascriptInterface {
-    public void exec(String pluginName, String action, String arguments, String callbackId);
-    public void setPluginManger(StrawPluginRegistry pluginManager);
+	public void exec(String pluginName, String action, String arguments, String callbackId);
+	public void setStraw(Straw straw);
 }
