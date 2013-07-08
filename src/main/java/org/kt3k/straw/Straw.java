@@ -17,7 +17,7 @@ public class Straw {
         this.insertStrawIntoWebView();
     }
 
-    public void sendResult(StrawPluginResponse res) {
+    public void sendResult(ActionResult res) {
         (new Handler(Looper.getMainLooper())).post(new StrawBack(this.webView, res.toJsMessage()));
     }
 
