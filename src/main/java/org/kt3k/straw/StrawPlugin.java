@@ -10,9 +10,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 abstract public class StrawPlugin {
 
-    private WebView webView;
+    protected WebView webView;
 
-    private Context context;
+    protected Context context;
 
     private HashMap<String, Method> methodMap = new HashMap<String, Method>();
 
