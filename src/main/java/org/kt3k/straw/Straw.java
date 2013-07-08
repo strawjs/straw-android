@@ -9,7 +9,6 @@ public class Straw {
     private WebView webView = null;
     private Context context = null;
     private Handler handler = null;
-    private StrawPluginManager pluginManager = null;
 
     private StrawJavascriptInterface jsInterface = null;
     public static final String JAVASCRIPT_INTERFACE_NAME = "strawNativeInterface";
@@ -18,6 +17,20 @@ public class Straw {
         this.webView = webView;
         this.context = context;
         this.handler = handler;
+
+        this.setUpJsInterface();
+        this.insertStrawIntoWebView();
+    }
+
+    public void sendResult(StrawPluginResponse res) {
+        this.handler.post(new StrawBack(this.webView, res.toJsMessage()));
+    }
+
+    private void insertStrawIntoWebView() {
+        this.webView.addJavascriptInterface(this.jsInterface, JAVASCRIPT_INTERFACE_NAME);
+    }
+
+    private void setUpJsInterface() {
         final StrawPluginManager pluginManager = new StrawPluginManager(this.webView, this.context);
 
         this.jsInterface = new StrawJavascriptInterface() {
@@ -31,18 +44,8 @@ public class Straw {
                 this.pluginManager = pluginManager;
             }
         };
-
         this.jsInterface.setPluginManger(pluginManager);
     }
-
-    public void sendResult(StrawPluginResponse res) {
-        this.handler.post(new StrawBack(this.webView, res.toJsMessage()));
-    }
-
-    private void insertStrawIntoWebView() {
-        this.webView.addJavascriptInterface(this.jsInterface, JAVASCRIPT_INTERFACE_NAME);
-    }
-
 }
 
 class StrawBack implements Runnable {
