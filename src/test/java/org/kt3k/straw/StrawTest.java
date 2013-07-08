@@ -23,7 +23,7 @@ public class StrawTest {
         Activity activity = new Activity();
         WebView webView = new WebView(activity);
         Handler handler = new Handler();
-        Straw straw = new Straw(webView, activity, handler);
+        Straw straw = new Straw(webView, handler);
     }
 
 }

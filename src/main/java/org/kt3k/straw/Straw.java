@@ -13,9 +13,9 @@ public class Straw {
     private StrawJavascriptInterface jsInterface = null;
     public static final String JAVASCRIPT_INTERFACE_NAME = "strawNativeInterface";
 
-    public Straw(WebView webView, Context context, Handler handler) {
+    public Straw(WebView webView, Handler handler) {
         this.webView = webView;
-        this.context = context;
+        this.context = webView.getContext();
         this.handler = handler;
 
         this.setUpJsInterface();
