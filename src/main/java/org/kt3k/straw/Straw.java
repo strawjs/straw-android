@@ -31,7 +31,7 @@ public class Straw {
     }
 
     private void setUpJsInterface() {
-        final StrawPluginManager pluginManager = new StrawPluginManager(this.webView, this.context);
+        final StrawPluginManager pluginManager = new StrawPluginManager(this.webView);
 
         this.jsInterface = new StrawJavascriptInterface() {
             private StrawPluginManager pluginManager;

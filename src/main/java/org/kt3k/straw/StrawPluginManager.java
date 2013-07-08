@@ -4,14 +4,13 @@ import java.util.List;
 import java.util.HashMap;
 
 import android.webkit.WebView;
-import android.content.Context;
 
 class StrawPluginManager {
 
     private WebView webView;
     private HashMap<String, StrawPlugin> plugins = new HashMap<String, StrawPlugin>();
 
-    public StrawPluginManager(WebView webView, Context context) {
+    public StrawPluginManager(WebView webView) {
         this.webView = webView;
     }
 

@@ -16,14 +16,14 @@ public class StrawPluginManagerTest {
     public void testConstuctor() {
         Activity activity = new Activity();
         WebView webView = new WebView(activity);
-        new StrawPluginManager(webView, activity);
+        new StrawPluginManager(webView);
     }
 
     @Test
     public void testLoadPlugins() {
         Activity activity = new Activity();
         WebView webView = new WebView(activity);
-        StrawPluginManager pm = new StrawPluginManager(webView, activity);
+        StrawPluginManager pm = new StrawPluginManager(webView);
 
         pm.loadPluginByName("org.kt3k.straw.DummyStrawPlugin");
 
@@ -36,7 +36,7 @@ public class StrawPluginManagerTest {
     public void testPluginExecution() {
         Activity activity = new Activity();
         WebView webView = new WebView(activity);
-        StrawPluginManager pm = new StrawPluginManager(webView, activity);
+        StrawPluginManager pm = new StrawPluginManager(webView);
 
         pm.loadPluginByName("org.kt3k.straw.DummyStrawPlugin");
 
