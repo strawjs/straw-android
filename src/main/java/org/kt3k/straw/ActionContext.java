@@ -11,12 +11,14 @@ public class ActionContext {
         this.callbackId = callbackId;
     }
 
-    public void resolve() {
+    public void resolve(Object obj) {
         ActionResult res = new ActionResult();
         this.straw.sendResult(res);
     }
 
-    public void reject() {
+    public void reject(String message) {
+        ActionResult res = new ActionResult();
+        this.straw.sendResult(res);
     }
 
     public void keepAlive(Boolean bool) {

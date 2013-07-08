@@ -15,7 +15,7 @@ public class StrawPluginTest {
 
     private final Activity activity = new Activity();
     private final WebView webView = new WebView(activity);
-    private final StrawPluginManager manager = new StrawPluginManager(webView);
+    private final StrawPluginRegistry manager = new StrawPluginRegistry(webView);
 
     private StrawPlugin dummyPlugin;
 

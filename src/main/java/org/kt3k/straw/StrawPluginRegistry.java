@@ -5,12 +5,12 @@ import java.util.HashMap;
 
 import android.webkit.WebView;
 
-class StrawPluginManager {
+class StrawPluginRegistry {
 
     private WebView webView;
     private HashMap<String, StrawPlugin> plugins = new HashMap<String, StrawPlugin>();
 
-    public StrawPluginManager(WebView webView) {
+    public StrawPluginRegistry(WebView webView) {
         this.webView = webView;
     }
 
@@ -47,7 +47,7 @@ class StrawPluginManager {
         StrawPlugin plugin = null;
 
         try {
-            plugin = StrawPluginManager.instantiatePluginClass(StrawPluginManager.getClassByName(name), this.webView);
+            plugin = StrawPluginRegistry.instantiatePluginClass(StrawPluginRegistry.getClassByName(name), this.webView);
 
         } catch (ClassNotFoundException e) {
             System.out.println("Error creating plugin class: " + name);

@@ -24,16 +24,16 @@ public class Straw {
     }
 
     private void setUpJsInterface() {
-        final StrawPluginManager pluginManager = new StrawPluginManager(this.webView);
+        final StrawPluginRegistry pluginManager = new StrawPluginRegistry(this.webView);
 
         this.jsInterface = new StrawJavascriptInterface() {
-            private StrawPluginManager pluginManager;
+            private StrawPluginRegistry pluginManager;
 
             public void exec(String pluginName, String action, String arguments, String callbackId) {
                 this.pluginManager.exec(pluginName, action, arguments, callbackId);
             }
 
-            public void setPluginManger(StrawPluginManager pluginManager) {
+            public void setPluginManger(StrawPluginRegistry pluginManager) {
                 this.pluginManager = pluginManager;
             }
         };
@@ -59,5 +59,5 @@ class StrawBack implements Runnable {
 
 interface StrawJavascriptInterface {
     public void exec(String pluginName, String action, String arguments, String callbackId);
-    public void setPluginManger(StrawPluginManager pluginManager);
+    public void setPluginManger(StrawPluginRegistry pluginManager);
 }
