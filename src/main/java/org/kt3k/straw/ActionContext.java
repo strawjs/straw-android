@@ -45,13 +45,13 @@ public class ActionContext {
 		return this.isSuccess;
 	}
 
-	public void resolve(Object obj) {
+	public void success(Object obj) {
 		this.isSuccess = true;
 
 		this.straw.sendResult(new ActionResult(this));
 	}
 
-	public void reject(String errorId, String errorMessage) {
+	public void fail(String errorId, String errorMessage) {
 		this.isSuccess = false;
 
 		this.straw.sendResult(new ActionResult(this));

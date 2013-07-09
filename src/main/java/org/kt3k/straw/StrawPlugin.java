@@ -39,14 +39,14 @@ abstract public class StrawPlugin {
         return null;
     }
 
-    public String exec(String action, String jsonString) {
+    public String exec(String actionName, String argumentJson) {
 
         Object result = null;
 
-        Method targetMethod = this.methodMap.get(action);
+        Method targetMethod = this.methodMap.get(actionName);
 
         if (targetMethod == null) {
-            System.out.println("No Such Plugin Action: " + action + ", arguments: " + jsonString);
+            System.out.println("No Such Plugin Action: " + actionName + ", arguments: " + argumentJson);
             return null;
         }
 
@@ -57,22 +57,22 @@ abstract public class StrawPlugin {
             if (parameterTypes.length == 0) {
                 result = targetMethod.invoke(this);
             } else if (parameterTypes.length == 1) {
-                result = targetMethod.invoke(this, this.mapper.readValue(jsonString, parameterTypes[0]));
+                result = targetMethod.invoke(this, this.mapper.readValue(argumentJson, parameterTypes[0]));
             }
 
             return this.mapper.writeValueAsString(result);
 
         } catch (SecurityException e) {
-            System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
+            System.out.println("cannot execute action: " + actionName + ", arguments: " + argumentJson);
             System.out.println(e);
         } catch (java.io.IOException e) {
-            System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
+            System.out.println("cannot execute action: " + actionName + ", arguments: " + argumentJson);
             System.out.println(e);
         } catch (IllegalAccessException e) {
-            System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
+            System.out.println("cannot execute action: " + actionName + ", arguments: " + argumentJson);
             System.out.println(e);
         } catch (java.lang.reflect.InvocationTargetException e) {
-            System.out.println("cannot execute action: " + action + ", arguments: " + jsonString);
+            System.out.println("cannot execute action: " + actionName + ", arguments: " + argumentJson);
             System.out.println(e);
         }
 
