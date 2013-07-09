@@ -14,9 +14,6 @@ class StrawPluginRegistry {
 		this.webView = webView;
 	}
 
-	public void exec(String pluginName, String action, String arguments, String callback) {
-	}
-
 	public void loadPlugins(List<String> pluginNames) {
 		for (String name: pluginNames) {
 			this.loadPluginByName(name);
