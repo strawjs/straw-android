@@ -48,40 +48,42 @@ public class ActionContext {
 		return this.isSuccess;
 	}
 
-	public void success(Object obj) {
-		this.isSuccess = true;
-		try {
-			this.resultJson = StrawPlugin.objToJson(obj);
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		this.straw.sendResult(new ActionResult(this));
+	public void success(Object value) {
+		this.sendResult(true, value);
 	}
 
 	public void fail(String errorId, String errorMessage) {
-		this.isSuccess = false;
+		this.sendResult(false, new ErrorResult(errorId, errorMessage));
+	}
 
-		ErrorResult res = new ErrorResult(errorId, errorMessage);
+	private void sendResult(Boolean isSuccess, Object value) {
+		this.isSuccess = isSuccess;
 
 		try {
-			this.resultJson = StrawPlugin.objToJson(res);
+
+			this.resultJson = StrawPlugin.objToJson(value);
+
 		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
+			String errorMessage = "Straw Framework Error: cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson();
+			System.out.println(errorMessage);
+			System.out.println(e);
 			e.printStackTrace();
+			return;
+
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
+			String errorMessage = "Straw Framework Error: cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson();
+			System.out.println(errorMessage);
+			System.out.println(e);
 			e.printStackTrace();
+			return;
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			String errorMessage = "Straw Framework Error: cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson();
+			System.out.println(errorMessage);
+			System.out.println(e);
 			e.printStackTrace();
+			return;
+
 		}
 
 		this.straw.sendResult(new ActionResult(this));
