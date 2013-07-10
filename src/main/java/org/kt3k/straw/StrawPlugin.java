@@ -43,44 +43,73 @@ abstract public class StrawPlugin {
 		return null;
 	}
 
-	public String exec(String actionName, String argumentJson) {
+	public void exec(ActionContext context) {
 
-		Object result = null;
+		String actionName = context.getActionName();
+		String argumentJson = context.getArgumentJson();
 
 		Method targetMethod = this.methodMap.get(actionName);
+		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(targetMethod);
 
 		if (targetMethod == null) {
-			System.out.println("No Such Plugin Action: " + actionName + ", arguments: " + argumentJson);
-			return null;
+			String errorMessage = "Straw Framework Error: No Such Plugin Action: action=" + actionName + ", argumentJson=" + argumentJson;
+			System.out.println(errorMessage);
+			return;
 		}
 
-		Class<?>[] parameterTypes = targetMethod.getParameterTypes();
+		Object argumentObject;
 
 		try {
 
-			if (parameterTypes.length == 0) {
-				result = targetMethod.invoke(this);
-			} else if (parameterTypes.length == 1) {
-				result = targetMethod.invoke(this, StrawPlugin.jsonToObj(argumentJson, parameterTypes[0]));
-			}
+			argumentObject = StrawPlugin.createArgumentJson(argumentJson, metaInfo.getArgumentType());
 
-			return StrawPlugin.objToJson(result);
+		} catch (JsonParseException e) {
+			String errorMessage = "Straw Framework Error: json parse error: action=" + actionName + ", argumentJson=" + argumentJson;
+			System.out.println(errorMessage);
+			System.out.println(e);
+			return;
 
-		} catch (SecurityException e) {
-			System.out.println("cannot execute action: " + actionName + ", arguments: " + argumentJson);
+		} catch (JsonMappingException e) {
+			String errorMessage = "Straw Framework Error: json mapping: action=" + actionName + ", argumentJson=" + argumentJson;
+			System.out.println(errorMessage);
 			System.out.println(e);
-		} catch (java.io.IOException e) {
-			System.out.println("cannot execute action: " + actionName + ", arguments: " + argumentJson);
+			return;
+
+		} catch (IOException e) {
+			String errorMessage = "Straw Framework Error: io error when parsing argumentJson: action=" + actionName + ", argumentJson=" + argumentJson;
+			System.out.println(errorMessage);
 			System.out.println(e);
-		} catch (IllegalAccessException e) {
-			System.out.println("cannot execute action: " + actionName + ", arguments: " + argumentJson);
-			System.out.println(e);
-		} catch (java.lang.reflect.InvocationTargetException e) {
-			System.out.println("cannot execute action: " + actionName + ", arguments: " + argumentJson);
-			System.out.println(e);
+			return;
 		}
 
-		return null;
+		try {
+
+			targetMethod.invoke(this, argumentObject, context);
+
+		} catch (SecurityException e) {
+			String errorMessage = "Straw Framework Error: cannot execute action by security problem: action=" + actionName + ", argumentJson=" + argumentJson;
+			System.out.println(errorMessage);
+			System.out.println(e);
+			return;
+
+		} catch (IllegalAccessException e) {
+			String errorMessage = "cannot execute action=" + actionName + ", argumentJson=" + argumentJson;
+			System.out.println(errorMessage);
+			System.out.println(e);
+			return;
+
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			String errorMessage = "cannot execute action=" + actionName + ", argumentJson=" + argumentJson;
+			System.out.println(errorMessage);
+			System.out.println(e);
+			return;
+		}
+
+		return;
+	}
+
+	private static Object createArgumentJson(String argumentJson, Class<? extends Object> type) throws JsonParseException, JsonMappingException, IOException {
+		return StrawPlugin.jsonToObj(argumentJson, type);
 	}
 
 	public static String objToJson(Object value) throws JsonGenerationException, JsonMappingException, IOException {

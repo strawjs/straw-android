@@ -25,9 +25,7 @@ public class ActionContext {
 	}
 
 	public void exec() {
-		StrawPlugin plugin = this.straw.getRegistry().getPluginByName(this.pluginName);
-		String resultJson = plugin.exec(actionName, argumentJson);
-		this.resultJson = resultJson;
+		this.straw.getRegistry().getPluginByName(this.pluginName).exec(this);
 	}
 
 	public String getActionName() {
