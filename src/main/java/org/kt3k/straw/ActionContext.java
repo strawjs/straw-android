@@ -1,5 +1,10 @@
 package org.kt3k.straw;
 
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+
 public class ActionContext {
 
 	private Straw straw;
@@ -47,12 +52,39 @@ public class ActionContext {
 
 	public void success(Object obj) {
 		this.isSuccess = true;
+		try {
+			this.resultJson = StrawPlugin.objToJson(obj);
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		this.straw.sendResult(new ActionResult(this));
 	}
 
 	public void fail(String errorId, String errorMessage) {
 		this.isSuccess = false;
+
+		ErrorResult res = new ErrorResult(errorId, errorMessage);
+
+		try {
+			this.resultJson = StrawPlugin.objToJson(res);
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		this.straw.sendResult(new ActionResult(this));
 	}
@@ -63,5 +95,15 @@ public class ActionContext {
 
 	public void keepAlive(Boolean bool) {
 		this.keepAlive = bool;
+	}
+
+	static class ErrorResult {
+		public String message;
+		public String id;
+
+		public ErrorResult(String id, String message) {
+			this.message = message;
+			this.id = id;
+		}
 	}
 }
