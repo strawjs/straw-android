@@ -47,16 +47,22 @@ class StrawPluginRegistry {
 			plugin = StrawPluginRegistry.instantiatePluginClass(StrawPluginRegistry.getClassByName(name), this.webView);
 
 		} catch (ClassNotFoundException e) {
-			System.out.println("Error creating plugin class: " + name);
+			System.out.println("Straw Framework Error: class not found: class=" + name);
 			System.out.println(e);
+			e.printStackTrace();
+			return null;
 
 		} catch (InstantiationException e) {
-			System.out.println("Error creating plugin class: " + name);
+			System.out.println("Straw Framework Error: cannot instantiate plugin class: class=" + name);
 			System.out.println(e);
+			e.printStackTrace();
+			return null;
 
 		} catch (IllegalAccessException e) {
-			System.out.println("Error creating plugin class: " + name);
+			System.out.println("Straw Framework Error: illegal access: class=" + name);
 			System.out.println(e);
+			e.printStackTrace();
+			return null;
 		}
 
 		return plugin;
