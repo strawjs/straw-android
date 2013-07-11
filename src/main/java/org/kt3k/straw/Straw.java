@@ -23,8 +23,8 @@ public class Straw {
 		return this.registry;
 	}
 
-	public void sendResult(ActionResult res) {
-		this.webView.post(new StrawBack(this.webView, res.toJsMessage()));
+	public void postJsMessage(String jsMessage) {
+		this.webView.post(new StrawBack(this.webView, jsMessage));
 	}
 
 	private void insertStrawIntoWebView() {

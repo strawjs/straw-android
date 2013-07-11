@@ -49,14 +49,14 @@ public class ActionContext {
 	}
 
 	public void success(Object value) {
-		this.sendResult(true, value);
+		this.postResult(true, value);
 	}
 
 	public void fail(String errorId, String errorMessage) {
-		this.sendResult(false, new ErrorResult(errorId, errorMessage));
+		this.postResult(false, new ErrorResult(errorId, errorMessage));
 	}
 
-	private void sendResult(Boolean isSuccess, Object value) {
+	private void postResult(Boolean isSuccess, Object value) {
 		this.isSuccess = isSuccess;
 
 		try {
@@ -86,7 +86,7 @@ public class ActionContext {
 
 		}
 
-		this.straw.sendResult(new ActionResult(this));
+		this.straw.postJsMessage(new ActionResult(this).toJsMessage());
 	}
 
 	public Boolean keepAlive() {
