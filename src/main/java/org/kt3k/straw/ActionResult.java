@@ -14,9 +14,15 @@ public class ActionResult {
 	static final String DOUBLE_QUOTE = "\"";
 
 	public ActionResult(ActionContext context) {
-		this.resultJson = context.getResultJson();
-		this.isSuccess = context.isSuccess();
 		this.callbackId = context.getCallbackId();
+		this.isSuccess = context.isSuccess();
+		this.resultJson = context.getResultJson();
+	}
+
+	public ActionResult(String callbackId, Boolean isSuccess, String resultJson) {
+		this.callbackId = callbackId;
+		this.isSuccess = isSuccess;
+		this.resultJson = resultJson;
 	}
 
 	public String toJsMessage() {
