@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
+import static org.kt3k.straw.ActionResult.toJsMessage;
+
 public class ActionContext {
 
 	private Straw straw;
@@ -86,7 +88,7 @@ public class ActionContext {
 
 		}
 
-		this.straw.postJsMessage(new ActionResult(this).toJsMessage());
+		this.straw.postJsMessage(toJsMessage(this));
 	}
 
 	public Boolean keepAlive() {

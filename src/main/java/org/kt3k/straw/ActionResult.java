@@ -14,9 +14,7 @@ public class ActionResult {
 	static final String DOUBLE_QUOTE = "\"";
 
 	public ActionResult(ActionContext context) {
-		this.callbackId = context.getCallbackId();
-		this.isSuccess = context.isSuccess();
-		this.resultJson = context.getResultJson();
+		this(context.getCallbackId(), context.isSuccess(), context.getResultJson());
 	}
 
 	public ActionResult(String callbackId, Boolean isSuccess, String resultJson) {
@@ -35,5 +33,9 @@ public class ActionResult {
 
 	private String createJsMessageParameters() {
 		return DOUBLE_QUOTE + this.callbackId + DOUBLE_QUOTE + COMMA + this.isSuccess + COMMA + this.resultJson;
+	}
+
+	public static String toJsMessage(ActionContext context) {
+		return new ActionResult(context).toJsMessage();
 	}
 }
