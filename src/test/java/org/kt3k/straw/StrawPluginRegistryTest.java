@@ -10,7 +10,7 @@ import android.app.Activity;
 import org.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)
-public class StrawPluginManagerTest {
+public class StrawPluginRegistryTest {
 
     @Test
     public void testConstuctor() {
@@ -30,19 +30,6 @@ public class StrawPluginManagerTest {
         StrawPlugin dummyPlugin = pm.getPluginByName("dummy");
         assertNotNull(dummyPlugin);
         assertEquals("org.kt3k.straw.DummyStrawPlugin", dummyPlugin.getClass().getCanonicalName());
-    }
-
-    @Test
-    public void testPluginExecution() {
-        Activity activity = new Activity();
-        WebView webView = new WebView(activity);
-        StrawPluginRegistry pm = new StrawPluginRegistry(webView);
-
-        pm.loadPluginByName("org.kt3k.straw.DummyStrawPlugin");
-
-        //StrawPlugin dummyPlugin = pm.getPluginByName("dummy");
-        //assertEquals("{\"c\":\"foo\",\"d\":\"bar\"}", dummyPlugin.exec("dummyAction", "{\"a\":\"foo\",\"b\":\"bar\"}"));
-        //assertEquals("{\"c\":\"baz\",\"d\":\"baz\"}", dummyPlugin.exec("dummyAction", "{\"a\":\"baz\",\"b\":\"baz\"}"));
     }
 
 }
