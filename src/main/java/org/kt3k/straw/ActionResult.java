@@ -8,8 +8,10 @@ public class ActionResult {
 
 	static final String JAVASCRIPT_SCHEME = "javascript:";
 	static final String OPEN_PAREN = "(";
-	static final String CLOSE_PAREN = ");";
+	static final String CLOSE_PAREN = ")";
+	static final String SEMI_COLON = ";";
 	static final String COMMA = ",";
+	static final String DOUBLE_QUOTE = "\"";
 
 	public ActionResult(ActionContext context) {
 		this.resultJson = context.getResultJson();
@@ -22,10 +24,10 @@ public class ActionResult {
 	}
 
 	private String createJsInterfaceCall() {
-		return Straw.NATIVE_TO_JS_INTERFACE_NAME + ActionResult.OPEN_PAREN + this.createJsMessageParameters() + ActionResult.CLOSE_PAREN;
+		return Straw.NATIVE_TO_JS_INTERFACE_NAME + OPEN_PAREN + this.createJsMessageParameters() + CLOSE_PAREN + SEMI_COLON;
 	}
 
 	private String createJsMessageParameters() {
-		return this.callbackId + ActionResult.COMMA + this.isSuccess + ActionResult.COMMA + this.resultJson;
+		return DOUBLE_QUOTE + this.callbackId + DOUBLE_QUOTE + COMMA + this.isSuccess + COMMA + this.resultJson;
 	}
 }
