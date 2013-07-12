@@ -5,7 +5,7 @@ import android.webkit.WebView;
 public class Straw {
 
 	private WebView webView = null;
-	private StrawJavascriptInterface jsInterface = null;
+	private StrawNativeToJsInterface jsInterface = null;
 	private StrawPluginRegistry registry;
 
 	public static final String JS_TO_NATIVE_INTERFACE_NAME = "strawNativeInterface";
@@ -16,7 +16,6 @@ public class Straw {
 
 		this.registry = new StrawPluginRegistry(this.webView);
 		this.setUpJsInterface();
-		this.insertStrawIntoWebView();
 	}
 
 	public StrawPluginRegistry getRegistry() {
@@ -27,25 +26,10 @@ public class Straw {
 		this.webView.post(new StrawBack(this.webView, jsMessage));
 	}
 
-	private void insertStrawIntoWebView() {
-		this.webView.addJavascriptInterface(this.jsInterface, JS_TO_NATIVE_INTERFACE_NAME);
-	}
-
 	private void setUpJsInterface() {
+		this.jsInterface = new StrawNativeToJsInterfaceImpl(this);
 
-		this.jsInterface = new StrawJavascriptInterface() {
-			private Straw straw;
-
-			public void exec(String pluginName, String action, String arguments, String callbackId) {
-				ActionContext context = new ActionContext(pluginName, action, arguments, callbackId, this.straw);
-				context.exec();
-			}
-
-			public void setStraw(Straw straw) {
-				this.straw = straw;
-			}
-		};
-		this.jsInterface.setStraw(this);
+		this.webView.addJavascriptInterface(this.jsInterface, JS_TO_NATIVE_INTERFACE_NAME);
 	}
 }
 
@@ -65,7 +49,18 @@ class StrawBack implements Runnable {
 
 }
 
-interface StrawJavascriptInterface {
-	public void exec(String pluginName, String action, String arguments, String callbackId);
-	public void setStraw(Straw straw);
+interface StrawNativeToJsInterface {
+	public void exec(String pluginName, String actionName, String argumentJson, String callbackId);
+}
+
+class StrawNativeToJsInterfaceImpl implements StrawNativeToJsInterface {
+	private Straw straw;
+
+	public StrawNativeToJsInterfaceImpl(Straw straw) {
+		this.straw = straw;
+	}
+
+	public void exec(String pluginName, String actionName, String argumentJson, String callbackId) {
+		new ActionContext(pluginName, actionName, argumentJson, callbackId, this.straw).exec();
+	}
 }
