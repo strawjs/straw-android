@@ -8,43 +8,43 @@ public class DummyStrawPlugin extends StrawPlugin {
     };
 
     @PluginAction
-    public ActionResult dummyAction(ActionParam param) {
-        ActionResult res = new ActionResult();
+    public DummyActionResult dummyAction(DummyActionParam param, StrawDrink context) {
+        DummyActionResult res = new DummyActionResult();
         res.c = param.a;
         res.d = param.b;
         return res;
     }
 
-    static class ActionParam {
+    static class DummyActionParam {
         public String a;
         public String b;
     }
 
-    static class ActionResult {
+    static class DummyActionResult {
         public String c;
         public String d;
     }
 
     @PluginAction
-    public ActionResult actionReturnsNull() {
+    public DummyActionResult actionReturnsNull() {
         return null;
     }
 
     @PluginAction
-    public ActionResult dummyAction3() {
-        ActionResult res = new ActionResult();
+    public DummyActionResult dummyAction3() {
+        DummyActionResult res = new DummyActionResult();
         return res;
     }
 
     @PluginAction
-    public ActionResult dummyAction4() {
-        ActionResult res = new ActionResult();
+    public DummyActionResult dummyAction4() {
+        DummyActionResult res = new DummyActionResult();
         res.c = "ddd";
         return res;
     }
 
-    public ActionResult actionWithoutAnnotation() {
-        ActionResult res = new ActionResult();
+    public DummyActionResult actionWithoutAnnotation() {
+        DummyActionResult res = new DummyActionResult();
         return res;
     }
 }

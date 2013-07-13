@@ -40,5 +40,4 @@ public class StrawPluginTest {
     public void testActionWithoutAnnotation() {
         //assertEquals(null, this.dummyPlugin.exec("actionWithoutAnnotation", null));
     }
-
 }
