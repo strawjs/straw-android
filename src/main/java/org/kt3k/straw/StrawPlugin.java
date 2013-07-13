@@ -49,13 +49,14 @@ abstract public class StrawPlugin {
 		String argumentJson = context.getArgumentJson();
 
 		Method targetMethod = this.methodMap.get(actionName);
-		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(targetMethod);
 
 		if (targetMethod == null) {
 			String errorMessage = "Straw Framework Error: No Such Plugin Action: action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			return;
 		}
+
+		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(targetMethod);
 
 		Object argumentObject;
 
@@ -83,6 +84,7 @@ abstract public class StrawPlugin {
 			System.out.println(e);
 			e.printStackTrace();
 			return;
+
 		}
 
 		try {
@@ -94,24 +96,20 @@ abstract public class StrawPlugin {
 			System.out.println(errorMessage);
 			System.out.println(e);
 			e.printStackTrace();
-			return;
 
 		} catch (IllegalAccessException e) {
 			String errorMessage = "Straw Framework Error: cannot invoke action method (illegal access exception): action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
 			e.printStackTrace();
-			return;
 
 		} catch (java.lang.reflect.InvocationTargetException e) {
 			String errorMessage = "Straw Framework Error: cannot invoke action method (invocation target exception): action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
 			e.printStackTrace();
-			return;
-		}
 
-		return;
+		}
 	}
 
 	private static Object createArgumentJson(String argumentJson, Class<? extends Object> type) throws JsonParseException, JsonMappingException, IOException {
