@@ -64,21 +64,21 @@ abstract public class StrawPlugin {
 			argumentObject = StrawPlugin.createArgumentJson(argumentJson, metaInfo.getArgumentType());
 
 		} catch (JsonParseException e) {
-			String errorMessage = "Straw Framework Error: json parse error: action=" + actionName + ", argumentJson=" + argumentJson;
+			String errorMessage = "Straw Framework Error: JSON Parse Error: action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
 			e.printStackTrace();
 			return;
 
 		} catch (JsonMappingException e) {
-			String errorMessage = "Straw Framework Error: json mapping: action=" + actionName + ", argumentJson=" + argumentJson;
+			String errorMessage = "Straw Framework Error: JSON Mapping Error: action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
 			e.printStackTrace();
 			return;
 
 		} catch (IOException e) {
-			String errorMessage = "Straw Framework Error: io error when parsing argumentJson: action=" + actionName + ", argumentJson=" + argumentJson;
+			String errorMessage = "Straw Framework Error: IO Error When Parsing JSON: action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
 			e.printStackTrace();
