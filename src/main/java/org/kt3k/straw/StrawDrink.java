@@ -63,7 +63,7 @@ public class StrawDrink {
 
 		try {
 
-			this.resultJson = StrawPlugin.objToJson(value);
+			this.resultJson = StrawUtil.objToJson(value);
 
 		} catch (JsonGenerationException e) {
 			String errorMessage = "Straw Framework Error: cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson();

@@ -7,10 +7,8 @@ import java.util.HashMap;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 
 abstract public class StrawPlugin {
 
@@ -19,8 +17,6 @@ abstract public class StrawPlugin {
 	protected Context context;
 
 	private HashMap<String, Method> methodMap = new HashMap<String, Method>();
-
-	private static ObjectMapper objectMapper = new ObjectMapper();
 
 	public StrawPlugin() {
 		Method[] methods = this.getClass().getMethods();
@@ -113,14 +109,6 @@ abstract public class StrawPlugin {
 	}
 
 	private static Object createArgumentJson(String argumentJson, Class<? extends Object> type) throws JsonParseException, JsonMappingException, IOException {
-		return StrawPlugin.jsonToObj(argumentJson, type);
-	}
-
-	public static String objToJson(Object value) throws JsonGenerationException, JsonMappingException, IOException {
-		return StrawPlugin.objectMapper.writeValueAsString(value);
-	}
-
-	public static Object jsonToObj(String json, Class<?> type) throws JsonParseException, JsonMappingException, IOException {
-		return StrawPlugin.objectMapper.readValue(json, type);
+		return StrawUtil.jsonToObj(argumentJson, type);
 	}
 }
