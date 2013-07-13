@@ -2,49 +2,48 @@ package org.kt3k.straw;
 
 public class DummyStrawPlugin extends StrawPlugin {
 
-    @Override
-    public String getName() {
-        return "dummy";
-    };
+	@Override
+	public String getName() {
+		return "dummy";
+	};
 
-    @PluginAction
-    public DummyActionResult dummyAction(DummyActionParam param, StrawDrink drink) {
-        DummyActionResult res = new DummyActionResult();
-        res.c = param.a;
-        res.d = param.b;
-        return res;
-    }
+	@PluginAction
+	public void dummyAction(DummyActionParam param, StrawDrink drink) {
+		DummyActionResult res = new DummyActionResult();
+		res.c = param.a;
+		res.d = param.b;
 
-    static class DummyActionParam {
-        public String a;
-        public String b;
-    }
+		drink.success(res);
+	}
 
-    static class DummyActionResult {
-        public String c;
-        public String d;
-    }
+	static class DummyActionParam {
+		public String a;
+		public String b;
+	}
 
-    @PluginAction
-    public DummyActionResult actionReturnsNull() {
-        return null;
-    }
+	static class DummyActionResult {
+		public String c;
+		public String d;
+	}
 
-    @PluginAction
-    public DummyActionResult dummyAction3() {
-        DummyActionResult res = new DummyActionResult();
-        return res;
-    }
+	@PluginAction
+	public void dummyAction3(Object x, StrawDrink drink) {
+		DummyActionResult res = new DummyActionResult();
 
-    @PluginAction
-    public DummyActionResult dummyAction4() {
-        DummyActionResult res = new DummyActionResult();
-        res.c = "ddd";
-        return res;
-    }
+		drink.success(res);
+	}
 
-    public DummyActionResult actionWithoutAnnotation() {
-        DummyActionResult res = new DummyActionResult();
-        return res;
-    }
+	@PluginAction
+	public void dummyAction4(Object _, StrawDrink drink) {
+		DummyActionResult res = new DummyActionResult();
+		res.c = "ddd";
+
+		drink.success(res);
+	}
+
+	public void actionWithoutAnnotation(Object _, StrawDrink drink) {
+		DummyActionResult res = new DummyActionResult();
+
+		drink.success(res);
+	}
 }
