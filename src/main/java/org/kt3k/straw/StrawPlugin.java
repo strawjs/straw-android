@@ -68,7 +68,7 @@ abstract public class StrawPlugin {
 		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(targetMethod);
 
 		if (metaInfo == null) {
-			String errorMessage = "Straw Framework Error: Wrong Parameters For Action Method: action=" + actionName + " for class=" + targetMethod.getClass().getCanonicalName();
+			String errorMessage = "Straw Framework Error: Wrong Parameter Signature For Action Method: action=" + actionName + " for class=" + targetMethod.getClass().getCanonicalName();
 			System.out.println(errorMessage);
 
 			return;
