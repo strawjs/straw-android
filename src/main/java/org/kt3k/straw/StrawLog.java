@@ -1,7 +1,7 @@
 package org.kt3k.straw;
 
 public class StrawLog {
-	
+
 	static final String MESSAGE_FRAMEWORK_ERROR = "Straw Framework Error: ";
 	static final String MESSAGE_PLUGIN_ERROR = "Straw Plugin Error: ";
 
@@ -13,12 +13,20 @@ public class StrawLog {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void printFrameworkError(String message, Exception e) {
+
+	public static void printFrameworkError(Exception e, String message) {
 		printError(MESSAGE_FRAMEWORK_ERROR + message, e);
 	}
-	
-	public static void printPluginError(String message, Exception e) {
+
+	public static void printFrameworkError(String message) {
+		printError(MESSAGE_FRAMEWORK_ERROR + message, null);
+	}
+
+	public static void printPluginError(Exception e, String message) {
 		printError(MESSAGE_PLUGIN_ERROR + message, e);
+	}
+
+	public static void printPluginError(String message) {
+		printError(MESSAGE_PLUGIN_ERROR + message, null);
 	}
 }

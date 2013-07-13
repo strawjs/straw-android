@@ -27,8 +27,7 @@ abstract public class StrawPlugin {
 				if (metaInfo != null) {
 					this.actionMap.put(method.getName(), metaInfo);
 				} else {
-					String errorMessage = "Straw Framework Error: Wrong Parameter Signature For Action Method: action=" + method.getName() + " for class=" + method.getClass().getCanonicalName();
-					System.out.println(errorMessage);
+					StrawLog.printFrameworkError("Wrong Parameter Signature For Action Method: action=" + method.getName() + " for class=" + method.getClass().getCanonicalName());
 				}
 			}
 		}
@@ -52,13 +51,10 @@ abstract public class StrawPlugin {
 			this.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
 
 		} catch (NullPointerException e) {
-			String errorMessage = "Straw Framework Error: unintended NullPointerException: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson();
-			System.out.println(errorMessage);
+			StrawLog.printFrameworkError("unintended NullPointerException: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson());
 
 		} catch (Exception e) {
-			String errorMessage = "Straw Framework Error: Unknown Runtime Error: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson();
-			System.out.println(errorMessage);
-
+			StrawLog.printFrameworkError("Straw Framework Error: Unknown Runtime Error: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson());
 		}
 	}
 
@@ -66,8 +62,7 @@ abstract public class StrawPlugin {
 		PluginActionMetaInfo metaInfo = this.actionMap.get(actionName);
 
 		if (metaInfo == null) {
-			String errorMessage = "Straw Framework Error: No Such Plugin Action: action=" + actionName + ", argumentJson=" + argumentJson;
-			System.out.println(errorMessage);
+			StrawLog.printFrameworkError("No Such Plugin Action: action=" + actionName + ", argumentJson=" + argumentJson);
 
 			return;
 		}
@@ -79,24 +74,15 @@ abstract public class StrawPlugin {
 			argumentObject = StrawPlugin.createArgumentJson(argumentJson, metaInfo.getArgumentType());
 
 		} catch (JsonParseException e) {
-			String errorMessage = "Straw Framework Error: JSON Parse Error: action=" + actionName + ", argumentJson=" + argumentJson;
-			System.out.println(errorMessage);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printFrameworkError(e, "JSON Parse Error: action=" + actionName + ", argumentJson=" + argumentJson);
 			return;
 
 		} catch (JsonMappingException e) {
-			String errorMessage = "Straw Framework Error: JSON Mapping Error: action=" + actionName + ", argumentJson=" + argumentJson;
-			System.out.println(errorMessage);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printFrameworkError(e, "JSON Mapping Error: action=" + actionName + ", argumentJson=" + argumentJson);
 			return;
 
 		} catch (IOException e) {
-			String errorMessage = "Straw Framework Error: IO Error When Parsing JSON: action=" + actionName + ", argumentJson=" + argumentJson;
-			System.out.println(errorMessage);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printFrameworkError(e, "IO Error When Parsing JSON: action=" + actionName + ", argumentJson=" + argumentJson);
 			return;
 
 		}
@@ -106,34 +92,19 @@ abstract public class StrawPlugin {
 			metaInfo.getPluginAction().invoke(this, argumentObject, context);
 
 		} catch (SecurityException e) {
-			String errorMessage = "Straw Framework Error: cannot invoke action method (security exception): action=" + actionName + ", argumentJson=" + argumentJson;
-			System.out.println(errorMessage);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printFrameworkError(e, "cannot invoke action method (security exception): action=" + actionName + ", argumentJson=" + argumentJson);
 
 		} catch (IllegalAccessException e) {
-			String errorMessage = "Straw Framework Error: cannot invoke action method (illegal access exception): action=" + actionName + ", argumentJson=" + argumentJson;
-			System.out.println(errorMessage);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printFrameworkError(e, "cannot invoke action method (illegal access exception): action=" + actionName + ", argumentJson=" + argumentJson);
 
 		} catch (java.lang.reflect.InvocationTargetException e) {
-			String errorMessage = "Straw Framework Error: cannot invoke action method (invocation target exception): action=" + actionName + ", argumentJson=" + argumentJson;
-			System.out.println(errorMessage);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): action=" + actionName + ", argumentJson=" + argumentJson);
 
 		} catch (NullPointerException e) {
-			String errorMessage = "Straw Plugin Error: NullPointerException inside plugin action invocation: action=" + actionName + ", argumentJson=" + argumentJson;
-			System.out.println(errorMessage);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printPluginError(e, "NullPointerException inside plugin action invocation: action=" + actionName + ", argumentJson=" + argumentJson);
 
 		} catch (Exception e) {
-			String errorMessage = "Straw Plugin Error: Runtime Error inside plugin action invocation: action=" + actionName + ", argumentJson=" + argumentJson;
-			System.out.println(errorMessage);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printPluginError(e, "Runtime Error inside plugin action invocation: action=" + actionName + ", argumentJson=" + argumentJson);
 
 		}
 	}

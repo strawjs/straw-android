@@ -66,24 +66,19 @@ public class StrawDrink {
 			this.resultJson = StrawUtil.objToJson(value);
 
 		} catch (JsonGenerationException e) {
-			String errorMessage = "Straw Framework Error: cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson();
-			System.out.println(errorMessage);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printFrameworkError(e, "cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson());
 			return;
 
 		} catch (JsonMappingException e) {
-			String errorMessage = "Straw Framework Error: cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson();
-			System.out.println(errorMessage);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printFrameworkError(e, "cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson());
 			return;
 
 		} catch (IOException e) {
-			String errorMessage = "Straw Framework Error: cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson();
-			System.out.println(errorMessage);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printFrameworkError(e, "cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson());
+			return;
+
+		} catch (Exception e) {
+			StrawLog.printFrameworkError(e, "unknown error: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson());
 			return;
 
 		}
