@@ -91,11 +91,11 @@ public class StrawDrink {
 		this.straw.postJsMessage(toJsMessage(this));
 	}
 
-	public Boolean keepAlive() {
+	public Boolean getKeepAlive() {
 		return this.keepAlive;
 	}
 
-	public void keepAlive(Boolean bool) {
+	public void setKeepAlive(Boolean bool) {
 		this.keepAlive = bool;
 	}
 

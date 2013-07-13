@@ -40,12 +40,9 @@ class PluginActionMetaInfo {
 			info.setPluginAction(method);
 
 			return info;
-		} else {
-			String errorMessage = "Straw Framework Error: wrong parameter for action=" + method.getName() + " for class=" + method.getClass().getCanonicalName();
-			System.out.println(errorMessage);
-
-			return null;
 		}
+
+		return null;
 	}
 
 	static Boolean isValidPluginActionParameterTypes(Class<?>[] parameterTypes) {

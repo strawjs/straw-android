@@ -18,5 +18,4 @@ public class StrawUtil {
 	public static Object jsonToObj(String json, Class<?> type) throws JsonParseException, JsonMappingException, IOException {
 		return StrawUtil.objectMapper.readValue(json, type);
 	}
-
 }

@@ -39,20 +39,40 @@ abstract public class StrawPlugin {
 		return null;
 	}
 
-	public void exec(StrawDrink context) {
+	public void exec(StrawDrink drink) {
+		try {
 
-		String actionName = context.getActionName();
-		String argumentJson = context.getArgumentJson();
+			this.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
 
+		} catch (NullPointerException e) {
+			String errorMessage = "Straw Framework Error: NullPointerException: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson();
+			System.out.println(errorMessage);
+
+		} catch (Exception e) {
+			String errorMessage = "Straw Framework Error: Unknown Runtime Error: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson();
+			System.out.println(errorMessage);
+
+		}
+	}
+
+	private void invokeActionMethod(String actionName, String argumentJson, StrawDrink context) {
 		Method targetMethod = this.methodMap.get(actionName);
 
 		if (targetMethod == null) {
 			String errorMessage = "Straw Framework Error: No Such Plugin Action: action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
+
 			return;
 		}
 
 		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(targetMethod);
+
+		if (metaInfo == null) {
+			String errorMessage = "Straw Framework Error: Wrong Parameters For Action Method: action=" + actionName + " for class=" + targetMethod.getClass().getCanonicalName();
+			System.out.println(errorMessage);
+
+			return;
+		}
 
 		Object argumentObject;
 
@@ -101,6 +121,18 @@ abstract public class StrawPlugin {
 
 		} catch (java.lang.reflect.InvocationTargetException e) {
 			String errorMessage = "Straw Framework Error: cannot invoke action method (invocation target exception): action=" + actionName + ", argumentJson=" + argumentJson;
+			System.out.println(errorMessage);
+			System.out.println(e);
+			e.printStackTrace();
+
+		} catch (NullPointerException e) {
+			String errorMessage = "Straw Plugin Error: NullPointerException inside plugin action invocation: action=" + actionName + ", argumentJson=" + argumentJson;
+			System.out.println(errorMessage);
+			System.out.println(e);
+			e.printStackTrace();
+
+		} catch (Exception e) {
+			String errorMessage = "Straw Plugin Error: Runtime Error inside plugin action invocation: action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
 			e.printStackTrace();

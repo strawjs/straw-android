@@ -5,6 +5,7 @@ public class ActionResult {
 	private String resultJson;
 	private Boolean isSuccess = false;
 	private String callbackId;
+	private Boolean keepAlive = false;
 
 	static final String JAVASCRIPT_SCHEME = "javascript:";
 	static final String OPEN_PAREN = "(";
@@ -14,13 +15,18 @@ public class ActionResult {
 	static final String DOUBLE_QUOTE = "\"";
 
 	public ActionResult(StrawDrink context) {
-		this(context.getCallbackId(), context.isSuccess(), context.getResultJson());
+		this(context.getCallbackId(), context.isSuccess(), context.getResultJson(), context.getKeepAlive());
 	}
 
 	public ActionResult(String callbackId, Boolean isSuccess, String resultJson) {
+		this(callbackId, isSuccess, resultJson, false);
+	}
+
+	public ActionResult(String callbackId, Boolean isSuccess, String resultJson, Boolean keepAlive) {
 		this.callbackId = callbackId;
 		this.isSuccess = isSuccess;
 		this.resultJson = resultJson;
+		this.keepAlive = keepAlive;
 	}
 
 	public String toJsMessage() {
@@ -32,7 +38,7 @@ public class ActionResult {
 	}
 
 	private String createJsMessageParameters() {
-		return DOUBLE_QUOTE + this.callbackId + DOUBLE_QUOTE + COMMA + this.isSuccess + COMMA + this.resultJson;
+		return DOUBLE_QUOTE + this.callbackId + DOUBLE_QUOTE + COMMA + this.isSuccess + COMMA + this.resultJson + COMMA + this.keepAlive;
 	}
 
 	public static String toJsMessage(StrawDrink context) {

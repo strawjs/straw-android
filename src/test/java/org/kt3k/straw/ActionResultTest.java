@@ -37,15 +37,15 @@ public class ActionResultTest {
 			public Integer b = 2;
 		});
 
-		assertEquals("javascript:strawJsInterface(\"callbackId\",true,{\"a\":\"1\",\"b\":2});", new ActionResult(ac).toJsMessage());
-		assertEquals("javascript:strawJsInterface(\"callbackId\",true,{\"a\":\"1\",\"b\":2});", ActionResult.toJsMessage(ac));
+		assertEquals("javascript:strawJsInterface(\"callbackId\",true,{\"a\":\"1\",\"b\":2},false);", new ActionResult(ac).toJsMessage());
+		assertEquals("javascript:strawJsInterface(\"callbackId\",true,{\"a\":\"1\",\"b\":2},false);", ActionResult.toJsMessage(ac));
 
 		ac.fail("errorIdFoo", "errorMessageBar");
-		assertEquals("javascript:strawJsInterface(\"callbackId\",false,{\"message\":\"errorMessageBar\",\"id\":\"errorIdFoo\"});", new ActionResult(ac).toJsMessage());
-		assertEquals("javascript:strawJsInterface(\"callbackId\",false,{\"message\":\"errorMessageBar\",\"id\":\"errorIdFoo\"});", ActionResult.toJsMessage(ac));
+		assertEquals("javascript:strawJsInterface(\"callbackId\",false,{\"message\":\"errorMessageBar\",\"id\":\"errorIdFoo\"},false);", new ActionResult(ac).toJsMessage());
+		assertEquals("javascript:strawJsInterface(\"callbackId\",false,{\"message\":\"errorMessageBar\",\"id\":\"errorIdFoo\"},false);", ActionResult.toJsMessage(ac));
 
-		assertEquals("javascript:strawJsInterface(\"foo\",true,1234);", new ActionResult("foo", true, "1234").toJsMessage());
-		assertEquals("javascript:strawJsInterface(\"bar\",false,5678);", new ActionResult("bar", false, "5678").toJsMessage());
+		assertEquals("javascript:strawJsInterface(\"foo\",true,1234,false);", new ActionResult("foo", true, "1234").toJsMessage());
+		assertEquals("javascript:strawJsInterface(\"bar\",false,5678,false);", new ActionResult("bar", false, "5678").toJsMessage());
 
 	}
 }
