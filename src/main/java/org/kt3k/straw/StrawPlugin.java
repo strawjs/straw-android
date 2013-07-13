@@ -16,13 +16,20 @@ abstract public class StrawPlugin {
 
 	protected Context context;
 
-	private HashMap<String, Method> methodMap = new HashMap<String, Method>();
+	private HashMap<String, PluginActionMetaInfo> actionMap = new HashMap<String, PluginActionMetaInfo>();
 
 	public StrawPlugin() {
 		Method[] methods = this.getClass().getMethods();
 		for (Method method: methods) {
 			if (method.getAnnotation(PluginAction.class) != null) {
-				this.methodMap.put(method.getName(), method);
+				PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method);
+
+				if (metaInfo != null) {
+					this.actionMap.put(method.getName(), metaInfo);
+				} else {
+					String errorMessage = "Straw Framework Error: Wrong Parameter Signature For Action Method: action=" + method.getName() + " for class=" + method.getClass().getCanonicalName();
+					System.out.println(errorMessage);
+				}
 			}
 		}
 	}
@@ -45,7 +52,7 @@ abstract public class StrawPlugin {
 			this.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
 
 		} catch (NullPointerException e) {
-			String errorMessage = "Straw Framework Error: NullPointerException: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson();
+			String errorMessage = "Straw Framework Error: unintended NullPointerException: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson();
 			System.out.println(errorMessage);
 
 		} catch (Exception e) {
@@ -56,19 +63,10 @@ abstract public class StrawPlugin {
 	}
 
 	private void invokeActionMethod(String actionName, String argumentJson, StrawDrink context) {
-		Method targetMethod = this.methodMap.get(actionName);
-
-		if (targetMethod == null) {
-			String errorMessage = "Straw Framework Error: No Such Plugin Action: action=" + actionName + ", argumentJson=" + argumentJson;
-			System.out.println(errorMessage);
-
-			return;
-		}
-
-		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(targetMethod);
+		PluginActionMetaInfo metaInfo = this.actionMap.get(actionName);
 
 		if (metaInfo == null) {
-			String errorMessage = "Straw Framework Error: Wrong Parameter Signature For Action Method: action=" + actionName + " for class=" + targetMethod.getClass().getCanonicalName();
+			String errorMessage = "Straw Framework Error: No Such Plugin Action: action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 
 			return;
@@ -105,7 +103,7 @@ abstract public class StrawPlugin {
 
 		try {
 
-			targetMethod.invoke(this, argumentObject, context);
+			metaInfo.getPluginAction().invoke(this, argumentObject, context);
 
 		} catch (SecurityException e) {
 			String errorMessage = "Straw Framework Error: cannot invoke action method (security exception): action=" + actionName + ", argumentJson=" + argumentJson;
