@@ -12,15 +12,11 @@ import org.robolectric.RobolectricTestRunner;
 public class StrawTest {
 
     @Test
-    public void testMe() {
-        assertTrue(true);
-    }
-
-    @Test
     public void testConstuctor() {
         Activity activity = new Activity();
         WebView webView = new WebView(activity);
-        new Straw(webView);
+        Straw straw = new Straw(webView);
+        assertNotNull(straw);
     }
 
 }
