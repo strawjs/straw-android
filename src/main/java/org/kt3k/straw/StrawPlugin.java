@@ -67,18 +67,21 @@ abstract public class StrawPlugin {
 			String errorMessage = "Straw Framework Error: json parse error: action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
+			e.printStackTrace();
 			return;
 
 		} catch (JsonMappingException e) {
 			String errorMessage = "Straw Framework Error: json mapping: action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
+			e.printStackTrace();
 			return;
 
 		} catch (IOException e) {
 			String errorMessage = "Straw Framework Error: io error when parsing argumentJson: action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
+			e.printStackTrace();
 			return;
 		}
 
@@ -87,21 +90,24 @@ abstract public class StrawPlugin {
 			targetMethod.invoke(this, argumentObject, context);
 
 		} catch (SecurityException e) {
-			String errorMessage = "Straw Framework Error: cannot execute action by security problem: action=" + actionName + ", argumentJson=" + argumentJson;
+			String errorMessage = "Straw Framework Error: cannot invoke action method (security exception): action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
+			e.printStackTrace();
 			return;
 
 		} catch (IllegalAccessException e) {
-			String errorMessage = "cannot execute action=" + actionName + ", argumentJson=" + argumentJson;
+			String errorMessage = "Straw Framework Error: cannot invoke action method (illegal access exception): action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
+			e.printStackTrace();
 			return;
 
 		} catch (java.lang.reflect.InvocationTargetException e) {
-			String errorMessage = "cannot execute action=" + actionName + ", argumentJson=" + argumentJson;
+			String errorMessage = "Straw Framework Error: cannot invoke action method (invocation target exception): action=" + actionName + ", argumentJson=" + argumentJson;
 			System.out.println(errorMessage);
 			System.out.println(e);
+			e.printStackTrace();
 			return;
 		}
 
