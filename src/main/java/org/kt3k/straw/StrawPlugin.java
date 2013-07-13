@@ -16,7 +16,7 @@ abstract public class StrawPlugin {
 
 	protected Context context;
 
-	private HashMap<String, PluginActionMetaInfo> actionMap = new HashMap<String, PluginActionMetaInfo>();
+	private HashMap<String, PluginActionMetaInfo> actionInfoMap = new HashMap<String, PluginActionMetaInfo>();
 
 	public StrawPlugin() {
 		Method[] methods = this.getClass().getMethods();
@@ -25,7 +25,7 @@ abstract public class StrawPlugin {
 				PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method);
 
 				if (metaInfo != null) {
-					this.actionMap.put(method.getName(), metaInfo);
+					this.actionInfoMap.put(method.getName(), metaInfo);
 				} else {
 					StrawLog.printFrameworkError("Wrong Parameter Signature For Action Method: action=" + method.getName() + " for class=" + method.getClass().getCanonicalName());
 				}
@@ -58,8 +58,12 @@ abstract public class StrawPlugin {
 		}
 	}
 
+	public PluginActionMetaInfo getActionInfo(String actionName) {
+		return this.actionInfoMap.get(actionName);
+	}
+
 	private void invokeActionMethod(String actionName, String argumentJson, StrawDrink context) {
-		PluginActionMetaInfo metaInfo = this.actionMap.get(actionName);
+		PluginActionMetaInfo metaInfo = this.getActionInfo(actionName);
 
 		if (metaInfo == null) {
 			StrawLog.printFrameworkError("No Such Plugin Action: action=" + actionName + ", argumentJson=" + argumentJson);
