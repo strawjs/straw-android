@@ -7,7 +7,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 
 import static org.kt3k.straw.ActionResult.toJsMessage;
 
-public class ActionContext {
+public class StrawDrink {
 
 	private Straw straw;
 	private Boolean keepAlive = false;
@@ -18,7 +18,7 @@ public class ActionContext {
 	private String resultJson;
 	private Boolean isSuccess = false;
 
-	public ActionContext(String pluginName, String actionName, String argumentJson, String callbackId, Straw straw) {
+	public StrawDrink(String pluginName, String actionName, String argumentJson, String callbackId, Straw straw) {
 		this.straw = straw;
 		this.pluginName = pluginName;
 		this.actionName = actionName;

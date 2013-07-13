@@ -13,7 +13,7 @@ public class ActionResult {
 	static final String COMMA = ",";
 	static final String DOUBLE_QUOTE = "\"";
 
-	public ActionResult(ActionContext context) {
+	public ActionResult(StrawDrink context) {
 		this(context.getCallbackId(), context.isSuccess(), context.getResultJson());
 	}
 
@@ -35,7 +35,7 @@ public class ActionResult {
 		return DOUBLE_QUOTE + this.callbackId + DOUBLE_QUOTE + COMMA + this.isSuccess + COMMA + this.resultJson;
 	}
 
-	public static String toJsMessage(ActionContext context) {
+	public static String toJsMessage(StrawDrink context) {
 		return new ActionResult(context).toJsMessage();
 	}
 }

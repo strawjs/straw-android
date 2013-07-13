@@ -22,13 +22,13 @@ public class ActionResultTest {
 
 	@Test
 	public void testConstuctor() {
-		ActionContext ac = new ActionContext("dummy", "dummyAction", "{}", "callbackId", this.straw);
+		StrawDrink ac = new StrawDrink("dummy", "dummyAction", "{}", "callbackId", this.straw);
 		new ActionResult(ac);
 	}
 
 	@Test
 	public void testToJsMessage() {
-		ActionContext ac = new ActionContext("dummy", "dummyAction", "{}", "callbackId", this.straw);
+		StrawDrink ac = new StrawDrink("dummy", "dummyAction", "{}", "callbackId", this.straw);
 
 		ac.success(new Object() {
 			@SuppressWarnings("unused")

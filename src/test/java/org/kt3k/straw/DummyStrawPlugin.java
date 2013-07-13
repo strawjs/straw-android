@@ -8,7 +8,7 @@ public class DummyStrawPlugin extends StrawPlugin {
     };
 
     @PluginAction
-    public DummyActionResult dummyAction(DummyActionParam param, StrawDrink context) {
+    public DummyActionResult dummyAction(DummyActionParam param, StrawDrink drink) {
         DummyActionResult res = new DummyActionResult();
         res.c = param.a;
         res.d = param.b;

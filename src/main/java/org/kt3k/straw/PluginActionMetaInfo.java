@@ -22,7 +22,7 @@ class PluginActionMetaInfo {
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
-		if (parameterTypes.length == 2 && parameterTypes[1].isAssignableFrom(ActionContext.class)) {
+		if (parameterTypes.length == 2 && parameterTypes[1].isAssignableFrom(StrawDrink.class)) {
 			info.setArgumentType(parameterTypes[0]);
 		} else {
 			String errorMessage = "Straw Framework Error: wrong parameter for action=" + method.getName() + " for class=" + method.getClass().getCanonicalName();

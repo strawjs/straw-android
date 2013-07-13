@@ -61,6 +61,6 @@ class StrawNativeToJsInterfaceImpl implements StrawNativeToJsInterface {
 	}
 
 	public void exec(String pluginName, String actionName, String argumentJson, String callbackId) {
-		new ActionContext(pluginName, actionName, argumentJson, callbackId, this.straw).exec();
+		new StrawDrink(pluginName, actionName, argumentJson, callbackId, this.straw).exec();
 	}
 }

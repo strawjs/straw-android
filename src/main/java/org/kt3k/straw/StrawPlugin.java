@@ -43,7 +43,7 @@ abstract public class StrawPlugin {
 		return null;
 	}
 
-	public void exec(ActionContext context) {
+	public void exec(StrawDrink context) {
 
 		String actionName = context.getActionName();
 		String argumentJson = context.getArgumentJson();
