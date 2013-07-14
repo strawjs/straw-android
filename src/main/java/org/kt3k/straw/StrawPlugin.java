@@ -50,9 +50,6 @@ abstract public class StrawPlugin {
 
 			this.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
 
-		} catch (NullPointerException e) {
-			StrawLog.printFrameworkError("unintended NullPointerException: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson());
-
 		} catch (Exception e) {
 			StrawLog.printFrameworkError("Straw Framework Error: Unknown Runtime Error: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson());
 		}
