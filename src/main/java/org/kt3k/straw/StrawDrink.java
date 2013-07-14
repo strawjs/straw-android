@@ -30,6 +30,10 @@ public class StrawDrink {
 		this.straw.getRegistry().getPluginByName(this.pluginName).exec(this);
 	}
 
+	public String getPluginName() {
+		return this.pluginName;
+	}
+
 	public String getActionName() {
 		return this.actionName;
 	}
@@ -50,6 +54,14 @@ public class StrawDrink {
 		return this.isSuccess;
 	}
 
+	public Boolean getKeepAlive() {
+		return this.keepAlive;
+	}
+
+	public void setKeepAlive(Boolean bool) {
+		this.keepAlive = bool;
+	}
+
 	public void success(Object value) {
 		this.postResult(true, value);
 	}
@@ -66,19 +78,19 @@ public class StrawDrink {
 			this.resultJson = StrawUtil.objToJson(value);
 
 		} catch (JsonGenerationException e) {
-			StrawLog.printFrameworkError(e, "cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson());
+			StrawLog.printFrameworkError(e, "cannot generate result json: " + this);
 			return;
 
 		} catch (JsonMappingException e) {
-			StrawLog.printFrameworkError(e, "cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson());
+			StrawLog.printFrameworkError(e, "cannot generate result json: " + this);
 			return;
 
 		} catch (IOException e) {
-			StrawLog.printFrameworkError(e, "cannot generate result json: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson());
+			StrawLog.printFrameworkError(e, "cannot generate result json: " + this);
 			return;
 
 		} catch (Exception e) {
-			StrawLog.printFrameworkError(e, "unknown error: action=" + this.getActionName() + "argumentJson=" + this.getArgumentJson());
+			StrawLog.printFrameworkError(e, "unknown error: " + this);
 			return;
 
 		}
@@ -86,12 +98,9 @@ public class StrawDrink {
 		this.straw.postJsMessage(toJsMessage(this));
 	}
 
-	public Boolean getKeepAlive() {
-		return this.keepAlive;
-	}
-
-	public void setKeepAlive(Boolean bool) {
-		this.keepAlive = bool;
+	@Override
+	public String toString() {
+		return "plugin=" + this.getPluginName() + " action=" + this.getActionName() + " argumentJson=" + this.getArgumentJson() + "callbackId=" + this.getCallbackId();
 	}
 
 	static class ErrorResult {

@@ -59,11 +59,11 @@ abstract public class StrawPlugin {
 		return this.actionInfoMap.get(actionName);
 	}
 
-	private void invokeActionMethod(String actionName, String argumentJson, StrawDrink context) {
+	private void invokeActionMethod(String actionName, String argumentJson, StrawDrink drink) {
 		PluginActionMetaInfo metaInfo = this.getActionInfo(actionName);
 
 		if (metaInfo == null) {
-			StrawLog.printFrameworkError("No Such Plugin Action: action=" + actionName + ", argumentJson=" + argumentJson);
+			StrawLog.printFrameworkError("No Such Plugin Action: " + drink);
 
 			return;
 		}
@@ -75,37 +75,34 @@ abstract public class StrawPlugin {
 			argumentObject = StrawPlugin.createArgumentJson(argumentJson, metaInfo.getArgumentType());
 
 		} catch (JsonParseException e) {
-			StrawLog.printFrameworkError(e, "JSON Parse Error: action=" + actionName + ", argumentJson=" + argumentJson);
+			StrawLog.printFrameworkError(e, "JSON Parse Error: " + drink);
 			return;
 
 		} catch (JsonMappingException e) {
-			StrawLog.printFrameworkError(e, "JSON Mapping Error: action=" + actionName + ", argumentJson=" + argumentJson);
+			StrawLog.printFrameworkError(e, "JSON Mapping Error: " + drink);
 			return;
 
 		} catch (IOException e) {
-			StrawLog.printFrameworkError(e, "IO Error When Parsing JSON: action=" + actionName + ", argumentJson=" + argumentJson);
+			StrawLog.printFrameworkError(e, "IO Error When Parsing JSON: " + drink);
 			return;
 
 		}
 
 		try {
 
-			metaInfo.getPluginAction().invoke(this, argumentObject, context);
+			metaInfo.getPluginAction().invoke(this, argumentObject, drink);
 
 		} catch (SecurityException e) {
-			StrawLog.printFrameworkError(e, "cannot invoke action method (security exception): action=" + actionName + ", argumentJson=" + argumentJson);
+			StrawLog.printFrameworkError(e, "cannot invoke action method (security exception): " + drink);
 
 		} catch (IllegalAccessException e) {
-			StrawLog.printFrameworkError(e, "cannot invoke action method (illegal access exception): action=" + actionName + ", argumentJson=" + argumentJson);
+			StrawLog.printFrameworkError(e, "cannot invoke action method (illegal access exception): " + drink);
 
 		} catch (java.lang.reflect.InvocationTargetException e) {
-			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): action=" + actionName + ", argumentJson=" + argumentJson);
-
-		} catch (NullPointerException e) {
-			StrawLog.printPluginError(e, "NullPointerException inside plugin action invocation: action=" + actionName + ", argumentJson=" + argumentJson);
+			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): " + drink);
 
 		} catch (Exception e) {
-			StrawLog.printPluginError(e, "Runtime Error inside plugin action invocation: action=" + actionName + ", argumentJson=" + argumentJson);
+			StrawLog.printPluginError(e, "Runtime Error inside plugin action invocation: " + drink);
 
 		}
 	}
