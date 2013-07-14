@@ -10,7 +10,7 @@ public class StrawLog {
 
 		if (e != null) {
 			System.out.println(e);
-			e.printStackTrace();
+			System.out.println(StrawUtil.join(e.getStackTrace(), "\n"));
 		}
 	}
 

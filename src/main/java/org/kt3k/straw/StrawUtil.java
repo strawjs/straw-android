@@ -18,4 +18,23 @@ public class StrawUtil {
 	public static Object jsonToObj(String json, Class<?> type) throws JsonParseException, JsonMappingException, IOException {
 		return StrawUtil.objectMapper.readValue(json, type);
 	}
+
+	public static <T> String join(T[] array, String sep) {
+		Integer len = array.length;
+
+		if (len == 0) {
+			return "";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(array[0].toString());
+
+		for (int i = 1; i < len; i++) {
+			sb.append(sep);
+			sb.append(array[i].toString());
+		}
+
+		return sb.toString();
+	}
 }
