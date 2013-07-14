@@ -1,6 +1,5 @@
 package org.kt3k.straw;
 
-import java.util.List;
 import java.util.HashMap;
 
 import android.webkit.WebView;
@@ -14,7 +13,7 @@ class StrawPluginRegistry {
 		this.webView = webView;
 	}
 
-	public void loadPlugins(List<String> pluginNames) {
+	public void loadPlugins(String[] pluginNames) {
 		for (String name: pluginNames) {
 			this.loadPluginByName(name);
 		}
@@ -34,6 +33,14 @@ class StrawPluginRegistry {
 		}
 
 		this.plugins.put(pluginName, plugin);
+	}
+
+	public void unloadPlugin(String name) {
+		this.plugins.remove(name);
+	}
+
+	public void unloadAllPlugins() {
+		this.plugins.clear();
 	}
 
 	public StrawPlugin getPluginByName(String name) {

@@ -26,6 +26,26 @@ public class Straw {
 		this.webView.post(new StrawBack(this.webView, jsMessage));
 	}
 
+	public static Straw insertInto(WebView webView) {
+		return new Straw(webView);
+	}
+
+	public void addPlugin(String pluginCanonicalName) {
+		this.registry.loadPluginByName(pluginCanonicalName);
+	}
+
+	public void addPlugins(String[] pluginCanonicalNames) {
+		this.registry.loadPlugins(pluginCanonicalNames);
+	}
+
+	public void removePlugin(String pluginName) {
+		this.registry.unloadPlugin(pluginName);
+	}
+
+	public void clearPlugins() {
+		this.registry.unloadAllPlugins();
+	}
+
 	private void setUpJsInterface() {
 		this.jsInterface = new StrawNativeToJsInterfaceImpl(this);
 
