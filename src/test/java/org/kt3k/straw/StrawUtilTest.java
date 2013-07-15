@@ -14,10 +14,22 @@ import org.robolectric.RobolectricTestRunner;
 @RunWith(RobolectricTestRunner.class)
 public class StrawUtilTest {
 
+	static class CustomClass {
+
+		@Override
+		public String toString() {
+			return "CustomClass";
+		}
+	}
+
 	@Test
 	public void testJoin() {
 		assertEquals("123:456", StrawUtil.join(new Integer[]{123, 456}, ":"));
+		assertEquals("123:456:789", StrawUtil.join(new Integer[]{123, 456, 789}, ":"));
 		assertEquals("abc, def", StrawUtil.join(new String[]{"abc", "def"}, ", "));
+		assertEquals("abc, def, ghi", StrawUtil.join(new String[]{"abc", "def", "ghi"}, ", "));
+		assertEquals("CustomClass CustomClass", StrawUtil.join(new CustomClass[]{new CustomClass(), new CustomClass()}, " "));
+		assertEquals("CustomClass CustomClass CustomClass", StrawUtil.join(new CustomClass[]{new CustomClass(), new CustomClass(), new CustomClass()}, " "));
 	}
 
 	static class DummyClass {
