@@ -15,7 +15,7 @@ public class StrawUtil {
 		return StrawUtil.objectMapper.writeValueAsString(value);
 	}
 
-	public static Object jsonToObj(String json, Class<?> type) throws JsonParseException, JsonMappingException, IOException {
+	public static <T> T jsonToObj(String json, Class<T> type) throws JsonParseException, JsonMappingException, IOException {
 		return StrawUtil.objectMapper.readValue(json, type);
 	}
 
