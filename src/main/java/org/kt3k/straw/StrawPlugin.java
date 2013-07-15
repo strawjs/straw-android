@@ -41,9 +41,11 @@ abstract public class StrawPlugin {
 		this.context = context;
 	}
 
-	public String getName() {
-		return null;
-	}
+	/**
+	 * returns straw-plugin's name
+	 * @return straw-plugin's name
+	 */
+	abstract public String getName();
 
 	public void exec(StrawDrink drink) {
 		try {
