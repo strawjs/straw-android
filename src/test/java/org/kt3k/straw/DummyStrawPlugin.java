@@ -16,14 +16,23 @@ public class DummyStrawPlugin extends StrawPlugin {
 		drink.success(res);
 	}
 
-	static class DummyActionParam {
+	public static class DummyActionParam {
 		public String a;
 		public String b;
 	}
 
-	static class DummyActionResult {
+	public static class DummyActionResult {
 		public String c;
 		public String d;
+
+		@Override
+		public boolean equals(Object value) {
+			return value != null && this.toString().equals(value.toString());
+		}
+
+		public String toString() {
+			return "DummyActionResult(" + this.c + ", " + this.d + ")";
+		}
 	}
 
 	@PluginAction
