@@ -36,7 +36,7 @@ public class DummyStrawPlugin extends StrawPlugin {
 	}
 
 	@PluginAction
-	public void dummyAction3(Object x, StrawDrink drink) {
+	public void dummyActionSuccessWithEmptyResult(Object x, StrawDrink drink) {
 		DummyActionResult res = new DummyActionResult();
 
 		drink.success(res);

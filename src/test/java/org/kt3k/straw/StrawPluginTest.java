@@ -21,36 +21,49 @@ public class StrawPluginTest {
 	private final StrawPluginRegistry manager = new StrawPluginRegistry(webView);
 
 	private StrawPlugin dummyPlugin;
+	private StrawDrink mockDrink;
 
 	@Before
 	public void setUpDummyPlugin() throws Exception {
 		this.manager.loadPluginByName("org.kt3k.straw.DummyStrawPlugin");
 		this.dummyPlugin = manager.getPluginByName("dummy");
+		this.mockDrink = mock(StrawDrink.class);
 	}
 
 	@Test
 	public void testPluginActionExecution() {
+		when(this.mockDrink.getActionName()).thenReturn("dummyAction");
+		when(this.mockDrink.getArgumentJson()).thenReturn("{\"a\":\"foo\",\"b\":\"bar\"}");
 
-		StrawDrink drink = mock(StrawDrink.class);
-		when(drink.getActionName()).thenReturn("dummyAction");
-		when(drink.getArgumentJson()).thenReturn("{\"a\":\"foo\",\"b\":\"bar\"}");
-		this.dummyPlugin.exec(drink);
+		this.dummyPlugin.exec(this.mockDrink);
 
 		DummyStrawPlugin.DummyActionResult res = new DummyStrawPlugin.DummyActionResult();
 		res.c = "foo";
 		res.d = "bar";
+		verify(this.mockDrink).success(res);
 
-		verify(drink).success(res);
-		//assertEquals("{\"c\":\"foo\",\"d\":\"bar\"}", this.dummyPlugin.exec("dummyAction", "{\"a\":\"foo\",\"b\":\"bar\"}"));
-		//assertEquals("{\"c\":\"baz\",\"d\":\"baz\"}", this.dummyPlugin.exec("dummyAction", "{\"a\":\"baz\",\"b\":\"baz\"}"));
 
-		//assertEquals("null", this.dummyPlugin.exec("actionReturnsNull", null));
-		//assertEquals("{\"c\":null,\"d\":null}", this.dummyPlugin.exec("dummyAction3", null));
-		//assertEquals("{\"c\":\"ddd\",\"d\":null}", this.dummyPlugin.exec("dummyAction4", null));
+		when(this.mockDrink.getArgumentJson()).thenReturn("{\"a\":\"baz\",\"b\":\"baz\"}");
+		this.dummyPlugin.exec(this.mockDrink);
+		res.c = "baz";
+		res.d = "baz";
+		verify(this.mockDrink).success(res);
+
+
+		when(this.mockDrink.getActionName()).thenReturn("dummyActionSuccessWithEmptyResult");
+		this.dummyPlugin.exec(this.mockDrink);
+		res.c = null;
+		res.d = null;
+		verify(this.mockDrink).success(res);
 	}
 
 	@Test
 	public void testActionWithoutAnnotation() {
-		//assertEquals(null, this.dummyPlugin.exec("actionWithoutAnnotation", null));
+		when(this.mockDrink.getActionName()).thenReturn("dummyActionWithoutAnnotation");
+		when(this.mockDrink.getArgumentJson()).thenReturn("{}");
+
+		this.dummyPlugin.exec(this.mockDrink);
+
+		verify(this.mockDrink, never()).success(any());
 	}
 }
