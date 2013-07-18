@@ -3,6 +3,7 @@ package org.kt3k.straw;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import static org.junit.Assert.*;
 
 import static org.mockito.Mockito.*;
 
@@ -63,5 +64,20 @@ public class StrawPluginTest {
 		this.dummyPlugin.exec(this.mockDrink);
 
 		verify(this.mockDrink, never()).success(any());
+	}
+
+	@Test
+	public void testWebViewIsNotNull() {
+		assertNotNull(this.dummyPlugin.webView);
+	}
+
+	@Test
+	public void testContextIsNotNull() {
+		assertNotNull(this.dummyPlugin.context);
+	}
+
+	@Test
+	public void testActivityIsNotNull() {
+		assertNotNull(this.dummyPlugin.activity);
 	}
 }

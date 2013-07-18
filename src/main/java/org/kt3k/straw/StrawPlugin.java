@@ -1,6 +1,7 @@
 package org.kt3k.straw;
 
 import android.webkit.WebView;
+import android.app.Activity;
 import android.content.Context;
 
 import java.util.HashMap;
@@ -15,6 +16,8 @@ abstract public class StrawPlugin {
 	protected WebView webView;
 
 	protected Context context;
+
+	protected Activity activity;
 
 	private HashMap<String, PluginActionMetaInfo> actionInfoMap = new HashMap<String, PluginActionMetaInfo>();
 
@@ -39,6 +42,12 @@ abstract public class StrawPlugin {
 
 	public void setContext(Context context) {
 		this.context = context;
+
+		if (context instanceof Activity) {
+			this.activity = (Activity)context;
+		} else {
+			StrawLog.printFrameworkError("WebView.context is not an Activity. Plugins which depends on activity don't work.");
+		}
 	}
 
 	/**
