@@ -1,10 +1,5 @@
 package org.kt3k.straw;
 
-import java.io.IOException;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
@@ -38,7 +33,7 @@ public class StrawUtilTest {
 	}
 
 	@Test
-	public void testObjToJson() throws JsonGenerationException, JsonMappingException, IOException {
+	public void testObjToJson() {
 		DummyClass a = new DummyClass();
 		a.foo = "abc";
 		a.bar = 333;
@@ -47,7 +42,7 @@ public class StrawUtilTest {
 	}
 
 	@Test
-	public void testJsonToObj() throws JsonParseException, JsonMappingException, IOException {
+	public void testJsonToObj() {
 		DummyClass a = StrawUtil.jsonToObj("{\"foo\":\"def\",\"bar\":444}", DummyClass.class);
 		assertEquals("def", a.foo);
 		assertEquals((Integer)444, a.bar);

@@ -5,11 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import java.util.HashMap;
-import java.io.IOException;
 import java.lang.reflect.Method;
-
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 
 import com.google.gson.JsonSyntaxException;
 
