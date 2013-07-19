@@ -1,22 +1,18 @@
 package org.kt3k.straw;
 
-import java.io.IOException;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 public class StrawUtil {
 
-	public static ObjectMapper objectMapper = new ObjectMapper();
+	public static Gson gson = new Gson();
 
-	public static String objToJson(Object value) throws JsonGenerationException, JsonMappingException, IOException {
-		return StrawUtil.objectMapper.writeValueAsString(value);
+	public static String objToJson(Object value) {
+		return gson.toJson(value);
 	}
 
-	public static <T> T jsonToObj(String json, Class<T> type) throws JsonParseException, JsonMappingException, IOException {
-		return StrawUtil.objectMapper.readValue(json, type);
+	public static <T> T jsonToObj(String json, Class<T> type) throws JsonSyntaxException {
+		return gson.fromJson(json, type);
 	}
 
 	public static <T> String join(T[] array, String sep) {

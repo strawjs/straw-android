@@ -41,7 +41,7 @@ public class ActionResult {
 		return DOUBLE_QUOTE + this.callbackId + DOUBLE_QUOTE + COMMA + this.isSuccess + COMMA + this.resultJson + COMMA + this.keepAlive;
 	}
 
-	public static String toJsMessage(StrawDrink context) {
-		return new ActionResult(context).toJsMessage();
+	public static String toJsMessage(StrawDrink drink) {
+		return new ActionResult(drink).toJsMessage();
 	}
 }

@@ -26,16 +26,19 @@ public class ActionResultTest {
 		new ActionResult(ac);
 	}
 
+	public static class TestResult {
+		public String a;
+		public Integer b;
+	}
+
 	@Test
 	public void testToJsMessage() {
 		StrawDrink ac = new StrawDrink("dummy", "dummyAction", "{}", "callbackId", this.straw);
 
-		ac.success(new Object() {
-			@SuppressWarnings("unused")
-			public String a = "1";
-			@SuppressWarnings("unused")
-			public Integer b = 2;
-		});
+		TestResult res = new TestResult();
+		res.a = "1";
+		res.b = 2;
+		ac.success(res);
 
 		assertEquals("javascript:strawJsInterface(\"callbackId\",true,{\"a\":\"1\",\"b\":2},false);", new ActionResult(ac).toJsMessage());
 		assertEquals("javascript:strawJsInterface(\"callbackId\",true,{\"a\":\"1\",\"b\":2},false);", ActionResult.toJsMessage(ac));

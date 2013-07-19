@@ -11,6 +11,8 @@ import java.lang.reflect.Method;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 
+import com.google.gson.JsonSyntaxException;
+
 abstract public class StrawPlugin {
 
 	protected WebView webView;
@@ -85,16 +87,8 @@ abstract public class StrawPlugin {
 
 			argumentObject = StrawPlugin.createArgumentJson(argumentJson, metaInfo.getArgumentType());
 
-		} catch (JsonParseException e) {
+		} catch (JsonSyntaxException e) {
 			StrawLog.printFrameworkError(e, "JSON Parse Error: " + drink);
-			return;
-
-		} catch (JsonMappingException e) {
-			StrawLog.printFrameworkError(e, "JSON Mapping Error: " + drink);
-			return;
-
-		} catch (IOException e) {
-			StrawLog.printFrameworkError(e, "IO Error When Parsing JSON: " + drink);
 			return;
 
 		}
@@ -118,7 +112,7 @@ abstract public class StrawPlugin {
 		}
 	}
 
-	private static Object createArgumentJson(String argumentJson, Class<? extends Object> type) throws JsonParseException, JsonMappingException, IOException {
+	private static Object createArgumentJson(String argumentJson, Class<? extends Object> type) throws JsonSyntaxException {
 		return StrawUtil.jsonToObj(argumentJson, type);
 	}
 }

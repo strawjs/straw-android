@@ -77,18 +77,6 @@ public class StrawDrink {
 
 			this.resultJson = StrawUtil.objToJson(value);
 
-		} catch (JsonGenerationException e) {
-			StrawLog.printFrameworkError(e, "cannot generate result json: " + this);
-			return;
-
-		} catch (JsonMappingException e) {
-			StrawLog.printFrameworkError(e, "cannot generate result json: " + this);
-			return;
-
-		} catch (IOException e) {
-			StrawLog.printFrameworkError(e, "cannot generate result json: " + this);
-			return;
-
 		} catch (Exception e) {
 			StrawLog.printFrameworkError(e, "unknown error: " + this);
 			return;
