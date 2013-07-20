@@ -6,45 +6,25 @@ import android.webkit.WebView;
 
 class StrawPluginRegistry {
 
-	private WebView webView;
+	public static Class<? extends StrawPlugin> getClassByName(String name) throws ClassNotFoundException {
+		Class<? extends StrawPlugin> c = Class.forName(name).asSubclass(StrawPlugin.class);
+		return c;
+	}
+	private static StrawPlugin instantiatePluginClass(Class<? extends StrawPlugin> pluginClass, WebView webView) throws InstantiationException, IllegalAccessException {
+		StrawPlugin plugin = (StrawPlugin)pluginClass.newInstance();
+
+		plugin.setWebView(webView);
+		plugin.setContext(webView.getContext());
+
+		return plugin;
+	}
+
 	private HashMap<String, StrawPlugin> plugins = new HashMap<String, StrawPlugin>();
+
+	private WebView webView;;
 
 	public StrawPluginRegistry(WebView webView) {
 		this.webView = webView;
-	}
-
-	public void loadPlugins(String[] pluginNames) {
-		for (String name: pluginNames) {
-			this.loadPluginByName(name);
-		}
-	};
-
-	public void loadPluginByName(String name) {
-		StrawPlugin plugin = this.createPluginByName(name);
-
-		if (plugin == null) {
-			return;
-		}
-
-		String pluginName = plugin.getName();
-		if (pluginName == null) {
-			System.out.println("Plugin name is null: " + name);
-			return;
-		}
-
-		this.plugins.put(pluginName, plugin);
-	}
-
-	public void unloadPlugin(String name) {
-		this.plugins.remove(name);
-	}
-
-	public void unloadAllPlugins() {
-		this.plugins.clear();
-	}
-
-	public StrawPlugin getPluginByName(String name) {
-		return this.plugins.get(name);
 	}
 
 	private StrawPlugin createPluginByName(String name) {
@@ -75,17 +55,37 @@ class StrawPluginRegistry {
 		return plugin;
 	}
 
-	private static StrawPlugin instantiatePluginClass(Class<? extends StrawPlugin> pluginClass, WebView webView) throws InstantiationException, IllegalAccessException {
-		StrawPlugin plugin = (StrawPlugin)pluginClass.newInstance();
-
-		plugin.setWebView(webView);
-		plugin.setContext(webView.getContext());
-
-		return plugin;
+	public StrawPlugin getPluginByName(String name) {
+		return this.plugins.get(name);
 	}
 
-	public static Class<? extends StrawPlugin> getClassByName(String name) throws ClassNotFoundException {
-		Class<? extends StrawPlugin> c = Class.forName(name).asSubclass(StrawPlugin.class);
-		return c;
+	public void loadPluginByName(String name) {
+		StrawPlugin plugin = this.createPluginByName(name);
+
+		if (plugin == null) {
+			return;
+		}
+
+		String pluginName = plugin.getName();
+		if (pluginName == null) {
+			System.out.println("Plugin name is null: " + name);
+			return;
+		}
+
+		this.plugins.put(pluginName, plugin);
+	}
+
+	public void loadPlugins(String[] pluginNames) {
+		for (String name: pluginNames) {
+			this.loadPluginByName(name);
+		}
+	}
+
+	public void unloadAllPlugins() {
+		this.plugins.clear();
+	}
+
+	public void unloadPlugin(String name) {
+		this.plugins.remove(name);
 	}
 }
