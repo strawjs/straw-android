@@ -12,11 +12,6 @@ public class UIPlugin extends org.kt3k.straw.StrawPlugin {
 		return "UI";
 	}
 
-	@PluginAction
-	public void finish(Object _, StrawDrink drink) {
-		this.activity.finish();
-	}
-
 	static class ToastParam {
 		public String text;
 	}
