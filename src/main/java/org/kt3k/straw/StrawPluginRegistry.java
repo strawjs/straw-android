@@ -10,6 +10,7 @@ class StrawPluginRegistry {
 		Class<? extends StrawPlugin> c = Class.forName(name).asSubclass(StrawPlugin.class);
 		return c;
 	}
+
 	private static StrawPlugin instantiatePluginClass(Class<? extends StrawPlugin> pluginClass, WebView webView) throws InstantiationException, IllegalAccessException {
 		StrawPlugin plugin = (StrawPlugin)pluginClass.newInstance();
 
@@ -27,28 +28,32 @@ class StrawPluginRegistry {
 		this.webView = webView;
 	}
 
-	private StrawPlugin createPluginByName(String name) {
+	private StrawPlugin createPluginByClass(Class<? extends StrawPlugin> pluginClass) {
 		StrawPlugin plugin = null;
 
 		try {
-			plugin = StrawPluginRegistry.instantiatePluginClass(StrawPluginRegistry.getClassByName(name), this.webView);
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("Straw Framework Error: class not found: class=" + name);
-			System.out.println(e);
-			e.printStackTrace();
-			return null;
+			plugin = StrawPluginRegistry.instantiatePluginClass(pluginClass, this.webView);
 
 		} catch (InstantiationException e) {
-			System.out.println("Straw Framework Error: cannot instantiate plugin class: class=" + name);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printFrameworkError(e, "cannot instantiate plugin class: class=" + pluginClass.getCanonicalName());
 			return null;
 
 		} catch (IllegalAccessException e) {
-			System.out.println("Straw Framework Error: illegal access: class=" + name);
-			System.out.println(e);
-			e.printStackTrace();
+			StrawLog.printFrameworkError(e, "illegal access: class=" + pluginClass.getCanonicalName());
+			return null;
+
+		}
+
+		return plugin;
+	}
+
+	public StrawPlugin createPluginByName(String name) {
+		StrawPlugin plugin = null;
+
+		try {
+			plugin = this.createPluginByClass(StrawPluginRegistry.getClassByName(name));
+		} catch (ClassNotFoundException e) {
+			StrawLog.printFrameworkError(e, "class not found: class=" + name);
 			return null;
 		}
 
@@ -59,25 +64,37 @@ class StrawPluginRegistry {
 		return this.plugins.get(name);
 	}
 
-	public void loadPluginByName(String name) {
-		StrawPlugin plugin = this.createPluginByName(name);
-
+	public void loadPlugin(StrawPlugin plugin) {
 		if (plugin == null) {
 			return;
 		}
 
 		String pluginName = plugin.getName();
 		if (pluginName == null) {
-			System.out.println("Plugin name is null: " + name);
+			StrawLog.printFrameworkError("Plugin name is null: " + plugin.getName());
 			return;
 		}
 
 		this.plugins.put(pluginName, plugin);
 	}
 
+	public void loadPluginByClass(Class<? extends StrawPlugin> pluginClass) {
+		this.loadPlugin(this.createPluginByClass(pluginClass));
+	}
+
+	public void loadPluginByName(String name) {
+		this.loadPlugin(this.createPluginByName(name));
+	}
+
 	public void loadPlugins(String[] pluginNames) {
 		for (String name: pluginNames) {
 			this.loadPluginByName(name);
+		}
+	}
+
+	public void loadPlugins(Class<? extends StrawPlugin>[] pluginClasses) {
+		for (Class<? extends StrawPlugin> pluginClass: pluginClasses) {
+			this.loadPluginByClass(pluginClass);
 		}
 	}
 
