@@ -40,15 +40,15 @@ public class ActionResultTest {
 		res.b = 2;
 		ac.success(res);
 
-		assertEquals("javascript:strawJsInterface(\"callbackId\",true,{\"a\":\"1\",\"b\":2},false);", new ActionResult(ac).toJsMessage());
-		assertEquals("javascript:strawJsInterface(\"callbackId\",true,{\"a\":\"1\",\"b\":2},false);", ActionResult.toJsMessage(ac));
+		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"callbackId\",true,{\"a\":\"1\",\"b\":2},false);", new ActionResult(ac).toJsMessage());
+		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"callbackId\",true,{\"a\":\"1\",\"b\":2},false);", ActionResult.toJsMessage(ac));
 
 		ac.fail("errorIdFoo", "errorMessageBar");
-		assertEquals("javascript:strawJsInterface(\"callbackId\",false,{\"message\":\"errorMessageBar\",\"id\":\"errorIdFoo\"},false);", new ActionResult(ac).toJsMessage());
-		assertEquals("javascript:strawJsInterface(\"callbackId\",false,{\"message\":\"errorMessageBar\",\"id\":\"errorIdFoo\"},false);", ActionResult.toJsMessage(ac));
+		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"callbackId\",false,{\"message\":\"errorMessageBar\",\"id\":\"errorIdFoo\"},false);", new ActionResult(ac).toJsMessage());
+		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"callbackId\",false,{\"message\":\"errorMessageBar\",\"id\":\"errorIdFoo\"},false);", ActionResult.toJsMessage(ac));
 
-		assertEquals("javascript:strawJsInterface(\"foo\",true,1234,false);", new ActionResult("foo", true, "1234").toJsMessage());
-		assertEquals("javascript:strawJsInterface(\"bar\",false,5678,false);", new ActionResult("bar", false, "5678").toJsMessage());
+		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"foo\",true,1234,false);", new ActionResult("foo", true, "1234").toJsMessage());
+		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"bar\",false,5678,false);", new ActionResult("bar", false, "5678").toJsMessage());
 
 	}
 }

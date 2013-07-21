@@ -8,10 +8,12 @@ public class ActionResult {
 	private Boolean keepAlive = false;
 
 	static final String JAVASCRIPT_SCHEME = "javascript:";
+	static final String NATIVE_TO_JS_INTERFACE_METHOD = "exec";
 	static final String OPEN_PAREN = "(";
 	static final String CLOSE_PAREN = ")";
 	static final String SEMI_COLON = ";";
 	static final String COMMA = ",";
+	static final String DOT = ".";
 	static final String DOUBLE_QUOTE = "\"";
 
 	public ActionResult(StrawDrink context) {
@@ -34,7 +36,7 @@ public class ActionResult {
 	}
 
 	private String createJsInterfaceCall() {
-		return Straw.NATIVE_TO_JS_INTERFACE_NAME + OPEN_PAREN + this.createJsMessageParameters() + CLOSE_PAREN + SEMI_COLON;
+		return Straw.NATIVE_TO_JS_INTERFACE_NAME + DOT + NATIVE_TO_JS_INTERFACE_METHOD + OPEN_PAREN + this.createJsMessageParameters() + CLOSE_PAREN + SEMI_COLON;
 	}
 
 	private String createJsMessageParameters() {
