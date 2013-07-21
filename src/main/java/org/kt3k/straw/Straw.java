@@ -8,8 +8,8 @@ public class Straw {
 	private StrawNativeToJsInterface jsInterface = null;
 	private StrawPluginRegistry registry;
 
-	public static final String JS_TO_NATIVE_INTERFACE_NAME = "strawNativeInterface";
-	public static final String NATIVE_TO_JS_INTERFACE_NAME = "strawJsInterface";
+	public static final String JS_TO_NATIVE_INTERFACE_NAME = "JS_TO_NATIVE_INTERFACE";
+	public static final String NATIVE_TO_JS_INTERFACE_NAME = "NATIVE_TO_JS_INTERFACE";
 
 	public Straw(WebView webView) {
 		this.webView = webView;
