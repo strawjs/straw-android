@@ -17,6 +17,11 @@ abstract public class StrawPlugin {
 
 	protected Activity activity;
 
+	/**
+	 * this field is for unit tests
+	 */
+	public Thread thread;
+
 	private HashMap<String, PluginActionMetaInfo> actionInfoMap = new HashMap<String, PluginActionMetaInfo>();
 
 	public StrawPlugin() {
@@ -54,10 +59,18 @@ abstract public class StrawPlugin {
 	 */
 	abstract public String getName();
 
-	public void exec(StrawDrink drink) {
+	public void exec(final StrawDrink drink) {
 		try {
 
-			this.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
+			final StrawPlugin self = this;
+
+			this.thread = new Thread() {
+				@Override
+				public void run() {
+					self.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
+				}
+			};
+			this.thread.start();
 
 		} catch (Exception e) {
 			StrawLog.printFrameworkError("Unknown Runtime Error: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson());

@@ -30,7 +30,7 @@ public class StrawPluginTest {
 	}
 
 	@Test
-	public void testPluginActionExecution() {
+	public void testPluginActionExecution() throws InterruptedException {
 		when(this.mockDrink.getActionName()).thenReturn("dummyAction");
 		when(this.mockDrink.getArgumentJson()).thenReturn("{\"a\":\"foo\",\"b\":\"bar\"}");
 
@@ -39,6 +39,7 @@ public class StrawPluginTest {
 		DummyStrawPlugin.DummyActionResult res = new DummyStrawPlugin.DummyActionResult();
 		res.c = "foo";
 		res.d = "bar";
+		this.dummyPlugin.thread.join();
 		verify(this.mockDrink).success(res);
 
 
@@ -46,6 +47,7 @@ public class StrawPluginTest {
 		this.dummyPlugin.exec(this.mockDrink);
 		res.c = "baz";
 		res.d = "baz";
+		this.dummyPlugin.thread.join();
 		verify(this.mockDrink).success(res);
 
 
@@ -53,15 +55,17 @@ public class StrawPluginTest {
 		this.dummyPlugin.exec(this.mockDrink);
 		res.c = null;
 		res.d = null;
+		this.dummyPlugin.thread.join();
 		verify(this.mockDrink).success(res);
 	}
 
 	@Test
-	public void testActionWithoutAnnotation() {
+	public void testActionWithoutAnnotation() throws InterruptedException {
 		when(this.mockDrink.getActionName()).thenReturn("dummyActionWithoutAnnotation");
 		when(this.mockDrink.getArgumentJson()).thenReturn("{}");
 
 		this.dummyPlugin.exec(this.mockDrink);
+		this.dummyPlugin.thread.join();
 
 		verify(this.mockDrink, never()).success(any());
 	}
