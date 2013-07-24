@@ -8,7 +8,7 @@ install: mvn install -Dmaven.compiler.target=1.5 -Dmaven.compiler.source=1.5 -Ds
 script: mvn test -Dmaven.compiler.target=1.5 -Dmaven.compiler.source=1.5 -B
 
 after_success:
-- mvn -Pcobertura clean cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:cobertura
+- mvn -Pcobertura -Dmaven.compiler.target=1.5 -Dmaven.compiler.source=1.5 clean cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:cobertura
 
 before_install:
 
