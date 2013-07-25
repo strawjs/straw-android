@@ -23,7 +23,10 @@ public class ActionResultTest {
 	@Test
 	public void testConstuctor() {
 		StrawDrink ac = new StrawDrink("dummy", "dummyAction", "{}", "callbackId", this.straw);
-		new ActionResult(ac);
+		assertNotNull(new ActionResult(ac));
+
+		assertNotNull(new ActionResult("callbackId", true, "{}"));
+		assertNotNull(new ActionResult("callbackId", true, "{}", true));
 	}
 
 	public static class TestResult {
