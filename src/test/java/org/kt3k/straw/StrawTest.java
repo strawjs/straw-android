@@ -11,12 +11,24 @@ import org.robolectric.RobolectricTestRunner;
 @RunWith(RobolectricTestRunner.class)
 public class StrawTest {
 
-    @Test
-    public void testConstuctor() {
-        Activity activity = new Activity();
-        WebView webView = new WebView(activity);
-        Straw straw = new Straw(webView);
-        assertNotNull(straw);
-    }
+	@Test
+	public void testConstuctor() {
+		Activity activity = new Activity();
+		WebView webView = new WebView(activity);
+		Straw straw = new Straw(webView);
+
+		assertNotNull(straw);
+	}
+
+	@Test
+	public void testGetRegistry() {
+		Activity activity = new Activity();
+		WebView webView = new WebView(activity);
+		Straw straw = new Straw(webView);
+
+		StrawPluginRegistry reg = straw.getRegistry();
+
+		assertNotNull(reg);
+	}
 
 }
