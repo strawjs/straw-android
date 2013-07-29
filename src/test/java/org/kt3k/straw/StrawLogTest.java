@@ -50,7 +50,8 @@ public class StrawLogTest {
 		assertFalse(StrawLog.getPrintStackTrace());
 	}
 
-	@Test public void testCostructor() {
+	@Test
+	public void testCostructor() {
 		new StrawLog();
 	}
 

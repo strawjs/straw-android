@@ -53,4 +53,9 @@ public class StrawUtilTest {
 		assertEquals((Integer)444, a.bar);
 	}
 
+	@Test
+	public void testConstructor() {
+		new StrawUtil();
+	}
+
 }
