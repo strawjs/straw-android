@@ -5,7 +5,7 @@ import android.webkit.WebView;
 public class Straw {
 
 	private WebView webView = null;
-	private StrawNativeToJsInterface jsInterface = null;
+	private NativeToJsInterface jsInterface = null;
 	private StrawPluginRegistry registry;
 
 	public static final String JS_TO_NATIVE_INTERFACE_NAME = "JS_TO_NATIVE_INTERFACE";
@@ -23,7 +23,7 @@ public class Straw {
 	}
 
 	public void postJsMessage(String jsMessage) {
-		this.webView.post(new StrawBack(this.webView, jsMessage));
+		this.webView.post(new MessageBackThread(this.webView, jsMessage));
 	}
 
 	public static Straw insertInto(WebView webView) {
@@ -47,40 +47,8 @@ public class Straw {
 	}
 
 	private void setUpJsInterface() {
-		this.jsInterface = new StrawNativeToJsInterfaceImpl(this);
+		this.jsInterface = new NativeToJsInterfaceImpl(this);
 
 		this.webView.addJavascriptInterface(this.jsInterface, JS_TO_NATIVE_INTERFACE_NAME);
-	}
-}
-
-class StrawBack implements Runnable {
-
-	WebView webView;
-	String message;
-
-	public StrawBack(WebView webView, String message) {
-		this.webView = webView;
-		this.message = message;
-	}
-
-	public void run() {
-		this.webView.loadUrl(this.message);
-	}
-
-}
-
-interface StrawNativeToJsInterface {
-	public void exec(String pluginName, String actionName, String argumentJson, String callbackId);
-}
-
-class StrawNativeToJsInterfaceImpl implements StrawNativeToJsInterface {
-	private Straw straw;
-
-	public StrawNativeToJsInterfaceImpl(Straw straw) {
-		this.straw = straw;
-	}
-
-	public void exec(String pluginName, String actionName, String argumentJson, String callbackId) {
-		new StrawDrink(pluginName, actionName, argumentJson, callbackId, this.straw).exec();
 	}
 }
