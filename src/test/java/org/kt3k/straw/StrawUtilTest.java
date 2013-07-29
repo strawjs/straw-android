@@ -27,6 +27,11 @@ public class StrawUtilTest {
 		assertEquals("CustomClass CustomClass CustomClass", StrawUtil.join(new CustomClass[]{new CustomClass(), new CustomClass(), new CustomClass()}, " "));
 	}
 
+	@Test
+	public void testEmptyJoin() {
+		assertEquals("", StrawUtil.join(new Integer[]{}, ", "));
+	}
+
 	static class DummyClass {
 		public String foo;
 		public Integer bar;
