@@ -71,6 +71,17 @@ public class StrawPluginTest {
 	}
 
 	@Test
+	public void testActionWithWrongParameterTypes() throws InterruptedException {
+		when(this.mockDrink.getActionName()).thenReturn("dummyActionWithWrongParameterTypes");
+		when(this.mockDrink.getArgumentJson()).thenReturn("{}");
+
+		this.dummyPlugin.exec(this.mockDrink);
+		this.dummyPlugin.thread.join();
+
+		verify(this.mockDrink, never()).success(any());
+	}
+
+	@Test
 	public void testWebViewIsNotNull() {
 		assertNotNull(this.dummyPlugin.webView);
 	}

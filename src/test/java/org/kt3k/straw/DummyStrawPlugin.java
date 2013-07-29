@@ -55,4 +55,9 @@ public class DummyStrawPlugin extends StrawPlugin {
 
 		drink.success(res);
 	}
+
+	@PluginAction
+	public void actionWithWrongParameterTypes(Object _, StrawDrink drink, String str) {
+		drink.success(null);
+	}
 }
