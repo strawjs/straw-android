@@ -26,10 +26,6 @@ class PluginActionMetaInfo {
 		this.pluginAction = pluginAction;
 	}
 
-	public Boolean isValid() {
-		return this.pluginAction != null;
-	}
-
 	public static PluginActionMetaInfo generateMetaInfo(Method method) {
 		if (isValidPluginAction(method)) {
 			PluginActionMetaInfo info = new PluginActionMetaInfo();
