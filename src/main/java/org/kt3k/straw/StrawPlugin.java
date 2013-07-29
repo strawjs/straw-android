@@ -70,6 +70,7 @@ abstract public class StrawPlugin {
 					self.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
 				}
 			};
+
 			this.thread.start();
 
 		} catch (Exception e) {

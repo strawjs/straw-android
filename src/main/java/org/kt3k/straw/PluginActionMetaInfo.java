@@ -39,15 +39,15 @@ class PluginActionMetaInfo {
 		return null;
 	}
 
-	static Boolean isValidPluginActionParameterTypes(Class<?>[] parameterTypes) {
+	private static Boolean isValidPluginActionParameterTypes(Class<?>[] parameterTypes) {
 		return parameterTypes.length == 2 && parameterTypes[1].isAssignableFrom(StrawDrink.class);
 	}
 
-	static Boolean isValidPluginAction(Method method) {
+	private static Boolean isValidPluginAction(Method method) {
 		return isValidPluginActionParameterTypes(method.getParameterTypes());
 	}
 
-	static Class<?> getArgumentTypeOfPluginAction(Method method) {
+	private static Class<?> getArgumentTypeOfPluginAction(Method method) {
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
 		return parameterTypes.length == 2 ? parameterTypes[0] : null;
