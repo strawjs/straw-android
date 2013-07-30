@@ -1,7 +1,5 @@
 package org.kt3k.straw;
 
-import android.util.Log;
-import android.util.LogPrinter;
 import android.util.Printer;
 
 public class StrawLog {
@@ -9,7 +7,7 @@ public class StrawLog {
 	static final String MESSAGE_FRAMEWORK_ERROR = "Straw Framework Error: ";
 	static final String MESSAGE_PLUGIN_ERROR = "Straw Plugin Error: ";
 
-	static Printer output = new StrawErrorPrinter();
+	static Printer output = new StrawLogErrorPrinter();
 
 	static Boolean printStackTrace = true;
 
@@ -55,14 +53,5 @@ public class StrawLog {
 
 	public static void printPluginError(String message) {
 		printError(MESSAGE_PLUGIN_ERROR + message, null);
-	}
-}
-
-class StrawErrorPrinter extends LogPrinter {
-
-	static String TAG = "Straw Framework";
-
-	public StrawErrorPrinter() {
-		super(Log.ERROR, TAG);
 	}
 }
