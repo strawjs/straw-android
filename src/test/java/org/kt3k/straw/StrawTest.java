@@ -42,4 +42,19 @@ public class StrawTest {
 		assertNotNull(reg);
 	}
 
+	@Test
+	public void testPluginActionInvocation() throws InterruptedException {
+		Straw straw = Straw.insertInto(mock(WebView.class));
+		Straw spy = spy(straw);
+
+		spy.addPlugin("org.kt3k.straw.DummyStrawPlugin");
+
+		NativeToJsInterface n2js = new NativeToJsInterfaceImpl(spy);
+
+		n2js.exec("dummy", "dummyAction", "{\"a\": \"1\", \"b\": \"3\"}", "abc");
+
+		verify(spy, timeout(1000)).postJsMessage("javascript:" + Straw.NATIVE_TO_JS_INTERFACE_NAME + ".exec(\"abc\",true,{\"c\":\"1\",\"d\":\"3\"},false);");
+
+	}
+
 }
