@@ -1,9 +1,9 @@
 package org.kt3k.straw;
 
-class NativeToJsInterfaceImpl implements NativeToJsInterface {
+class JsToNativeInterfaceImpl implements JsToNativeInterface {
 	private Straw straw;
 
-	public NativeToJsInterfaceImpl(Straw straw) {
+	public JsToNativeInterfaceImpl(Straw straw) {
 		this.straw = straw;
 	}
 

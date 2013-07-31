@@ -5,7 +5,7 @@ import android.webkit.WebView;
 public class Straw {
 
 	private WebView webView = null;
-	private NativeToJsInterface jsInterface = null;
+	private JsToNativeInterface jsInterface = null;
 	private StrawPluginRegistry registry;
 
 	public static final String JS_TO_NATIVE_INTERFACE_NAME = "JS_TO_NATIVE_INTERFACE";
@@ -47,7 +47,7 @@ public class Straw {
 	}
 
 	private void setUpJsInterface() {
-		this.jsInterface = new NativeToJsInterfaceImpl(this);
+		this.jsInterface = new JsToNativeInterfaceImpl(this);
 
 		this.webView.addJavascriptInterface(this.jsInterface, JS_TO_NATIVE_INTERFACE_NAME);
 	}

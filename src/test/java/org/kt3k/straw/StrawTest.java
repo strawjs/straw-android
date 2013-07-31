@@ -19,7 +19,7 @@ public class StrawTest {
 
 		assertNotNull(straw);
 
-		verify(webView).addJavascriptInterface(isA(NativeToJsInterface.class), eq(Straw.JS_TO_NATIVE_INTERFACE_NAME));
+		verify(webView).addJavascriptInterface(isA(JsToNativeInterface.class), eq(Straw.JS_TO_NATIVE_INTERFACE_NAME));
 	}
 
 	@Test
@@ -29,7 +29,7 @@ public class StrawTest {
 
 		assertNotNull(straw);
 
-		verify(webView).addJavascriptInterface(isA(NativeToJsInterface.class), eq(Straw.JS_TO_NATIVE_INTERFACE_NAME));
+		verify(webView).addJavascriptInterface(isA(JsToNativeInterface.class), eq(Straw.JS_TO_NATIVE_INTERFACE_NAME));
 	}
 
 	@Test
@@ -49,9 +49,9 @@ public class StrawTest {
 
 		spy.addPlugin("org.kt3k.straw.DummyStrawPlugin");
 
-		NativeToJsInterface n2js = new NativeToJsInterfaceImpl(spy);
+		JsToNativeInterface js2n = new JsToNativeInterfaceImpl(spy);
 
-		n2js.exec("dummy", "dummyAction", "{\"a\": \"1\", \"b\": \"3\"}", "abc");
+		js2n.exec("dummy", "dummyAction", "{\"a\": \"1\", \"b\": \"3\"}", "abc");
 
 		verify(spy, timeout(1000)).postJsMessage("javascript:" + Straw.NATIVE_TO_JS_INTERFACE_NAME + ".exec(\"abc\",true,{\"c\":\"1\",\"d\":\"3\"},false);");
 
