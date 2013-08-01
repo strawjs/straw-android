@@ -111,4 +111,20 @@ public class StrawPluginTest {
 
 		verify(printer, timeout(1000)).println("Straw Framework Error: JSON Parse Error: baz");
 	}
+
+	@Test
+	public void testErrorInsidePluginAction() {
+		when(this.mockDrink.getActionName()).thenReturn("throwError");
+		when(this.mockDrink.getArgumentJson()).thenReturn("{}");
+		when(this.mockDrink.toString()).thenReturn("baz");
+
+		Printer printer = mock(Printer.class);
+
+		StrawLog.setPrinter(printer);
+
+		this.dummyPlugin.exec(this.mockDrink);
+
+		verify(printer, timeout(1000)).println("Straw Framework Error: cannot invoke action method (invocation target exception): baz");
+		verify(printer, timeout(1000)).println("java.lang.reflect.InvocationTargetException");
+	}
 }

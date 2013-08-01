@@ -111,7 +111,7 @@ abstract public class StrawPlugin {
 			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): " + drink.toString());
 
 		} catch (Throwable e) {
-			StrawLog.printPluginError(e, "Runtime Error inside plugin action invocation: " + drink.toString());
+			StrawLog.printPluginError(e, "unknown error: " + drink.toString());
 
 		}
 	}
