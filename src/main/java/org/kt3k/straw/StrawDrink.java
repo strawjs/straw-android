@@ -73,7 +73,7 @@ public class StrawDrink {
 			this.resultJson = StrawUtil.objToJson(value);
 
 		} catch (Exception e) {
-			StrawLog.printFrameworkError(e, "unknown error: " + this);
+			StrawLog.printFrameworkError(e, "unknown error: " + this.toString());
 			return;
 
 		}
@@ -83,16 +83,16 @@ public class StrawDrink {
 
 	@Override
 	public String toString() {
-		return "plugin=" + this.getPluginName() + " action=" + this.getActionName() + " argumentJson=" + this.getArgumentJson() + "callbackId=" + this.getCallbackId();
+		return "plugin=" + this.getPluginName() + " action=" + this.getActionName() + " argumentJson=" + this.getArgumentJson() + " callbackId=" + this.getCallbackId();
 	}
 
 	static class ErrorResult {
-		public String message;
 		public String id;
+		public String message;
 
 		public ErrorResult(String id, String message) {
-			this.message = message;
 			this.id = id;
+			this.message = message;
 		}
 	}
 }

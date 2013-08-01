@@ -47,8 +47,8 @@ public class ActionResultTest {
 		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"callbackId\",true,{\"a\":\"1\",\"b\":2},false);", ActionResult.toJsMessage(ac));
 
 		ac.fail("errorIdFoo", "errorMessageBar");
-		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"callbackId\",false,{\"message\":\"errorMessageBar\",\"id\":\"errorIdFoo\"},false);", new ActionResult(ac).toJsMessage());
-		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"callbackId\",false,{\"message\":\"errorMessageBar\",\"id\":\"errorIdFoo\"},false);", ActionResult.toJsMessage(ac));
+		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"callbackId\",false,{\"id\":\"errorIdFoo\",\"message\":\"errorMessageBar\"},false);", new ActionResult(ac).toJsMessage());
+		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"callbackId\",false,{\"id\":\"errorIdFoo\",\"message\":\"errorMessageBar\"},false);", ActionResult.toJsMessage(ac));
 
 		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"foo\",true,1234,false);", new ActionResult("foo", true, "1234").toJsMessage());
 		assertEquals("javascript:NATIVE_TO_JS_INTERFACE.exec(\"bar\",false,5678,false);", new ActionResult("bar", false, "5678").toJsMessage());
