@@ -74,7 +74,7 @@ abstract public class StrawPlugin {
 			this.thread.start();
 
 		} catch (Exception e) {
-			StrawLog.printFrameworkError("Unknown Runtime Error: action=" + drink.getActionName() + " argumentJson=" + drink.getArgumentJson());
+			StrawLog.printFrameworkError("Unknown Runtime Error: " + drink.toString());
 		}
 	}
 
@@ -86,7 +86,7 @@ abstract public class StrawPlugin {
 		PluginActionMetaInfo metaInfo = this.getActionInfo(actionName);
 
 		if (metaInfo == null) {
-			StrawLog.printFrameworkError("No Such Plugin Action: " + drink);
+			StrawLog.printFrameworkError("No Such Plugin Action: " + drink.toString());
 
 			return;
 		}
@@ -108,16 +108,16 @@ abstract public class StrawPlugin {
 			metaInfo.getPluginAction().invoke(this, argumentObject, drink);
 
 		} catch (SecurityException e) {
-			StrawLog.printFrameworkError(e, "cannot invoke action method (security exception): " + drink);
+			StrawLog.printFrameworkError(e, "cannot invoke action method (security exception): " + drink.toString());
 
 		} catch (IllegalAccessException e) {
-			StrawLog.printFrameworkError(e, "cannot invoke action method (illegal access exception): " + drink);
+			StrawLog.printFrameworkError(e, "cannot invoke action method (illegal access exception): " + drink.toString());
 
 		} catch (java.lang.reflect.InvocationTargetException e) {
-			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): " + drink);
+			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): " + drink.toString());
 
 		} catch (Exception e) {
-			StrawLog.printPluginError(e, "Runtime Error inside plugin action invocation: " + drink);
+			StrawLog.printPluginError(e, "Runtime Error inside plugin action invocation: " + drink.toString());
 
 		}
 	}
