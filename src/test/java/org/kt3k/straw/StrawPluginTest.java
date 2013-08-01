@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import static org.mockito.Mockito.*;
 
+import android.util.Printer;
 import android.webkit.WebView;
 import android.app.Activity;
 
@@ -17,15 +18,15 @@ public class StrawPluginTest {
 
 	private final Activity activity = new Activity();
 	private final WebView webView = new WebView(activity);
-	private final StrawPluginRegistry manager = new StrawPluginRegistry(webView);
+	private final StrawPluginRegistry registry = new StrawPluginRegistry(webView);
 
 	private StrawPlugin dummyPlugin;
 	private StrawDrink mockDrink;
 
 	@Before
 	public void setUpDummyPlugin() throws Exception {
-		this.manager.loadPluginByName("org.kt3k.straw.DummyStrawPlugin");
-		this.dummyPlugin = manager.getPluginByName("dummy");
+		this.registry.loadPluginByName("org.kt3k.straw.DummyStrawPlugin");
+		this.dummyPlugin = registry.getPluginByName("dummy");
 		this.mockDrink = mock(StrawDrink.class);
 	}
 
@@ -94,5 +95,20 @@ public class StrawPluginTest {
 	@Test
 	public void testActivityIsNotNull() {
 		assertNotNull(this.dummyPlugin.activity);
+	}
+
+	@Test
+	public void testJsonParseErrorWhenExec() {
+		when(this.mockDrink.getActionName()).thenReturn("dummyAction");
+		when(this.mockDrink.getArgumentJson()).thenReturn("ABC");
+		when(this.mockDrink.toString()).thenReturn("baz");
+
+		Printer printer = mock(Printer.class);
+
+		StrawLog.setPrinter(printer);
+
+		this.dummyPlugin.exec(this.mockDrink);
+
+		verify(printer, timeout(1000)).println("Straw Framework Error: JSON Parse Error: baz");
 	}
 }
