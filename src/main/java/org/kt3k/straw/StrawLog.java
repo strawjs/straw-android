@@ -11,7 +11,7 @@ public class StrawLog {
 
 	static Boolean printStackTrace = true;
 
-	private static void printError(String message, Exception e) {
+	private static void printError(String message, Throwable e) {
 		output.println(message);
 
 		if (e != null) {
@@ -35,11 +35,11 @@ public class StrawLog {
 		StrawLog.printStackTrace = printStackTrace;
 	}
 
-	private static String getStackTraceString(Exception e) {
+	private static String getStackTraceString(Throwable e) {
 		return StrawUtil.join(e.getStackTrace(), "\n");
 	}
 
-	public static void printFrameworkError(Exception e, String message) {
+	public static void printFrameworkError(Throwable e, String message) {
 		printError(MESSAGE_FRAMEWORK_ERROR + message, e);
 	}
 
@@ -47,7 +47,7 @@ public class StrawLog {
 		printError(MESSAGE_FRAMEWORK_ERROR + message, null);
 	}
 
-	public static void printPluginError(Exception e, String message) {
+	public static void printPluginError(Throwable e, String message) {
 		printError(MESSAGE_PLUGIN_ERROR + message, e);
 	}
 

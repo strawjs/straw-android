@@ -72,7 +72,7 @@ public class StrawDrink {
 
 			this.resultJson = StrawUtil.objToJson(value);
 
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			StrawLog.printFrameworkError(e, "unknown error: " + this.toString());
 			return;
 
