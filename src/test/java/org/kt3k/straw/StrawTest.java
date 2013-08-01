@@ -54,7 +54,27 @@ public class StrawTest {
 		js2n.exec("dummy", "dummyAction", "{\"a\": \"1\", \"b\": \"3\"}", "abc");
 
 		verify(spy, timeout(1000)).postJsMessage("javascript:" + Straw.NATIVE_TO_JS_INTERFACE_NAME + ".exec(\"abc\",true,{\"c\":\"1\",\"d\":\"3\"},false);");
+	}
 
+	@Test
+	public void testAddPlugins() {
+		Straw straw = Straw.insertInto(mock(WebView.class));
+
+		straw.addPlugins(new String[]{"org.kt3k.straw.DummyStrawPlugin"});
+
+		assertEquals("org.kt3k.straw.DummyStrawPlugin", straw.getRegistry().getPluginByName("dummy").getClass().getCanonicalName());
+
+		straw.removePlugin("dummy");
+
+		assertNull(straw.getRegistry().getPluginByName("dummy"));
+
+		straw.addPlugins(new String[]{"org.kt3k.straw.DummyStrawPlugin"});
+
+		assertEquals("org.kt3k.straw.DummyStrawPlugin", straw.getRegistry().getPluginByName("dummy").getClass().getCanonicalName());
+
+		straw.clearPlugins();
+
+		assertNull(straw.getRegistry().getPluginByName("dummy"));
 	}
 
 }
