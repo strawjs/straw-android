@@ -60,22 +60,16 @@ abstract public class StrawPlugin {
 	abstract public String getName();
 
 	public void exec(final StrawDrink drink) {
-		try {
+		final StrawPlugin self = this;
 
-			final StrawPlugin self = this;
+		this.thread = new Thread() {
+			@Override
+			public void run() {
+				self.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
+			}
+		};
 
-			this.thread = new Thread() {
-				@Override
-				public void run() {
-					self.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
-				}
-			};
-
-			this.thread.start();
-
-		} catch (Exception e) {
-			StrawLog.printFrameworkError("Unknown Runtime Error: " + drink.toString());
-		}
+		this.thread.start();
 	}
 
 	public PluginActionMetaInfo getActionInfo(String actionName) {
@@ -116,7 +110,7 @@ abstract public class StrawPlugin {
 		} catch (java.lang.reflect.InvocationTargetException e) {
 			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): " + drink.toString());
 
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			StrawLog.printPluginError(e, "Runtime Error inside plugin action invocation: " + drink.toString());
 
 		}
