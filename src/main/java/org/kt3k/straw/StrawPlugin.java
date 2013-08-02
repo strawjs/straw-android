@@ -25,7 +25,7 @@ abstract public class StrawPlugin {
 	private HashMap<String, PluginActionMetaInfo> actionInfoMap = new HashMap<String, PluginActionMetaInfo>();
 
 	public StrawPlugin() {
-		Method[] methods = this.getClass().getMethods();
+		Method[] methods = this.getClass().getDeclaredMethods();
 		for (Method method: methods) {
 			if (method.getAnnotation(PluginAction.class) != null) {
 				PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method);
@@ -101,17 +101,11 @@ abstract public class StrawPlugin {
 
 			metaInfo.getPluginAction().invoke(this, argumentObject, drink);
 
-		} catch (SecurityException e) {
-			StrawLog.printFrameworkError(e, "cannot invoke action method (security exception): " + drink.toString());
-
 		} catch (IllegalAccessException e) {
 			StrawLog.printFrameworkError(e, "cannot invoke action method (illegal access exception): " + drink.toString());
 
 		} catch (java.lang.reflect.InvocationTargetException e) {
 			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): " + drink.toString());
-
-		} catch (Throwable e) {
-			StrawLog.printPluginError(e, "unknown error: " + drink.toString());
 
 		}
 	}

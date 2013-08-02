@@ -74,6 +74,7 @@ public class StrawDrinkTest {
 
 		Printer printer = mock(Printer.class);
 		StrawLog.setPrinter(printer);
+		StrawLog.setPrintStackTrace(false);
 
 		drink.success(rec);
 

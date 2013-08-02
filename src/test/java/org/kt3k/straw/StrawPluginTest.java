@@ -104,8 +104,8 @@ public class StrawPluginTest {
 		when(this.mockDrink.toString()).thenReturn("baz");
 
 		Printer printer = mock(Printer.class);
-
 		StrawLog.setPrinter(printer);
+		StrawLog.setPrintStackTrace(false);
 
 		this.dummyPlugin.exec(this.mockDrink);
 
@@ -119,12 +119,28 @@ public class StrawPluginTest {
 		when(this.mockDrink.toString()).thenReturn("baz");
 
 		Printer printer = mock(Printer.class);
-
 		StrawLog.setPrinter(printer);
+		StrawLog.setPrintStackTrace(false);
 
 		this.dummyPlugin.exec(this.mockDrink);
 
 		verify(printer, timeout(1000)).println("Straw Framework Error: cannot invoke action method (invocation target exception): baz");
 		verify(printer, timeout(1000)).println("java.lang.reflect.InvocationTargetException");
+	}
+
+	@Test
+	public void testActionWithWrongAccessModifier() {
+		when(this.mockDrink.getActionName()).thenReturn("actionWithWrongAccessModifier");
+		when(this.mockDrink.getArgumentJson()).thenReturn("{}");
+		when(this.mockDrink.toString()).thenReturn("baz");
+
+		Printer printer = mock(Printer.class);
+		StrawLog.setPrinter(printer);
+		StrawLog.setPrintStackTrace(false);
+
+		this.dummyPlugin.exec(this.mockDrink);
+
+		verify(printer, timeout(1000)).println("Straw Framework Error: cannot invoke action method (illegal access exception): baz");
+		verify(printer, timeout(1000)).println("java.lang.IllegalAccessException: Class org.kt3k.straw.StrawPlugin can not access a member of class org.kt3k.straw.DummyStrawPlugin with modifiers \"private\"");
 	}
 }
