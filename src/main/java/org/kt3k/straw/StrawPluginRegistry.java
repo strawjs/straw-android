@@ -71,7 +71,7 @@ class StrawPluginRegistry {
 
 		String pluginName = plugin.getName();
 		if (pluginName == null) {
-			StrawLog.printFrameworkError("Plugin name is null: " + plugin.getName());
+			StrawLog.printFrameworkError("Plugin name is null");
 			return;
 		}
 
@@ -89,12 +89,6 @@ class StrawPluginRegistry {
 	public void loadPlugins(String[] pluginNames) {
 		for (String name: pluginNames) {
 			this.loadPluginByName(name);
-		}
-	}
-
-	public void loadPlugins(Class<? extends StrawPlugin>[] pluginClasses) {
-		for (Class<? extends StrawPlugin> pluginClass: pluginClasses) {
-			this.loadPluginByClass(pluginClass);
 		}
 	}
 
