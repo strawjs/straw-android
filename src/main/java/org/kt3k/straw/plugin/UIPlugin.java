@@ -26,6 +26,4 @@ public class UIPlugin extends org.kt3k.straw.StrawPlugin {
 		Toast.makeText(activity, param.text, Toast.LENGTH_LONG).show();
 	}
 
-
-
 }
