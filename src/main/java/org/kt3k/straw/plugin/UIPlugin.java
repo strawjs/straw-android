@@ -16,11 +16,21 @@ public class UIPlugin extends org.kt3k.straw.StrawPlugin {
 		public String text;
 	}
 
+	/**
+	 * show toast
+	 * @param param
+	 * @param drink
+	 */
 	@PluginAction
 	public void toast(ToastParam param, StrawDrink drink) {
 		Toast.makeText(activity, param.text, Toast.LENGTH_SHORT).show();
 	}
 
+	/**
+	 * show toast long
+	 * @param param
+	 * @param drink
+	 */
 	@PluginAction
 	public void toastLong(ToastParam param, StrawDrink drink) {
 		Toast.makeText(activity, param.text, Toast.LENGTH_LONG).show();
