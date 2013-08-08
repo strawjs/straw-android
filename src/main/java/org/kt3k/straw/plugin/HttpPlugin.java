@@ -6,12 +6,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
 
 import org.kt3k.straw.StrawDrink;
@@ -48,7 +46,7 @@ public class HttpPlugin extends StrawPlugin {
 		HttpURLConnection conn;
 
 		try {
-			conn = createConnection(param.url, drink);
+			conn = createConnection(param.url);
 		} catch (MalformedURLException e) {
 			drink.fail(URL_MALFORMED_ERROR, "URL format is wrong: " + param.url);
 
@@ -56,10 +54,6 @@ public class HttpPlugin extends StrawPlugin {
 		} catch (IOException e) {
 			drink.fail(CANNOT_CONNECT_ERROR, "cannot connect to url: " + param.url);
 
-			return;
-		}
-
-		if (conn == null) {
 			return;
 		}
 
@@ -99,7 +93,7 @@ public class HttpPlugin extends StrawPlugin {
 		return new java.util.Scanner(stream).useDelimiter("\\A").next();
 	}
 
-	private static HttpURLConnection createConnection(String spec, StrawDrink drink) throws MalformedURLException, IOException {
+	private static HttpURLConnection createConnection(String spec) throws MalformedURLException, IOException {
 		URL url = new URL(spec);
 
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
