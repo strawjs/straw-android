@@ -7,6 +7,7 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -90,7 +91,9 @@ public class HttpPlugin extends StrawPlugin {
 	}
 
 	private static String inputStreamToString(java.io.InputStream stream) {
-		return new java.util.Scanner(stream).useDelimiter("\\A").next();
+		Scanner scanner = new Scanner(stream).useDelimiter("\\A");
+
+		return scanner.hasNext() ? scanner.next() : "";
 	}
 
 	private static HttpURLConnection createConnection(String spec) throws MalformedURLException, IOException {
