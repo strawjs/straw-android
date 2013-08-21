@@ -22,7 +22,13 @@ public class StrawDrink {
 	}
 
 	public void exec() {
-		this.straw.getRegistry().getPluginByName(this.pluginName).exec(this);
+		StrawPlugin plugin = this.straw.getRegistry().getPluginByName(this.pluginName);
+
+		if (plugin != null) {
+			plugin.exec(this);
+		} else {
+			StrawLog.printFrameworkError("no such plugin: " + this.toString());
+		}
 	}
 
 	public String getPluginName() {
