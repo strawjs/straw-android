@@ -126,6 +126,7 @@ public class StrawPluginTest {
 
 		verify(printer, timeout(1000).times(2)).println("Straw Framework Error: cannot invoke action method (invocation target exception): baz");
 		verify(printer, timeout(1000)).println("java.lang.reflect.InvocationTargetException");
+		verify(printer, timeout(1000)).println("java.lang.ArithmeticException: / by zero");
 	}
 
 	@Test
