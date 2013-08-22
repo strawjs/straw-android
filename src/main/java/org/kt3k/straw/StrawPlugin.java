@@ -1,5 +1,6 @@
 package org.kt3k.straw;
 
+import android.os.HandlerThread;
 import android.webkit.WebView;
 import android.app.Activity;
 import android.content.Context;
@@ -62,7 +63,7 @@ abstract public class StrawPlugin {
 	public void exec(final StrawDrink drink) {
 		final StrawPlugin self = this;
 
-		this.thread = new Thread() {
+		this.thread = new HandlerThread("thread") {
 			@Override
 			public void run() {
 				self.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
@@ -106,7 +107,7 @@ abstract public class StrawPlugin {
 
 		} catch (java.lang.reflect.InvocationTargetException e) {
 			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): " + drink.toString());
-
+			StrawLog.printFrameworkError(e.getCause(), "cannot invoke action method (invocation target exception): " + drink.toString());
 		}
 	}
 
