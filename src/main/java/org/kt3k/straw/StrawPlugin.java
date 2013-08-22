@@ -26,16 +26,27 @@ abstract public class StrawPlugin {
 	private HashMap<String, PluginActionMetaInfo> actionInfoMap = new HashMap<String, PluginActionMetaInfo>();
 
 	public StrawPlugin() {
-		Method[] methods = this.getClass().getDeclaredMethods();
-		for (Method method: methods) {
-			if (method.getAnnotation(PluginAction.class) != null) {
-				PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method);
+		this.checkActionMethods(this.getClass().getDeclaredMethods());
+	}
 
-				if (metaInfo != null) {
-					this.actionInfoMap.put(method.getName(), metaInfo);
-				} else {
-					StrawLog.printFrameworkError("Wrong Parameter Signature For Action Method: action=" + method.getName() + " for class=" + method.getClass().getCanonicalName());
-				}
+	private void checkActionMethods(Method[] methods) {
+		for (Method method: methods) {
+			this.checkActionMethod(method);
+		}
+	}
+
+	private void checkActionMethod(Method method) {
+		if (method == null) {
+			return;
+		}
+
+		if (method.getAnnotation(PluginAction.class) != null) {
+			PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method);
+
+			if (metaInfo != null) {
+				this.actionInfoMap.put(method.getName(), metaInfo);
+			} else {
+				StrawLog.printFrameworkError("Wrong Parameter Signature For Action Method: action=" + method.getName() + " for class=" + method.getClass().getCanonicalName());
 			}
 		}
 	}
