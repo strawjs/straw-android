@@ -34,6 +34,14 @@ class PluginActionMetaInfo {
 			info.setArgumentType(getArgumentTypeOfPluginAction(method));
 			info.setPluginAction(method);
 
+			if (hasRunOnUiThreadAnnotation(method)) {
+				info.setIsBackgroundAction(false);
+			}
+
+			if (hasBackgroundAnnotation(method)) {
+				info.setIsBackgroundAction(true);
+			}
+
 			return info;
 		}
 
@@ -45,7 +53,19 @@ class PluginActionMetaInfo {
 	}
 
 	private static Boolean isValidPluginAction(Method method) {
-		return isValidPluginActionParameterTypes(method.getParameterTypes());
+		return hasPluginActionAnnotation(method) && isValidPluginActionParameterTypes(method.getParameterTypes());
+	}
+
+	private static Boolean hasPluginActionAnnotation(Method method) {
+		return method.getAnnotation(PluginAction.class) != null;
+	}
+
+	private static Boolean hasRunOnUiThreadAnnotation(Method method) {
+		return method.getAnnotation(RunOnUiThread.class) != null;
+	}
+
+	private static Boolean hasBackgroundAnnotation(Method method) {
+		return method.getAnnotation(Background.class) != null;
 	}
 
 	private static Class<?> getArgumentTypeOfPluginAction(Method method) {

@@ -36,18 +36,12 @@ abstract public class StrawPlugin {
 	}
 
 	private void checkActionMethod(Method method) {
-		if (method == null) {
-			return;
-		}
+		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method);
 
-		if (method.getAnnotation(PluginAction.class) != null) {
-			PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method);
-
-			if (metaInfo != null) {
-				this.actionInfoMap.put(method.getName(), metaInfo);
-			} else {
-				StrawLog.printFrameworkError("Wrong Parameter Signature For Action Method: action=" + method.getName() + " for class=" + method.getClass().getCanonicalName());
-			}
+		if (metaInfo != null) {
+			this.actionInfoMap.put(method.getName(), metaInfo);
+		} else {
+			StrawLog.printFrameworkError("Wrong Parameter Signature For Action Method: action=" + method.getName() + " for class=" + method.getClass().getCanonicalName());
 		}
 	}
 
