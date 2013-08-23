@@ -28,13 +28,23 @@ class PluginActionMetaInfo {
 	}
 
 	public void invokeActionMethod(final Object argumentObject, final StrawDrink drink) {
-		final PluginActionMetaInfo self = this;
-		new Thread() {
-			@Override
-			public void run() {
-				self.invokeActionMethodSync(argumentObject, drink);
-			}
-		}.start();
+		if (this.isBackgroundAction) {
+
+			final PluginActionMetaInfo self = this;
+
+			new Thread() {
+
+				@Override
+				public void run() {
+					self.invokeActionMethodSync(argumentObject, drink);
+				}
+
+			}.start();
+
+		} else {
+			this.invokeActionMethod(argumentObject, drink);
+
+		}
 	}
 
 	public void invokeActionMethodSync(Object argumentObject, StrawDrink drink) {
@@ -98,10 +108,6 @@ class PluginActionMetaInfo {
 
 	public void setIsBackgroundAction(Boolean isBackgroundAction) {
 		this.isBackgroundAction = isBackgroundAction;
-	}
-
-	public Boolean isBackgroundAction() {
-		return this.isBackgroundAction;
 	}
 
 }
