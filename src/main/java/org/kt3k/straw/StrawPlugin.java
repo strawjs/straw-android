@@ -1,6 +1,5 @@
 package org.kt3k.straw;
 
-import android.os.HandlerThread;
 import android.webkit.WebView;
 import android.app.Activity;
 import android.content.Context;
@@ -17,11 +16,6 @@ abstract public class StrawPlugin {
 	protected Context context;
 
 	protected Activity activity;
-
-	/**
-	 * this field is for unit tests
-	 */
-	public Thread thread;
 
 	private HashMap<String, PluginActionMetaInfo> actionInfoMap = new HashMap<String, PluginActionMetaInfo>();
 
@@ -66,16 +60,7 @@ abstract public class StrawPlugin {
 	abstract public String getName();
 
 	public void exec(final StrawDrink drink) {
-		final StrawPlugin self = this;
-
-		this.thread = new HandlerThread("thread") {
-			@Override
-			public void run() {
-				self.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
-			}
-		};
-
-		this.thread.start();
+		this.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
 	}
 
 	public PluginActionMetaInfo getActionInfo(String actionName) {

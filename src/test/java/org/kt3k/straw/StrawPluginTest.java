@@ -40,24 +40,21 @@ public class StrawPluginTest {
 		DummyStrawPlugin.DummyActionResult res = new DummyStrawPlugin.DummyActionResult();
 		res.c = "foo";
 		res.d = "bar";
-		this.dummyPlugin.thread.join();
-		verify(this.mockDrink).success(res);
+		verify(this.mockDrink, timeout(1000)).success(res);
 
 
 		when(this.mockDrink.getArgumentJson()).thenReturn("{\"a\":\"baz\",\"b\":\"baz\"}");
 		this.dummyPlugin.exec(this.mockDrink);
 		res.c = "baz";
 		res.d = "baz";
-		this.dummyPlugin.thread.join();
-		verify(this.mockDrink).success(res);
+		verify(this.mockDrink, timeout(1000)).success(res);
 
 
 		when(this.mockDrink.getActionName()).thenReturn("dummyActionSuccessWithEmptyResult");
 		this.dummyPlugin.exec(this.mockDrink);
 		res.c = null;
 		res.d = null;
-		this.dummyPlugin.thread.join();
-		verify(this.mockDrink).success(res);
+		verify(this.mockDrink, timeout(1000)).success(res);
 	}
 
 	@Test
@@ -66,9 +63,8 @@ public class StrawPluginTest {
 		when(this.mockDrink.getArgumentJson()).thenReturn("{}");
 
 		this.dummyPlugin.exec(this.mockDrink);
-		this.dummyPlugin.thread.join();
 
-		verify(this.mockDrink, never()).success(any());
+		verify(this.mockDrink, timeout(1000).never()).success(any());
 	}
 
 	@Test
@@ -77,9 +73,8 @@ public class StrawPluginTest {
 		when(this.mockDrink.getArgumentJson()).thenReturn("{}");
 
 		this.dummyPlugin.exec(this.mockDrink);
-		this.dummyPlugin.thread.join();
 
-		verify(this.mockDrink, never()).success(any());
+		verify(this.mockDrink, timeout(1000).never()).success(any());
 	}
 
 	@Test

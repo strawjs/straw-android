@@ -27,8 +27,14 @@ class PluginActionMetaInfo {
 		return this.pluginAction;
 	}
 
-	public void invokeActionMethod(Object argumentObject, StrawDrink drink) {
-		this.invokeActionMethodSync(argumentObject, drink);
+	public void invokeActionMethod(final Object argumentObject, final StrawDrink drink) {
+		final PluginActionMetaInfo self = this;
+		new Thread() {
+			@Override
+			public void run() {
+				self.invokeActionMethodSync(argumentObject, drink);
+			}
+		}.start();
 	}
 
 	public void invokeActionMethodSync(Object argumentObject, StrawDrink drink) {
