@@ -103,18 +103,8 @@ abstract public class StrawPlugin {
 
 		}
 
-		try {
+		metaInfo.invokeActionMethod(argumentObject, drink);
 
-			metaInfo.getPluginAction().invoke(metaInfo.getPluginObject(), argumentObject, drink);
-
-		} catch (IllegalAccessException e) {
-			StrawLog.printFrameworkError(e, "cannot invoke action method (illegal access exception): " + drink.toString());
-
-		} catch (java.lang.reflect.InvocationTargetException e) {
-			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): " + drink.toString());
-			StrawLog.printFrameworkError(e.getCause(), "cannot invoke action method (invocation target exception): " + drink.toString());
-
-		}
 	}
 
 	private static Object createArgumentJson(String argumentJson, Class<? extends Object> type) throws JsonSyntaxException {

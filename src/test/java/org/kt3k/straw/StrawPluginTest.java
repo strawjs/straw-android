@@ -142,6 +142,6 @@ public class StrawPluginTest {
 		this.dummyPlugin.exec(this.mockDrink);
 
 		verify(printer, timeout(1000)).println("Straw Framework Error: cannot invoke action method (illegal access exception): baz");
-		verify(printer, timeout(1000)).println("java.lang.IllegalAccessException: Class org.kt3k.straw.StrawPlugin can not access a member of class org.kt3k.straw.DummyStrawPlugin with modifiers \"private\"");
+		verify(printer, timeout(1000)).println("java.lang.IllegalAccessException: Class org.kt3k.straw.PluginActionMetaInfo can not access a member of class org.kt3k.straw.DummyStrawPlugin with modifiers \"private\"");
 	}
 }

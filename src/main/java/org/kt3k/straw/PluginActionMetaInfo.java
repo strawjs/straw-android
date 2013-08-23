@@ -27,6 +27,25 @@ class PluginActionMetaInfo {
 		return this.pluginAction;
 	}
 
+	public void invokeActionMethod(Object argumentObject, StrawDrink drink) {
+		this.invokeActionMethodSync(argumentObject, drink);
+	}
+
+	public void invokeActionMethodSync(Object argumentObject, StrawDrink drink) {
+		try {
+
+			this.pluginAction.invoke(this.plugin, argumentObject, drink);
+
+		} catch (IllegalAccessException e) {
+			StrawLog.printFrameworkError(e, "cannot invoke action method (illegal access exception): " + drink.toString());
+
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): " + drink.toString());
+			StrawLog.printFrameworkError(e.getCause(), "cannot invoke action method (invocation target exception): " + drink.toString());
+
+		}
+	}
+
 	public static PluginActionMetaInfo generateMetaInfo(Method method, StrawPlugin plugin) {
 		if (isValidPluginAction(method)) {
 			PluginActionMetaInfo info = new PluginActionMetaInfo(plugin, method, getArgumentTypeOfPluginAction(method));
