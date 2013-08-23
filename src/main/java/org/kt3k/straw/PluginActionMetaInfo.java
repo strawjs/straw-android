@@ -4,27 +4,22 @@ import java.lang.reflect.Method;
 
 class PluginActionMetaInfo {
 
+	final static Boolean IS_BACKGROUND_DEFAULT = true;
+
 	private StrawPlugin plugin;
 	private Class<?> argumentType = null;
 	private Method pluginAction;
 	private Boolean isBackgroundAction = true;
 
-	private PluginActionMetaInfo(StrawPlugin plugin, Method method, Class<?> argumentType) {
+	private PluginActionMetaInfo(StrawPlugin plugin, Method method, Class<?> argumentType, Boolean isBackground) {
 		this.plugin = plugin;
 		this.pluginAction = method;
 		this.argumentType = argumentType;
-	}
-
-	public StrawPlugin getPluginObject() {
-		return this.plugin;
+		this.isBackgroundAction = isBackground;
 	}
 
 	public Class<?> getArgumentType() {
 		return this.argumentType;
-	}
-
-	public Method getPluginAction() {
-		return this.pluginAction;
 	}
 
 	public void invokeActionMethod(final Object argumentObject, final StrawDrink drink) {
@@ -64,17 +59,17 @@ class PluginActionMetaInfo {
 
 	public static PluginActionMetaInfo generateMetaInfo(Method method, StrawPlugin plugin) {
 		if (isValidPluginAction(method)) {
-			PluginActionMetaInfo info = new PluginActionMetaInfo(plugin, method, getArgumentTypeOfPluginAction(method));
+			Boolean isBackground = IS_BACKGROUND_DEFAULT;
 
 			if (hasRunOnUiThreadAnnotation(method)) {
-				info.setIsBackgroundAction(false);
+				isBackground = false;
 			}
 
 			if (hasBackgroundAnnotation(method)) {
-				info.setIsBackgroundAction(true);
+				isBackground = true;
 			}
 
-			return info;
+			return new PluginActionMetaInfo(plugin, method, getArgumentTypeOfPluginAction(method), isBackground);
 		}
 
 		return null;
@@ -104,10 +99,6 @@ class PluginActionMetaInfo {
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
 		return parameterTypes.length == 2 ? parameterTypes[0] : null;
-	}
-
-	public void setIsBackgroundAction(Boolean isBackgroundAction) {
-		this.isBackgroundAction = isBackgroundAction;
 	}
 
 }
