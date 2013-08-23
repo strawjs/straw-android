@@ -4,35 +4,32 @@ import java.lang.reflect.Method;
 
 class PluginActionMetaInfo {
 
+	private StrawPlugin plugin;
 	private Class<?> argumentType = null;
-	private Method pluginAction = null;
+	private Method pluginAction;
 	private Boolean isBackgroundAction = true;
 
-	private PluginActionMetaInfo() {
+	private PluginActionMetaInfo(StrawPlugin plugin, Method method, Class<?> argumentType) {
+		this.plugin = plugin;
+		this.pluginAction = method;
+		this.argumentType = argumentType;
+	}
+
+	public StrawPlugin getPluginObject() {
+		return this.plugin;
 	}
 
 	public Class<?> getArgumentType() {
 		return this.argumentType;
 	}
 
-	public void setArgumentType(Class<?> argumentType) {
-		this.argumentType = argumentType;
-	}
-
 	public Method getPluginAction() {
 		return this.pluginAction;
 	}
 
-	public void setPluginAction(Method pluginAction) {
-		this.pluginAction = pluginAction;
-	}
-
-	public static PluginActionMetaInfo generateMetaInfo(Method method) {
+	public static PluginActionMetaInfo generateMetaInfo(Method method, StrawPlugin plugin) {
 		if (isValidPluginAction(method)) {
-			PluginActionMetaInfo info = new PluginActionMetaInfo();
-
-			info.setArgumentType(getArgumentTypeOfPluginAction(method));
-			info.setPluginAction(method);
+			PluginActionMetaInfo info = new PluginActionMetaInfo(plugin, method, getArgumentTypeOfPluginAction(method));
 
 			if (hasRunOnUiThreadAnnotation(method)) {
 				info.setIsBackgroundAction(false);

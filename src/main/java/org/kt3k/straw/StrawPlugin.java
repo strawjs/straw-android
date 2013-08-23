@@ -36,7 +36,7 @@ abstract public class StrawPlugin {
 	}
 
 	private void checkActionMethod(Method method) {
-		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method);
+		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method, this);
 
 		if (metaInfo != null) {
 			this.actionInfoMap.put(method.getName(), metaInfo);
@@ -105,7 +105,7 @@ abstract public class StrawPlugin {
 
 		try {
 
-			metaInfo.getPluginAction().invoke(this, argumentObject, drink);
+			metaInfo.getPluginAction().invoke(metaInfo.getPluginObject(), argumentObject, drink);
 
 		} catch (IllegalAccessException e) {
 			StrawLog.printFrameworkError(e, "cannot invoke action method (illegal access exception): " + drink.toString());
