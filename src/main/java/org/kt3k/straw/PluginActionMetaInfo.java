@@ -6,10 +6,10 @@ class PluginActionMetaInfo {
 
 	final static Boolean IS_BACKGROUND_DEFAULT = true;
 
-	private StrawPlugin plugin;
-	private Class<?> argumentType = null;
-	private Method pluginAction;
-	private Boolean isBackgroundAction = true;
+	private final StrawPlugin plugin;
+	private final Class<?> argumentType;
+	private final Method pluginAction;
+	private final Boolean isBackgroundAction;
 
 	private PluginActionMetaInfo(StrawPlugin plugin, Method method, Class<?> argumentType, Boolean isBackground) {
 		this.plugin = plugin;
@@ -37,12 +37,12 @@ class PluginActionMetaInfo {
 			}.start();
 
 		} else {
-			this.invokeActionMethod(argumentObject, drink);
+			this.invokeActionMethodSync(argumentObject, drink);
 
 		}
 	}
 
-	public void invokeActionMethodSync(Object argumentObject, StrawDrink drink) {
+	public synchronized void invokeActionMethodSync(Object argumentObject, StrawDrink drink) {
 		try {
 
 			this.pluginAction.invoke(this.plugin, argumentObject, drink);
