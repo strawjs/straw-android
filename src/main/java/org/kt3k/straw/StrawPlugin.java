@@ -119,6 +119,7 @@ abstract public class StrawPlugin {
 		} catch (java.lang.reflect.InvocationTargetException e) {
 			StrawLog.printFrameworkError(e, "cannot invoke action method (invocation target exception): " + drink.toString());
 			StrawLog.printFrameworkError(e.getCause(), "cannot invoke action method (invocation target exception): " + drink.toString());
+
 		}
 	}
 

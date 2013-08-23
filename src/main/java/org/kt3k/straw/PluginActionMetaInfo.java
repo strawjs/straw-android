@@ -6,6 +6,7 @@ class PluginActionMetaInfo {
 
 	private Class<?> argumentType = null;
 	private Method pluginAction = null;
+	private Boolean isBackgroundAction = true;
 
 	private PluginActionMetaInfo() {
 	}
@@ -52,4 +53,13 @@ class PluginActionMetaInfo {
 
 		return parameterTypes.length == 2 ? parameterTypes[0] : null;
 	}
+
+	public void setIsBackgroundAction(Boolean isBackgroundAction) {
+		this.isBackgroundAction = isBackgroundAction;
+	}
+
+	public Boolean isBackgroundAction() {
+		return this.isBackgroundAction;
+	}
+
 }
