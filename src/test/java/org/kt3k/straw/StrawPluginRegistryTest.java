@@ -114,4 +114,19 @@ public class StrawPluginRegistryTest {
 		verify(printer).println("java.lang.IllegalAccessException: Class org.kt3k.straw.StrawPluginRegistry can not access a member of class org.kt3k.straw.PluginWithoutCorrectConstructor with modifiers \"private\"");
 	}
 
+
+	@Test
+	public void testLoadPluginWithoutError() {
+		StrawPluginRegistry registry = new StrawPluginRegistry(mock(WebView.class));
+
+		Printer printer = mock(Printer.class);
+		StrawLog.setPrinter(printer);
+		StrawLog.setPrintStackTrace(false);
+
+		registry.loadPluginByName("org.kt3k.straw.PluginWithoutError");
+
+		verify(printer).println("abc");
+		verify(printer).println("def");
+	}
+
 }

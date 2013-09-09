@@ -30,6 +30,10 @@ abstract public class StrawPlugin {
 	}
 
 	private void checkActionMethod(Method method) {
+		if (method.getName().equals("getName")) {
+			return;
+		}
+
 		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method, this);
 
 		if (metaInfo != null) {
