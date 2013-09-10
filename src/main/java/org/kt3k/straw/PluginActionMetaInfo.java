@@ -80,7 +80,23 @@ class PluginActionMetaInfo {
 	}
 
 	private static Boolean isValidPluginAction(Method method) {
-		return hasPluginActionAnnotation(method) && isValidPluginActionParameterTypes(method.getParameterTypes());
+		if (hasPluginActionAnnotation(method)) {
+			if (isValidPluginActionParameterTypes(method.getParameterTypes())) {
+				return true;
+
+			} else {
+				// If a method with @PluginAction annotation doesn't have right signature types,
+				// then alert it.
+				StrawLog.printFrameworkError("Wrong Parameter Signature For Action Method: action=" + method.getName() + " for class=" + method.getClass().getCanonicalName());
+
+			}
+
+		}
+
+		// If a method doesn't have @PluginAction annotation,
+		// then it is not a target of plugin action validation,
+		// and no error message will be displayed.
+		return false;
 	}
 
 	private static Boolean hasPluginActionAnnotation(Method method) {

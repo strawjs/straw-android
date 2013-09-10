@@ -31,18 +31,13 @@ abstract public class StrawPlugin {
 
 	private void checkActionMethod(Method method) {
 
-		// getName method is special and should be ignore on PluginAction detection
-		if (method.getName().equals("getName")) {
-			return;
-		}
-
 		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method, this);
 
 		if (metaInfo != null) {
 			this.actionInfoMap.put(method.getName(), metaInfo);
-		} else {
-			StrawLog.printFrameworkError("Wrong Parameter Signature For Action Method: action=" + method.getName() + " for class=" + method.getClass().getCanonicalName());
 		}
+		// No else handling
+		// because it is done inside PluginActionMetaInfo.generateMetaInfo (factory method).
 	}
 
 	public void setWebView(WebView webView) {
