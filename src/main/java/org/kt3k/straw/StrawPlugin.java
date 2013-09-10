@@ -30,6 +30,8 @@ abstract public class StrawPlugin {
 	}
 
 	private void checkActionMethod(Method method) {
+
+		// getName method is special and should be ignore on PluginAction detection
 		if (method.getName().equals("getName")) {
 			return;
 		}
@@ -53,7 +55,7 @@ abstract public class StrawPlugin {
 		if (context instanceof Activity) {
 			this.activity = (Activity)context;
 		} else {
-			StrawLog.printFrameworkError("WebView.context is not an Activity. Plugins which depends on activity don't work.");
+			StrawLog.printFrameworkError("WebView.getContext() is not an Activity. Plugins which depends on activity don't work.");
 		}
 	}
 
