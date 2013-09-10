@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 import static org.mockito.Mockito.*;
 
+import android.app.Activity;
 import android.util.Printer;
 import android.webkit.WebView;
 import org.robolectric.RobolectricTestRunner;
@@ -117,16 +118,15 @@ public class StrawPluginRegistryTest {
 
 	@Test
 	public void testLoadPluginWithoutError() {
-		StrawPluginRegistry registry = new StrawPluginRegistry(mock(WebView.class));
+		WebView webView = mock(WebView.class);
+		when(webView.getContext()).thenReturn(mock(Activity.class));
+		StrawPluginRegistry registry = new StrawPluginRegistry(webView);
 
 		Printer printer = mock(Printer.class);
 		StrawLog.setPrinter(printer);
 		StrawLog.setPrintStackTrace(false);
 
 		registry.loadPluginByName("org.kt3k.straw.PluginWithoutError");
-
-		verify(printer).println("abc");
-		verify(printer).println("def");
 	}
 
 }
