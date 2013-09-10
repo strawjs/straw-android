@@ -7,9 +7,11 @@ public class PluginWithoutError extends StrawPlugin {
 		return "noErrorPlugin";
 	}
 
+	@PluginAction
 	public void methodAbc(Object _, StrawDrink drink) {
 	}
 
+	@PluginAction
 	public void methodDef(Object _, StrawDrink drink) {
 	}
 
