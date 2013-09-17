@@ -91,4 +91,12 @@
 
 		</plugins>
 	</build>
+
+    <distributionManagement>
+        <repository>
+            <id>internal.repo</id>
+            <name>internal repository</name>
+            <url>${internal.repo.path}</url>
+        </repository>
+    </distributionManagement>
 </project>
