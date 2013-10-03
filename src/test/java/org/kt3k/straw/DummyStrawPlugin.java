@@ -63,11 +63,13 @@ public class DummyStrawPlugin extends StrawPlugin {
 
 	@PluginAction
 	public void throwError(Object _, StrawDrink drink) {
-		Integer a = 0 / 0;
+		Integer a = 0;
+		a = a / a;
 	}
 
 	@PluginAction
 	private void actionWithWrongAccessModifier(Object _, StrawDrink drink) {
-		Integer a = 0 / 0;
+		Integer a = 0;
+		a = a / a;
 	}
 }
