@@ -55,9 +55,9 @@ public class StrawDrinkTest {
 		Straw straw = mock(Straw.class);
 		StrawDrink drink = new StrawDrink("a", "b", "c", "d", straw);
 
-		drink.fail("errorId", "errorMessage");
+		drink.fail("errorCode", "errorMessage");
 
-		verify(straw).postJsMessage("javascript:" + Straw.NATIVE_TO_JS_INTERFACE_NAME + ".exec(\"d\",false,{\"id\":\"errorId\",\"message\":\"errorMessage\"},false);");
+		verify(straw).postJsMessage("javascript:" + Straw.NATIVE_TO_JS_INTERFACE_NAME + ".exec(\"d\",false,{\"code\":\"errorCode\",\"message\":\"errorMessage\"},false);");
 	}
 
 	static class RecursiveParam {

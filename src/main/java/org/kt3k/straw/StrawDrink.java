@@ -93,11 +93,11 @@ public class StrawDrink {
 	}
 
 	static class ErrorResult {
-		public String id;
+		public String code;
 		public String message;
 
 		public ErrorResult(String id, String message) {
-			this.id = id;
+			this.code = id;
 			this.message = message;
 		}
 	}
