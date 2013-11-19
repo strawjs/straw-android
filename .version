@@ -1,0 +1,5 @@
+---
+version: 0.2.1
+files:
+  README.md: true
+  pom.xml: <version>#{V}</version>
