@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.kt3k.straw</groupId>
 	<artifactId>straw-android</artifactId>
-	<version>0.2.1</version>
+	<version>0.3.0</version>
 	<packaging>jar</packaging>
 	<name>straw</name>
 

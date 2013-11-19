@@ -105,5 +105,5 @@ puts config
 File.write VERSION_FILE, config.to_yaml
 
 if commit_file
-    `git add . ; git commit -m "Bump to version v#{after_version}"`
+    puts `git add . ; git commit -m "Bump to version v#{after_version}"`
 end
