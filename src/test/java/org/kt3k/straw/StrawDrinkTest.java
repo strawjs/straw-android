@@ -51,6 +51,36 @@ public class StrawDrinkTest {
 	}
 
 	@Test
+	public void testSuccessWithVoidParameter() {
+		Straw straw = mock(Straw.class);
+		StrawDrink drink = new StrawDrink("a", "b", "c", "d", straw);
+
+		drink.success();
+
+		verify(straw).postJsMessage("javascript:" + Straw.NATIVE_TO_JS_INTERFACE_NAME + ".exec(\"d\",true,{},false);");
+	}
+
+	@Test
+	public void testSuccessWithSingleIntegerParameter() {
+		Straw straw = mock(Straw.class);
+		StrawDrink drink = new StrawDrink("a", "b", "c", "d", straw);
+
+		drink.success(123);
+
+		verify(straw).postJsMessage("javascript:" + Straw.NATIVE_TO_JS_INTERFACE_NAME + ".exec(\"d\",true,{\"value\":123},false);");
+	}
+
+	@Test
+	public void testSuccessWithSingleStringParameter() {
+		Straw straw = mock(Straw.class);
+		StrawDrink drink = new StrawDrink("a", "b", "c", "d", straw);
+
+		drink.success("abc");
+
+		verify(straw).postJsMessage("javascript:" + Straw.NATIVE_TO_JS_INTERFACE_NAME + ".exec(\"d\",true,{\"value\":\"abc\"},false);");
+	}
+
+	@Test
 	public void testFail() {
 		Straw straw = mock(Straw.class);
 		StrawDrink drink = new StrawDrink("a", "b", "c", "d", straw);
