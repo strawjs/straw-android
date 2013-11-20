@@ -19,6 +19,16 @@ abstract public class StrawPlugin {
 
 	private HashMap<String, PluginActionMetaInfo> actionInfoMap = new HashMap<String, PluginActionMetaInfo>();
 
+
+	public static class SingleStringParam {
+		public String value;
+	}
+
+	public static class SingleIntegerParam {
+		public Integer value;
+	}
+
+
 	public StrawPlugin() {
 		this.checkActionMethods(this.getClass().getDeclaredMethods());
 	}
