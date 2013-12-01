@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 import android.webkit.WebView;
 import org.robolectric.RobolectricTestRunner;
 
+import com.squareup.otto.Subscribe;
+
 import static org.mockito.Mockito.*;
 
 @RunWith(RobolectricTestRunner.class)
@@ -75,6 +77,60 @@ public class StrawTest {
 		straw.clearPlugins();
 
 		assertNull(straw.getRegistry().getPluginByName("dummy"));
+	}
+
+
+	@Test
+	public void testOnBackPressed() {
+		Straw straw = new Straw(mock(WebView.class));
+
+		final Straw mock = mock(Straw.class);
+
+		straw.registerForBackPressed(new StrawPlugin() {
+
+			@Override
+			public String getName() {
+				return "dummy";
+			}
+
+			@Subscribe
+			public void onBackPressed(Object obj) {
+				mock.clearPlugins(); // dummy call for call verification
+			}
+		});
+
+		straw.onBackPressed();
+
+		verify(mock).clearPlugins();
+	}
+
+
+	@Test
+	public void testUnregisterForBackPressed() {
+		Straw straw = new Straw(mock(WebView.class));
+
+		final Straw mock = mock(Straw.class);
+
+		StrawPlugin plugin = new StrawPlugin() {
+
+			@Override
+			public String getName() {
+				return "dummy";
+			}
+
+			@Subscribe
+			public void onBackPressed(Object obj) {
+				mock.clearPlugins(); // dummy call for call verification
+			}
+		};
+
+		straw.registerForBackPressed(plugin);
+
+		straw.unregisterForBackPressed(plugin);
+
+		straw.onBackPressed();
+
+		verify(mock, never()).clearPlugins();
 	}
 
 }
