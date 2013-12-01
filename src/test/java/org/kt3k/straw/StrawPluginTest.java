@@ -10,23 +10,26 @@ import static org.mockito.Mockito.*;
 import android.util.Printer;
 import android.webkit.WebView;
 import android.app.Activity;
-
 import org.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)
 public class StrawPluginTest {
 
-	private final Activity activity = new Activity();
-	private final WebView webView = new WebView(activity);
-	private final StrawPluginRegistry registry = new StrawPluginRegistry(webView);
+	private StrawPluginRegistry registry;
 
 	private StrawPlugin dummyPlugin;
 	private StrawDrink mockDrink;
 
 	@Before
 	public void setUpDummyPlugin() throws Exception {
+		WebView webView = mock(WebView.class);
+		when(webView.getContext()).thenReturn(mock(Activity.class));
+
+		this.registry = new StrawPluginRegistry(webView);
 		this.registry.loadPluginByName("org.kt3k.straw.DummyStrawPlugin");
+
 		this.dummyPlugin = registry.getPluginByName("dummy");
+
 		this.mockDrink = mock(StrawDrink.class);
 	}
 

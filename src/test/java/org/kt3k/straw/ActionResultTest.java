@@ -5,8 +5,9 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
+import static org.mockito.Mockito.*;
+
 import android.webkit.WebView;
-import android.app.Activity;
 import org.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)
@@ -16,8 +17,7 @@ public class ActionResultTest {
 
 	@Before
 	public void setUp() {
-		WebView webView = new WebView(new Activity());
-		this.straw = new Straw(webView);
+		this.straw = new Straw(mock(WebView.class));
 	}
 
 	@Test

@@ -1,12 +1,16 @@
 # build result directory
-target
 bin
 
 # android generated files directory
 gen
 
-# Eclipse setting dir
+# Eclipse files
 .settings
+.project
+.classpath
 
 # gradle files
 .gradle
+
+# gradle build dir
+build
