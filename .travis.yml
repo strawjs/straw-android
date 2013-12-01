@@ -1,48 +1,13 @@
+# .travis.yml for straw-android
+
 language: java
 
 jdk:
 - oraclejdk7
 
-install: mvn install -Dmaven.compiler.target=1.5 -Dmaven.compiler.source=1.5 -DskipTests=true -B
-
-script: mvn test -Dmaven.compiler.target=1.5 -Dmaven.compiler.source=1.5 -B
+env:
+- TERM=dumb
 
 after_success:
-- mvn -Pcobertura -Dmaven.compiler.target=1.5 -Dmaven.compiler.source=1.5 clean cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:cobertura
-
-before_install:
-
-# env
-- env
-
-# x86_64 workaround
-- sudo apt-get update -qq
-- if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch > /dev/null; fi
-
-# install sdk
-- wget http://dl.google.com/android/android-sdk_r22-linux.tgz
-- tar -zxf android-sdk_r22-linux.tgz
-- export ANDROID_HOME=${TRAVIS_BUILD_DIR}/android-sdk-linux
-- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-
-# install android build tools
-- wget https://dl-ssl.google.com/android/repository/build-tools_r17-linux.zip
-- unzip build-tools_r17-linux.zip -d $ANDROID_HOME
-- mkdir -p $ANDROID_HOME/build-tools/
-- mv $ANDROID_HOME/android-4.2.2 $ANDROID_HOME/build-tools/17.0.0
-
-# install tools and platforms
-- echo yes | android update sdk --filter platform-tools --no-ui --all --force > /dev/null
-- echo yes | android update sdk --filter android-16 --no-ui --all --force > /dev/null
-- echo yes | android update sdk --filter android-17 --no-ui --all --force > /dev/null
-- echo yes | android update sdk --filter sysimg-17 --no-ui --all --force > /dev/null
-- echo yes | android update sdk --filter extra-android-support --no-ui --all --force > /dev/null
-
-# aapt path fix
-- cd $ANDROID_HOME/platform-tools
-
-- ln -s ../build-tools/17.0.0/aapt ./aapt
-- ln -s ../build-tools/17.0.0/aidl ./aidl
-- ln -s ../build-tools/17.0.0/lib ./lib
-
-- cd ${TRAVIS_BUILD_DIR}
+- gradle cobertura
+- gradle --info coveralls
