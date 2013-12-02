@@ -61,10 +61,6 @@ class StrawPluginRegistry {
 		return plugin;
 	}
 
-	public StrawPlugin getPluginByName(String name) {
-		return this.plugins.get(name);
-	}
-
 	public StrawPluginActionRepository getActionRepositoryForPluginName(String pluginName) {
 		return this.repos.get(pluginName);
 	}
