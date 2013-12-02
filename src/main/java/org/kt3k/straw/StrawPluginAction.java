@@ -2,7 +2,7 @@ package org.kt3k.straw;
 
 import java.lang.reflect.Method;
 
-class PluginActionMetaInfo {
+class StrawPluginAction {
 
 	final static Boolean IS_BACKGROUND_DEFAULT = true;
 
@@ -11,7 +11,7 @@ class PluginActionMetaInfo {
 	private final Method pluginAction;
 	private final Boolean isBackgroundAction;
 
-	private PluginActionMetaInfo(StrawPlugin plugin, Method method, Class<?> argumentType, Boolean isBackground) {
+	private StrawPluginAction(StrawPlugin plugin, Method method, Class<?> argumentType, Boolean isBackground) {
 		this.plugin = plugin;
 		this.pluginAction = method;
 		this.argumentType = argumentType;
@@ -25,7 +25,7 @@ class PluginActionMetaInfo {
 	public void invokeActionMethod(final Object argumentObject, final StrawDrink drink) {
 		if (this.isBackgroundAction) {
 
-			final PluginActionMetaInfo self = this;
+			final StrawPluginAction self = this;
 
 			new Thread() {
 
@@ -57,7 +57,7 @@ class PluginActionMetaInfo {
 		}
 	}
 
-	public static PluginActionMetaInfo generateMetaInfo(Method method, StrawPlugin plugin) {
+	public static StrawPluginAction generateMetaInfo(Method method, StrawPlugin plugin) {
 		if (isValidPluginAction(method)) {
 			Boolean isBackground = IS_BACKGROUND_DEFAULT;
 
@@ -69,7 +69,7 @@ class PluginActionMetaInfo {
 				isBackground = true;
 			}
 
-			return new PluginActionMetaInfo(plugin, method, getArgumentTypeOfPluginAction(method), isBackground);
+			return new StrawPluginAction(plugin, method, getArgumentTypeOfPluginAction(method), isBackground);
 		}
 
 		return null;

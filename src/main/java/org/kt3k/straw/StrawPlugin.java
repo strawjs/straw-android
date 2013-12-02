@@ -17,7 +17,7 @@ abstract public class StrawPlugin {
 
 	protected Activity activity;
 
-	private HashMap<String, PluginActionMetaInfo> actionInfoMap = new HashMap<String, PluginActionMetaInfo>();
+	private HashMap<String, StrawPluginAction> actionInfoMap = new HashMap<String, StrawPluginAction>();
 
 
 	public static class SingleStringParam {
@@ -41,7 +41,7 @@ abstract public class StrawPlugin {
 
 	private void checkActionMethod(Method method) {
 
-		PluginActionMetaInfo metaInfo = PluginActionMetaInfo.generateMetaInfo(method, this);
+		StrawPluginAction metaInfo = StrawPluginAction.generateMetaInfo(method, this);
 
 		if (metaInfo != null) {
 			this.actionInfoMap.put(method.getName(), metaInfo);
@@ -74,14 +74,14 @@ abstract public class StrawPlugin {
 		this.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
 	}
 
-	public PluginActionMetaInfo getActionInfo(String actionName) {
+	public StrawPluginAction getActionInfo(String actionName) {
 		return this.actionInfoMap.get(actionName);
 	}
 
 	private void invokeActionMethod(String actionName, String argumentJson, StrawDrink drink) {
-		PluginActionMetaInfo metaInfo = this.getActionInfo(actionName);
+		StrawPluginAction action = this.getActionInfo(actionName);
 
-		if (metaInfo == null) {
+		if (action == null) {
 			StrawLog.printFrameworkError("No Such Plugin Action: " + drink.toString());
 
 			return;
@@ -91,7 +91,7 @@ abstract public class StrawPlugin {
 
 		try {
 
-			argumentObject = StrawPlugin.createArgumentJson(argumentJson, metaInfo.getArgumentType());
+			argumentObject = StrawUtil.jsonToObj(argumentJson, action.getArgumentType());
 
 		} catch (JsonSyntaxException e) {
 			StrawLog.printFrameworkError(e, "JSON Parse Error: " + drink);
@@ -99,11 +99,8 @@ abstract public class StrawPlugin {
 
 		}
 
-		metaInfo.invokeActionMethod(argumentObject, drink);
+		action.invokeActionMethod(argumentObject, drink);
 
 	}
 
-	private static Object createArgumentJson(String argumentJson, Class<? extends Object> type) throws JsonSyntaxException {
-		return StrawUtil.jsonToObj(argumentJson, type);
-	}
 }
