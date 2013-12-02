@@ -60,7 +60,7 @@ abstract public class StrawPlugin {
 		if (context instanceof Activity) {
 			this.activity = (Activity)context;
 		} else {
-			StrawLog.printFrameworkError("WebView.getContext() is not an Activity. Plugins which depends on activity don't work.");
+			StrawLog.printFrameworkError("WebView.getContext() is not an Activity. A Plugin which depends on activity doesn't work.");
 		}
 	}
 
