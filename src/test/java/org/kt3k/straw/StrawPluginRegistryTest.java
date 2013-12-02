@@ -25,9 +25,11 @@ public class StrawPluginRegistryTest {
 
 		registry.loadPlugins(new String[]{"org.kt3k.straw.DummyStrawPlugin"});
 
-		StrawPlugin dummyPlugin = registry.getPluginByName("dummy");
-		assertNotNull(dummyPlugin);
-		assertEquals("org.kt3k.straw.DummyStrawPlugin", dummyPlugin.getClass().getCanonicalName());
+		StrawPluginActionRepository repo = registry.getActionRepositoryForPluginName("dummy");
+		assertNotNull(repo);
+
+		StrawPluginAction action = repo.get("dummyAction");
+		assertNotNull(action);
 	}
 
 
@@ -37,9 +39,11 @@ public class StrawPluginRegistryTest {
 
 		registry.loadPluginByName("org.kt3k.straw.DummyStrawPlugin");
 
-		StrawPlugin dummyPlugin = registry.getPluginByName("dummy");
-		assertNotNull(dummyPlugin);
-		assertEquals("org.kt3k.straw.DummyStrawPlugin", dummyPlugin.getClass().getCanonicalName());
+		StrawPluginActionRepository repo = registry.getActionRepositoryForPluginName("dummy");
+		assertNotNull(repo);
+
+		StrawPluginAction action = repo.get("dummyAction");
+		assertNotNull(action);
 	}
 
 	@Test
@@ -48,9 +52,11 @@ public class StrawPluginRegistryTest {
 
 		registry.loadPluginByClass(org.kt3k.straw.DummyStrawPlugin.class);
 
-		StrawPlugin dummyPlugin = registry.getPluginByName("dummy");
-		assertNotNull(dummyPlugin);
-		assertEquals("org.kt3k.straw.DummyStrawPlugin", dummyPlugin.getClass().getCanonicalName());
+		StrawPluginActionRepository repo = registry.getActionRepositoryForPluginName("dummy");
+		assertNotNull(repo);
+
+		StrawPluginAction action = repo.get("dummyAction");
+		assertNotNull(action);
 	}
 
 	@Test

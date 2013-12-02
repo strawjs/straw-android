@@ -19,8 +19,6 @@ abstract public class StrawPlugin {
 
 	protected Activity activity;
 
-	private HashMap<String, StrawPluginAction> actionInfoMap = new HashMap<String, StrawPluginAction>();
-
 
 	public static class SingleStringParam {
 		public String value;
@@ -32,13 +30,6 @@ abstract public class StrawPlugin {
 
 
 	public StrawPlugin() {
-		this.checkActionMethods();
-	}
-
-	private void checkActionMethods() {
-		for (StrawPluginAction action: this.createPluginActions()) {
-			this.actionInfoMap.put(action.getName(), action);
-		}
 	}
 
 	public List<StrawPluginAction> createPluginActions() {
@@ -76,38 +67,5 @@ abstract public class StrawPlugin {
 	 * @return straw-plugin's name
 	 */
 	abstract public String getName();
-
-	public void exec(final StrawDrink drink) {
-		this.invokeActionMethod(drink.getActionName(), drink.getArgumentJson(), drink);
-	}
-
-	public StrawPluginAction getActionInfo(String actionName) {
-		return this.actionInfoMap.get(actionName);
-	}
-
-	private void invokeActionMethod(String actionName, String argumentJson, StrawDrink drink) {
-		StrawPluginAction action = this.getActionInfo(actionName);
-
-		if (action == null) {
-			StrawLog.printFrameworkError("No Such Plugin Action: " + drink.toString());
-
-			return;
-		}
-
-		Object argumentObject;
-
-		try {
-
-			argumentObject = StrawUtil.jsonToObj(argumentJson, action.getArgumentType());
-
-		} catch (JsonSyntaxException e) {
-			StrawLog.printFrameworkError(e, "JSON Parse Error: " + drink);
-			return;
-
-		}
-
-		action.invokeActionMethod(argumentObject, drink);
-
-	}
 
 }

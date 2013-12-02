@@ -28,6 +28,10 @@ class StrawPluginAction {
 		return this.actionName;
 	}
 
+	public StrawPlugin getPlugin() {
+		return this.plugin;
+	}
+
 	public void invokeActionMethod(final Object argumentObject, final StrawDrink drink) {
 		if (this.isBackgroundAction) {
 

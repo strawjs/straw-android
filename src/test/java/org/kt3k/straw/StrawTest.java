@@ -64,19 +64,19 @@ public class StrawTest {
 
 		straw.addPlugins(new String[]{"org.kt3k.straw.DummyStrawPlugin"});
 
-		assertEquals("org.kt3k.straw.DummyStrawPlugin", straw.getRegistry().getPluginByName("dummy").getClass().getCanonicalName());
+		assertNotNull(straw.getRegistry().getActionRepositoryForPluginName("dummy"));
 
 		straw.removePlugin("dummy");
 
-		assertNull(straw.getRegistry().getPluginByName("dummy"));
+		assertNull(straw.getRegistry().getActionRepositoryForPluginName("dummy"));
 
 		straw.addPlugins(new String[]{"org.kt3k.straw.DummyStrawPlugin"});
 
-		assertEquals("org.kt3k.straw.DummyStrawPlugin", straw.getRegistry().getPluginByName("dummy").getClass().getCanonicalName());
+		assertNotNull(straw.getRegistry().getActionRepositoryForPluginName("dummy"));
 
 		straw.clearPlugins();
 
-		assertNull(straw.getRegistry().getPluginByName("dummy"));
+		assertNull(straw.getRegistry().getActionRepositoryForPluginName("dummy"));
 	}
 
 

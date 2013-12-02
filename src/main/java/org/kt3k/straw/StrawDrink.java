@@ -2,9 +2,11 @@ package org.kt3k.straw;
 
 import static org.kt3k.straw.ActionResult.toJsMessage;
 
+import com.google.gson.JsonSyntaxException;
+
 /**
- * one StrawDrink for each straw API call
  * StrawDrink represents the straw api's execution context
+ * one StrawDrink for each straw API call
  */
 public class StrawDrink {
 
@@ -52,13 +54,37 @@ public class StrawDrink {
 	}
 
 	public void exec() {
-		StrawPlugin plugin = this.straw.getRegistry().getPluginByName(this.pluginName);
+		StrawPluginActionRepository repo = this.straw.getRegistry().getActionRepositoryForPluginName(this.pluginName);
 
-		if (plugin != null) {
-			plugin.exec(this);
-		} else {
+		// when plugin name unavailable
+		if (repo == null) {
 			StrawLog.printFrameworkError("no such plugin: " + this.toString());
+			return;
 		}
+
+		StrawPluginAction action = repo.get(this.actionName);
+
+		// when plugin action name unavailable
+		if (action == null) {
+			StrawLog.printFrameworkError("No Such Plugin Action: " + this.toString());
+
+			return;
+		}
+
+		Object argumentObject;
+
+		try {
+
+			argumentObject = StrawUtil.jsonToObj(argumentJson, action.getArgumentType());
+
+		} catch (JsonSyntaxException e) {
+			StrawLog.printFrameworkError(e, "JSON Parse Error: " + this.toString());
+			return;
+
+		}
+
+		action.invokeActionMethod(argumentObject, this);
+
 	}
 
 	public String getPluginName() {

@@ -21,6 +21,7 @@ class StrawPluginRegistry {
 	}
 
 	private HashMap<String, StrawPlugin> plugins = new HashMap<String, StrawPlugin>();
+	private HashMap<String, StrawPluginActionRepository> repos = new HashMap<String, StrawPluginActionRepository>();
 
 	private WebView webView;;
 
@@ -64,6 +65,10 @@ class StrawPluginRegistry {
 		return this.plugins.get(name);
 	}
 
+	public StrawPluginActionRepository getActionRepositoryForPluginName(String pluginName) {
+		return this.repos.get(pluginName);
+	}
+
 	public void loadPlugin(StrawPlugin plugin) {
 		if (plugin == null) {
 			return;
@@ -75,7 +80,13 @@ class StrawPluginRegistry {
 			return;
 		}
 
-		this.plugins.put(pluginName, plugin);
+		StrawPluginActionRepository repo = new StrawPluginActionRepository();
+
+		for(StrawPluginAction action: plugin.createPluginActions()) {
+			repo.put(action.getName(), action);
+		}
+
+		this.repos.put(pluginName, repo);
 	}
 
 	public void loadPluginByClass(Class<? extends StrawPlugin> pluginClass) {
@@ -93,10 +104,10 @@ class StrawPluginRegistry {
 	}
 
 	public void unloadAllPlugins() {
-		this.plugins.clear();
+		this.repos.clear();
 	}
 
 	public void unloadPlugin(String name) {
-		this.plugins.remove(name);
+		this.repos.remove(name);
 	}
 }
