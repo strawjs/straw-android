@@ -10,16 +10,22 @@ class StrawPluginAction {
 	private final Class<?> argumentType;
 	private final Method pluginAction;
 	private final Boolean isBackgroundAction;
+	private final String actionName;
 
-	private StrawPluginAction(StrawPlugin plugin, Method method, Class<?> argumentType, Boolean isBackground) {
+	private StrawPluginAction(StrawPlugin plugin, Method method, String actionName, Class<?> argumentType, Boolean isBackground) {
 		this.plugin = plugin;
 		this.pluginAction = method;
+		this.actionName = actionName;
 		this.argumentType = argumentType;
 		this.isBackgroundAction = isBackground;
 	}
 
 	public Class<?> getArgumentType() {
 		return this.argumentType;
+	}
+
+	public String getName() {
+		return this.actionName;
 	}
 
 	public void invokeActionMethod(final Object argumentObject, final StrawDrink drink) {
@@ -69,7 +75,7 @@ class StrawPluginAction {
 				isBackground = true;
 			}
 
-			return new StrawPluginAction(plugin, method, getArgumentTypeOfPluginAction(method), isBackground);
+			return new StrawPluginAction(plugin, method, method.getName(), getArgumentTypeOfPluginAction(method), isBackground);
 		}
 
 		return null;

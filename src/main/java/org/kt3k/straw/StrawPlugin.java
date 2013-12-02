@@ -4,7 +4,9 @@ import android.webkit.WebView;
 import android.app.Activity;
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.lang.reflect.Method;
 
 import com.google.gson.JsonSyntaxException;
@@ -30,24 +32,29 @@ abstract public class StrawPlugin {
 
 
 	public StrawPlugin() {
-		this.checkActionMethods(this.getClass().getDeclaredMethods());
+		this.checkActionMethods();
 	}
 
-	private void checkActionMethods(Method[] methods) {
+	private void checkActionMethods() {
+		for (StrawPluginAction action: this.createPluginActions()) {
+			this.actionInfoMap.put(action.getName(), action);
+		}
+	}
+
+	public List<StrawPluginAction> createPluginActions() {
+		Method[] methods = this.getClass().getDeclaredMethods();
+
+		List<StrawPluginAction> actions = new ArrayList<StrawPluginAction>();
+
 		for (Method method: methods) {
-			this.checkActionMethod(method);
+			StrawPluginAction action = StrawPluginAction.generateMetaInfo(method, this);
+
+			if (action != null) {
+				actions.add(action);
+			}
 		}
-	}
 
-	private void checkActionMethod(Method method) {
-
-		StrawPluginAction metaInfo = StrawPluginAction.generateMetaInfo(method, this);
-
-		if (metaInfo != null) {
-			this.actionInfoMap.put(method.getName(), metaInfo);
-		}
-		// No else handling
-		// because it is done inside PluginActionMetaInfo.generateMetaInfo (factory method).
+		return actions;
 	}
 
 	public void setWebView(WebView webView) {
