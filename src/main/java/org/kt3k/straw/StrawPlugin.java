@@ -5,11 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.lang.reflect.Method;
-
-import com.google.gson.JsonSyntaxException;
 
 abstract public class StrawPlugin {
 

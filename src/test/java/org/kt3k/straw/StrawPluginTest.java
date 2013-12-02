@@ -7,7 +7,6 @@ import static org.junit.Assert.*;
 
 import static org.mockito.Mockito.*;
 
-import android.util.Printer;
 import android.webkit.WebView;
 import android.app.Activity;
 import org.robolectric.RobolectricTestRunner;
@@ -18,8 +17,6 @@ public class StrawPluginTest {
 	private StrawPluginRegistry registry;
 
 	private StrawPlugin dummyPlugin;
-	private StrawDrink mockDrink;
-
 	@Before
 	public void setUpDummyPlugin() throws Exception {
 		WebView webView = mock(WebView.class);
@@ -30,7 +27,7 @@ public class StrawPluginTest {
 
 		this.dummyPlugin = registry.getActionRepositoryForPluginName("dummy").get("dummyAction").getPlugin();
 
-		this.mockDrink = mock(StrawDrink.class);
+		mock(StrawDrink.class);
 	}
 
 	/*
@@ -146,4 +143,15 @@ public class StrawPluginTest {
 		verify(printer, timeout(1000)).println("java.lang.IllegalAccessException: Class org.kt3k.straw.StrawPluginAction can not access a member of class org.kt3k.straw.DummyStrawPlugin with modifiers \"private\"");
 	}
 	 */
+
+	@Test
+	public void testSingleStringParam() {
+		assertNotNull(new StrawPlugin.SingleStringParam());
+	}
+
+
+	@Test
+	public void testSingleIntegerParam() {
+		assertNotNull(new StrawPlugin.SingleIntegerParam());
+	}
 }
