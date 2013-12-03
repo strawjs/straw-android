@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import android.util.Printer;
+import android.webkit.WebView;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -111,5 +112,84 @@ public class StrawDrinkTest {
 		verify(printer).println("Straw Framework Error: unknown error: plugin=a action=b argumentJson=c callbackId=d");
 		verify(printer).println("java.lang.StackOverflowError");
 	}
+
+
+	@Test
+	public void testExecWithNonexistentPluginName() {
+		Straw straw = new Straw(mock(WebView.class));
+		StrawDrink drink = new StrawDrink("nonexistent", "nop", "{}", "1", straw);
+
+		// set up mock printer
+		Printer printer = mock(Printer.class);
+		StrawLog.setPrinter(printer);
+		StrawLog.setPrintStackTrace(false);
+
+		drink.exec();
+
+		verify(printer).println("Straw Framework Error: No such plugin: plugin=nonexistent action=nop argumentJson={} callbackId=1");
+	}
+
+
+	@Test
+	public void testExecWithNonexistentActionName() {
+		// set up straw
+		Straw straw = new Straw(mock(WebView.class));
+		straw.addPlugin("org.kt3k.straw.DummyStrawPlugin");
+
+		// set up drink
+		StrawDrink drink = new StrawDrink("dummy", "nonexistentAction", "{}", "1", straw);
+
+		// set up mock printer
+		Printer printer = mock(Printer.class);
+		StrawLog.setPrinter(printer);
+		StrawLog.setPrintStackTrace(false);
+
+		drink.exec();
+
+		verify(printer).println("Straw Framework Error: No such plugin action: plugin=dummy action=nonexistentAction argumentJson={} callbackId=1");
+	}
+
+
+	@Test
+	public void testExecWithBrokenArgumentJson() {
+		// set up straw
+		Straw straw = new Straw(mock(WebView.class));
+		straw.addPlugin("org.kt3k.straw.DummyStrawPlugin");
+
+		// set up drink
+		StrawDrink drink = new StrawDrink("dummy", "dummyAction", "{broken json}", "1", straw);
+
+		// set up mock printer
+		Printer printer = mock(Printer.class);
+		StrawLog.setPrinter(printer);
+		StrawLog.setPrintStackTrace(false);
+
+		drink.exec();
+
+		verify(printer).println("Straw Framework Error: JSON parse error: plugin=dummy action=dummyAction argumentJson={broken json} callbackId=1");
+	}
+
+
+	@Test
+	public void testExecWithSuccessCall() {
+		// set up straw
+		Straw straw = new Straw(mock(WebView.class));
+		straw.addPlugin("org.kt3k.straw.DummyStrawPlugin");
+
+		// set up drink
+		StrawDrink drink = new StrawDrink("dummy", "dummyAction", "{}", "1", straw);
+
+		// set up mock printer
+		Printer printer = mock(Printer.class);
+		StrawLog.setPrinter(printer);
+		StrawLog.setPrintStackTrace(false);
+
+		drink.exec();
+
+		verify(printer, never()).println(anyString());
+
+		assertTrue(drink.isSuccess());
+	}
+
 
 }

@@ -7,6 +7,7 @@ import com.google.gson.JsonSyntaxException;
 /**
  * StrawDrink represents the straw api's execution context
  * one StrawDrink for each straw API call
+ * other naming candidates were: StrawCall, StrawShot, StrawContext etc
  */
 public class StrawDrink {
 
@@ -58,7 +59,7 @@ public class StrawDrink {
 
 		// when plugin name unavailable
 		if (repo == null) {
-			StrawLog.printFrameworkError("no such plugin: " + this.toString());
+			StrawLog.printFrameworkError("No such plugin: " + this.toString());
 			return;
 		}
 
@@ -66,7 +67,7 @@ public class StrawDrink {
 
 		// when plugin action name unavailable
 		if (action == null) {
-			StrawLog.printFrameworkError("No Such Plugin Action: " + this.toString());
+			StrawLog.printFrameworkError("No such plugin action: " + this.toString());
 
 			return;
 		}
@@ -78,7 +79,7 @@ public class StrawDrink {
 			argumentObject = StrawUtil.jsonToObj(argumentJson, action.getArgumentType());
 
 		} catch (JsonSyntaxException e) {
-			StrawLog.printFrameworkError(e, "JSON Parse Error: " + this.toString());
+			StrawLog.printFrameworkError(e, "JSON parse error: " + this.toString());
 			return;
 
 		}
