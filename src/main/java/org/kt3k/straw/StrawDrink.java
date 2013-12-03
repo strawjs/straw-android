@@ -84,7 +84,7 @@ public class StrawDrink {
 
 		}
 
-		action.invokeActionMethod(argumentObject, this);
+		action.invoke(argumentObject, this);
 
 	}
 

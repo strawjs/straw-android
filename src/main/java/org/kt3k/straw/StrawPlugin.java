@@ -35,7 +35,7 @@ abstract public class StrawPlugin {
 		List<StrawPluginAction> actions = new ArrayList<StrawPluginAction>();
 
 		for (Method method: methods) {
-			StrawPluginAction action = StrawPluginAction.generateMetaInfo(method, this);
+			StrawPluginAction action = StrawPluginActionFactory.createPluginAction(method, this);
 
 			if (action != null) {
 				actions.add(action);
