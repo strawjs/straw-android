@@ -25,7 +25,7 @@ public class StrawPluginActionFactory {
 	}
 
 	private static Boolean isValidPluginActionParameterTypes(Class<?>[] parameterTypes) {
-		return parameterTypes.length == 2 && parameterTypes[1].isAssignableFrom(StrawDrink.class);
+		return parameterTypes.length == 2 && StrawDrink.class.isAssignableFrom(parameterTypes[1]);
 	}
 
 	private static Boolean isValidPluginAction(Method method) {
@@ -61,9 +61,7 @@ public class StrawPluginActionFactory {
 	}
 
 	private static Class<?> getArgumentTypeOfPluginAction(Method method) {
-		Class<?>[] parameterTypes = method.getParameterTypes();
-
-		return parameterTypes.length == 2 ? parameterTypes[0] : null;
+		return method.getParameterTypes()[0];
 	}
 
 }
