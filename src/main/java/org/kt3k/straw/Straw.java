@@ -1,6 +1,5 @@
 package org.kt3k.straw;
 
-import android.view.KeyEvent;
 import android.webkit.WebView;
 
 import com.squareup.otto.Bus;
