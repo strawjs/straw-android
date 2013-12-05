@@ -17,8 +17,8 @@ public class StrawLog {
 		if (e != null) {
 			output.println(e.toString());
 
-			if (StrawLog.printStackTrace) {
-				output.println(getStackTraceString(e));
+			for (StackTraceElement elm: e.getStackTrace()) {
+				output.println(elm.toString());
 			}
 		}
 	}
@@ -33,10 +33,6 @@ public class StrawLog {
 
 	public static void setPrintStackTrace(Boolean printStackTrace) {
 		StrawLog.printStackTrace = printStackTrace;
-	}
-
-	private static String getStackTraceString(Throwable e) {
-		return StrawUtil.join(e.getStackTrace(), "\n");
 	}
 
 	public static void printFrameworkError(Throwable e, String message) {
