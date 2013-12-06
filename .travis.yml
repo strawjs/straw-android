@@ -9,5 +9,5 @@ env:
 - TERM=dumb
 
 after_success:
-- gradle cobertura
+- gradle jacocoTestReport
 - gradle --info coveralls
