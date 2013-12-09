@@ -1,7 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
-//apply plugin: 'cobertura'
 apply plugin: 'coveralls'
 apply plugin: 'jacoco'
 
@@ -29,15 +28,10 @@ buildscript {
 
         mavenCentral()
 
-        maven {
-            url 'http://kt3k.github.io/repository/maven/release'
-        }
-
     }
 
     dependencies {
-        //classpath 'net.saliman:gradle-cobertura-plugin:2.0.0'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.1.7-test'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.2.1'
     }
 }
 
@@ -50,8 +44,6 @@ uploadArchives {
         }
     }
 }
-
-//cobertura.coverageFormats = ['html', 'xml']
 
 jacocoTestReport {
     reports {
