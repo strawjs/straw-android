@@ -9,5 +9,4 @@ env:
 - TERM=dumb
 
 after_success:
-- gradle cobertura
-- gradle --info coveralls
+- gradle cobertura coveralls
