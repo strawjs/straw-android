@@ -89,4 +89,15 @@ public class Straw {
 		// post back key events to registered handlers
 		this.backKeyBus.post(new Object());
 	}
+
+	static class StrawEvent {
+
+		public final String type;
+
+		public StrawEvent(String type) {
+			this.type = type;
+		}
+
+	}
+
 }
