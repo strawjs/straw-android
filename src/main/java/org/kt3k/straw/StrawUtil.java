@@ -1,5 +1,8 @@
 package org.kt3k.straw;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -32,5 +35,9 @@ public class StrawUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static Boolean hasAnnotation(Method method, Class<? extends Annotation> annotation) {
+		return method.getAnnotation(annotation) != null;
 	}
 }
