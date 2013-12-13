@@ -1,5 +1,7 @@
 package org.kt3k.straw;
 
+import org.kt3k.straw.annotation.PluginAction;
+
 public class PluginWithoutError extends StrawPlugin {
 
 	@Override

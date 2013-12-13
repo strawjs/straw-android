@@ -1,4 +1,4 @@
-package org.kt3k.straw;
+package org.kt3k.straw.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;

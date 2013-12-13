@@ -2,6 +2,8 @@ package org.kt3k.straw;
 
 import java.lang.reflect.Method;
 
+import org.kt3k.straw.annotation.PluginAction;
+
 public class StrawPluginActionFactory {
 
 	final static Boolean IS_BACKGROUND_DEFAULT = true;
