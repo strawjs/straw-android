@@ -2,7 +2,9 @@ package org.kt3k.straw;
 
 import java.lang.reflect.Method;
 
+import org.kt3k.straw.annotation.Background;
 import org.kt3k.straw.annotation.PluginAction;
+import org.kt3k.straw.annotation.RunOnUiThread;
 
 public class StrawPluginActionFactory {
 

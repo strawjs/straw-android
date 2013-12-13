@@ -3,6 +3,7 @@ package org.kt3k.straw;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kt3k.straw.annotation.PluginAction;
+import org.kt3k.straw.annotation.RunOnUiThread;
 import org.robolectric.RobolectricTestRunner;
 
 import android.util.Printer;

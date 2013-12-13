@@ -6,7 +6,9 @@ import java.lang.reflect.Method;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kt3k.straw.annotation.Background;
 import org.kt3k.straw.annotation.PluginAction;
+import org.kt3k.straw.annotation.RunOnUiThread;
 import org.robolectric.RobolectricTestRunner;
 
 class StrawPluginFixture2 extends StrawPlugin {
