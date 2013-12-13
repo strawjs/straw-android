@@ -20,7 +20,6 @@ class StrawPluginRegistry {
 		return plugin;
 	}
 
-	private HashMap<String, StrawPlugin> plugins = new HashMap<String, StrawPlugin>();
 	private HashMap<String, StrawPluginActionRepository> repos = new HashMap<String, StrawPluginActionRepository>();
 
 	private WebView webView;;
