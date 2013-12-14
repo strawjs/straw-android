@@ -1,5 +1,8 @@
 package org.kt3k.straw;
 
+import java.lang.reflect.Method;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
@@ -56,6 +59,14 @@ public class StrawUtilTest {
 	@Test
 	public void testConstructor() {
 		new StrawUtil();
+	}
+	
+	public void testHasAnnotation() throws SecurityException, NoSuchMethodException {
+		Method method = this.getClass().getMethod("testHasAnnotation", new Class[]{});
+		
+		assertTrue(StrawUtil.hasAnnotation(method, Test.class));
+		
+		assertFalse(StrawUtil.hasAnnotation(method, Before.class));
 	}
 
 }
