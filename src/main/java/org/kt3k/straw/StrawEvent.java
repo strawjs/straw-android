@@ -8,4 +8,9 @@ class StrawEvent {
 		this.type = type;
 	}
 
+	@Override
+	public String toString() {
+		return "StrawEvent (type=" + this.type + ")";
+	}
+
 }

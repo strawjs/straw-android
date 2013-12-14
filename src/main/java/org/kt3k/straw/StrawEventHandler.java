@@ -53,18 +53,20 @@ public class StrawEventHandler {
 	 * invoke straw event handler synchronously
 	 * @param e
 	 */
-	private void invokeSync(StrawEvent e) {
+	private synchronized void invokeSync(StrawEvent event) {
 		try {
-			this.method.invoke(plugin, e);
-		} catch (IllegalArgumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IllegalAccessException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvocationTargetException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			this.method.invoke(plugin, event);
+
+		} catch (IllegalArgumentException e) {
+			StrawLog.printFrameworkError(e, "Cannot invoke event handler (illegal argument exception): " + event.toString());
+
+		} catch (IllegalAccessException e) {
+			StrawLog.printFrameworkError(e, "Cannot invoke event handler (illegal access exception): " + event.toString());
+
+		} catch (InvocationTargetException e) {
+			StrawLog.printFrameworkError(e, "Cannot invoke event handler (invocation target exception): " + event.toString());
+			StrawLog.printFrameworkError(e.getCause(), "cannot invoke event handler (invocation target exception): " + event.toString());
+
 		}
 	}
 }
