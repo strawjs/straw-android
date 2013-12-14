@@ -1,6 +1,9 @@
 package org.kt3k.straw;
 
+import org.kt3k.straw.annotation.Background;
+import org.kt3k.straw.annotation.EventHandler;
 import org.kt3k.straw.annotation.PluginAction;
+import org.kt3k.straw.annotation.RunOnUiThread;
 
 public class DummyStrawPlugin extends StrawPlugin {
 
@@ -73,5 +76,23 @@ public class DummyStrawPlugin extends StrawPlugin {
 	private void actionWithWrongAccessModifier(Object _, StrawDrink drink) {
 		Integer a = 0;
 		a = a / a;
+	}
+
+
+	@EventHandler("backPressed")
+	public void backPressedHandler(StrawEvent e) {
+		e.toString();
+	}
+
+	@Background
+	@EventHandler("some event")
+	public void backPressedHandlerBackground(StrawEvent e) {
+		e.toString();
+	}
+
+	@RunOnUiThread
+	@EventHandler("some event 2")
+	public void backPressedHandlerForeground(StrawEvent e) {
+		e.toString();
 	}
 }
