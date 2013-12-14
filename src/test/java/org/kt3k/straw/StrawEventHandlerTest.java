@@ -27,10 +27,12 @@ public class StrawEventHandlerTest {
 
 	}
 
+
 	@Test
 	public void testConstructor() throws SecurityException, NoSuchMethodException {
 		assertNotNull(new StrawEventHandler(new StrawPluginDummy(), "event", this.getClass().getMethod("testConstructor", new Class[]{}), false));
 	}
+
 
 	@Test
 	public void testGetters() throws SecurityException, NoSuchMethodException {
@@ -76,6 +78,7 @@ public class StrawEventHandlerTest {
 		verify(mock, timeout(1000)).postJsMessage("abc");
 	}
 
+
 	@Test
 	public void testInvokeForeground() throws SecurityException, NoSuchMethodException {
 		// mock up object
@@ -109,6 +112,7 @@ public class StrawEventHandlerTest {
 		verify(mock).postJsMessage("abc");
 	}
 
+
 	@Test
 	public void testInvokeArgumentException() throws SecurityException, NoSuchMethodException {
 		// mock up printer
@@ -141,4 +145,74 @@ public class StrawEventHandlerTest {
 
 		verify(printer).println("Straw Framework Error: Cannot invoke event handler (illegal argument exception): StrawEvent (type=event)");
 	}
+
+
+	@Test
+	public void testInvokeIllegalAccessException() throws SecurityException, NoSuchMethodException {
+		// mock up printer
+		Printer printer = mock(Printer.class);
+		StrawLog.setPrinter(printer);
+		StrawLog.setPrintStackTrace(false);
+
+		// create fixture plugin
+		StrawPlugin plugin = new StrawPlugin () {
+
+			@Override
+			public String getName() {
+				return "name";
+			}
+
+			@RunOnUiThread
+			@EventHandler("xyz_event")
+			private void handler(StrawEvent e) {
+			}
+		};
+
+		// get method
+		Method method = plugin.getClass().getDeclaredMethod("handler", new Class[]{StrawEvent.class});
+
+		// create handler object
+		StrawEventHandler handler = new StrawEventHandler(plugin, "event", method, false);
+
+		// invoke
+		handler.invoke(new StrawEvent("event"));
+
+		verify(printer).println("Straw Framework Error: Cannot invoke event handler (illegal access exception): StrawEvent (type=event)");
+	}
+
+
+	@Test
+	public void testInvokeTargetInvocationException() throws SecurityException, NoSuchMethodException {
+		// mock up printer
+		Printer printer = mock(Printer.class);
+		StrawLog.setPrinter(printer);
+		StrawLog.setPrintStackTrace(false);
+
+		// create fixture plugin
+		StrawPlugin plugin = new StrawPlugin () {
+
+			@Override
+			public String getName() {
+				return "name";
+			}
+
+			@RunOnUiThread
+			@EventHandler("xyz_event")
+			public void handler(StrawEvent e) {
+				e.equals(1 / 0);
+			}
+		};
+
+		// get method
+		Method method = plugin.getClass().getDeclaredMethod("handler", new Class[]{StrawEvent.class});
+
+		// create handler object
+		StrawEventHandler handler = new StrawEventHandler(plugin, "event", method, false);
+
+		// invoke
+		handler.invoke(new StrawEvent("event"));
+
+		verify(printer, times(2)).println("Straw Framework Error: Cannot invoke event handler (invocation target exception): StrawEvent (type=event)");
+	}
+
 }

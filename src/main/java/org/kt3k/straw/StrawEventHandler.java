@@ -65,7 +65,7 @@ public class StrawEventHandler {
 
 		} catch (InvocationTargetException e) {
 			StrawLog.printFrameworkError(e, "Cannot invoke event handler (invocation target exception): " + event.toString());
-			StrawLog.printFrameworkError(e.getCause(), "cannot invoke event handler (invocation target exception): " + event.toString());
+			StrawLog.printFrameworkError(e.getCause(), "Cannot invoke event handler (invocation target exception): " + event.toString());
 
 		}
 	}
