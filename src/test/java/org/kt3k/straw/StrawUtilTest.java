@@ -61,6 +61,7 @@ public class StrawUtilTest {
 		new StrawUtil();
 	}
 	
+	@Test
 	public void testHasAnnotation() throws SecurityException, NoSuchMethodException {
 		Method method = this.getClass().getMethod("testHasAnnotation", new Class[]{});
 		
