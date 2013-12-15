@@ -10,7 +10,6 @@ public class Straw {
 	private final WebView webView;
 	private final JsToNativeInterface jsInterface;
 	private final StrawPluginRegistry registry;
-	private final StrawEventHandlerRepository handlerRepository;
 	private Bus backKeyBus;
 
 
@@ -21,8 +20,6 @@ public class Straw {
 		this.webView = webView;
 
 		this.registry = new StrawPluginRegistry(this.webView);
-
-		this.handlerRepository = new StrawEventHandlerRepository();
 
 		this.jsInterface = new JsToNativeInterfaceImpl(this);
 
@@ -84,7 +81,7 @@ public class Straw {
 	@Subscribe
 	public void rootHandler(StrawEvent e) {
 
-		for (StrawEventHandler handler: this.handlerRepository.get(e.type)) {
+		for (StrawEventHandler handler: this.registry.getHandlerRepository().get(e.type)) {
 			handler.invoke(e);
 		}
 

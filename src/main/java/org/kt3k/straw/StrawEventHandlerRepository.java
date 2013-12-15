@@ -9,7 +9,7 @@ public class StrawEventHandlerRepository {
 
 	private final Map<String, List<StrawEventHandler>> store = new HashMap<String, List<StrawEventHandler>>();
 
-	public void set(StrawEventHandler handler) {
+	public void store(StrawEventHandler handler) {
 		String eventName = handler.getEventName();
 
 		List<StrawEventHandler> list = this.store.get(eventName);
@@ -23,10 +23,10 @@ public class StrawEventHandlerRepository {
 		list.add(handler);
 	}
 
-	public void set(List<StrawEventHandler> handlers) {
+	public void store(List<StrawEventHandler> handlers) {
 
 		for (StrawEventHandler handler: handlers) {
-			this.set(handler);
+			this.store(handler);
 		}
 
 	}
