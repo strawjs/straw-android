@@ -69,7 +69,7 @@ public class StrawPluginRegistryTest {
 
 		registry.loadPluginByName("org.nonexistent.NonExistent");
 
-		verify(printer).println("Straw Framework Error: class not found: class=org.nonexistent.NonExistent");
+		verify(printer).println("Straw Framework Error: Class not found: class=org.nonexistent.NonExistent");
 		verify(printer).println("java.lang.ClassNotFoundException: org.nonexistent.NonExistent");
 	}
 
@@ -103,7 +103,7 @@ public class StrawPluginRegistryTest {
 
 		registry.loadPluginByName("org.kt3k.straw.StrawPlugin");
 
-		verify(printer).println("Straw Framework Error: cannot instantiate plugin class: class=org.kt3k.straw.StrawPlugin");
+		verify(printer).println("Straw Framework Error: Cannot instantiate plugin class: class=org.kt3k.straw.StrawPlugin");
 		verify(printer).println("java.lang.InstantiationException");
 	}
 
@@ -117,7 +117,7 @@ public class StrawPluginRegistryTest {
 
 		registry.loadPluginByName("org.kt3k.straw.PluginWithoutCorrectConstructor");
 
-		verify(printer).println("Straw Framework Error: illegal access: class=org.kt3k.straw.PluginWithoutCorrectConstructor");
+		verify(printer).println("Straw Framework Error: Illegal access: class=org.kt3k.straw.PluginWithoutCorrectConstructor");
 		verify(printer).println("java.lang.IllegalAccessException: Class org.kt3k.straw.StrawPluginRegistry can not access a member of class org.kt3k.straw.PluginWithoutCorrectConstructor with modifiers \"private\"");
 	}
 
