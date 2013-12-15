@@ -29,7 +29,11 @@ public class StrawEventHandlerFactory {
 		List<StrawEventHandler> handlers = new ArrayList<StrawEventHandler>();
 
 		for (Method method: plugin.getClass().getMethods()) {
-			handlers.add(create(plugin, method));
+			StrawEventHandler handler = create(plugin, method);
+
+			if (handler != null) {
+				handlers.add(handler);
+			}
 		}
 
 		return handlers;
@@ -40,7 +44,9 @@ public class StrawEventHandlerFactory {
 
 		for (StrawPlugin plugin: plugins) {
 			for (StrawEventHandler handler: create(plugin)) {
-				handlers.add(handler);
+				if (handler != null) {
+					handlers.add(handler);
+				}
 			}
 		}
 
