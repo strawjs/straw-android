@@ -44,9 +44,7 @@ public class StrawEventHandlerFactory {
 
 		for (StrawPlugin plugin: plugins) {
 			for (StrawEventHandler handler: create(plugin)) {
-				if (handler != null) {
-					handlers.add(handler);
-				}
+				handlers.add(handler);
 			}
 		}
 
