@@ -18,8 +18,11 @@ public class StrawEventHandlerFactory {
 	 */
 	static public StrawEventHandler create(StrawPlugin plugin, Method method) {
 
-		if (isValidEventHandler(method)) {
-			return new StrawEventHandler(plugin, getEventName(method), method, isBackgroundHandler(method));
+		EventHandler annotation = method.getAnnotation(EventHandler.class);
+
+		// a valid event handler is a method which has the EventHandler annotation and the valid signature
+		if (annotation != null && hasValidSignature(method)) {
+			return new StrawEventHandler(plugin, annotation.value(), method, isBackgroundHandler(method));
 		}
 
 		return null;
@@ -51,30 +54,10 @@ public class StrawEventHandlerFactory {
 		return handlers;
 	}
 
-	static private Boolean isValidEventHandler(Method method) {
-		if (!StrawUtil.hasAnnotation(method, EventHandler.class)) {
-			return false;
-		}
-
-		if (!hasValidSignature(method)) {
-			return false;
-		}
-
-		return true;
-	}
-
 	static private Boolean hasValidSignature(Method method) {
-		return true;
-	}
+		Class<?>[] parameterTypes = method.getParameterTypes();
 
-	static private String getEventName(Method method) {
-		EventHandler anno = method.getAnnotation(EventHandler.class);
-
-		if (anno != null) {
-			return anno.value();
-		}
-
-		return null;
+		return parameterTypes.length == 1 && parameterTypes[0] == StrawEvent.class;
 	}
 
 	static Boolean isBackgroundHandler(Method method) {
