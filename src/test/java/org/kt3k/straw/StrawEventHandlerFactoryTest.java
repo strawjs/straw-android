@@ -17,10 +17,11 @@ public class StrawEventHandlerFactoryTest {
 	public void testCreateWithPlugins() {
 		List<StrawEventHandler> handlers = StrawEventHandlerFactory.create(new StrawPlugin[]{new DummyStrawPlugin()});
 		
-		assertEquals(3, handlers.size());
-		assertEquals("event1", handlers.get(0).getEventName());
-		assertEquals("event2", handlers.get(1).getEventName());
-		assertEquals("event3", handlers.get(2).getEventName());
+		assertEquals(4, handlers.size());
+		assertEquals("backPressed", handlers.get(0).getEventName());
+		assertEquals("event1", handlers.get(1).getEventName());
+		assertEquals("event2", handlers.get(2).getEventName());
+		assertEquals("event3", handlers.get(3).getEventName());
 	}
 
 }

@@ -80,19 +80,19 @@ public class DummyStrawPlugin extends StrawPlugin {
 
 
 	@EventHandler("event1")
-	public void backPressedHandler(StrawEvent e) {
+	public void dummyHandler1(StrawEvent e) {
 		e.toString();
 	}
 
 	@Background
 	@EventHandler("event2")
-	public void backPressedHandlerBackground(StrawEvent e) {
+	public void dummyHandlerOnBackground(StrawEvent e) {
 		e.toString();
 	}
 
 	@RunOnUiThread
 	@EventHandler("event3")
-	public void backPressedHandlerForeground(StrawEvent e) {
+	public void dummyHanlerOnForeground(StrawEvent e) {
 		e.toString();
 	}
 
@@ -106,5 +106,12 @@ public class DummyStrawPlugin extends StrawPlugin {
 	@EventHandler("event5")
 	public void dummyEventHandlerWithWrongParameterType(Straw e) {
 		e.toString();
+	}
+
+
+	// for back pressed event test
+	@EventHandler(StrawEvent.Type.BACK_PRESSED)
+	public void onBackPressed(StrawEvent e) {
+		e.getClass();
 	}
 }
