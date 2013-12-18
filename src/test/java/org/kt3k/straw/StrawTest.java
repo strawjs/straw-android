@@ -2,12 +2,12 @@ package org.kt3k.straw;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kt3k.straw.annotation.EventHandler;
+
 import static org.junit.Assert.*;
 
 import android.webkit.WebView;
 import org.robolectric.RobolectricTestRunner;
-
-import com.squareup.otto.Subscribe;
 
 import static org.mockito.Mockito.*;
 
@@ -77,6 +77,66 @@ public class StrawTest {
 		straw.clearPlugins();
 
 		assertNull(straw.getRegistry().getActionRepositoryForPluginName("dummy"));
+	}
+
+
+	@Test
+	public void testRootHandler() {
+		Straw straw = Straw.insertInto(mock(WebView.class));
+
+		final Straw mock = mock(Straw.class);
+
+		StrawPlugin plugin = new StrawPlugin () {
+
+			@Override
+			public String getName() {
+				return "dummy";
+			}
+
+			@EventHandler("my sister arrested")
+			public void handler(StrawEvent e) {
+				// dummy call for verification
+				mock.getRegistry();
+			}
+
+		};
+
+		straw.getRegistry().loadPlugin(plugin);
+
+		straw.rootHandler(new StrawEvent("my sister arrested"));
+
+		// verify dummy call inside handler
+		verify(mock).getRegistry();
+	}
+
+
+	@Test
+	public void testOnBackPressed() {
+		Straw straw = Straw.insertInto(mock(WebView.class));
+
+		final Straw mock = mock(Straw.class);
+
+		StrawPlugin plugin = new StrawPlugin () {
+
+			@Override
+			public String getName() {
+				return "dummy";
+			}
+
+			@EventHandler(StrawEvent.Type.BACK_PRESSED)
+			public void handler(StrawEvent e) {
+				// dummy call for verification
+				mock.getRegistry();
+			}
+
+		};
+
+		straw.getRegistry().loadPlugin(plugin);
+
+		straw.onBackPressed();
+
+		// verify dummy call inside handler
+		verify(mock).getRegistry();
 	}
 
 }

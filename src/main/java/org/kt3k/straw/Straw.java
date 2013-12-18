@@ -81,7 +81,7 @@ public class Straw {
 	@Subscribe
 	public void rootHandler(StrawEvent e) {
 
-		for (StrawEventHandler handler: this.registry.getHandlerRepository().get(e.type)) {
+		for (StrawEventHandler handler: this.registry.getHandlerRepository().get(e.getType())) {
 			handler.invoke(e);
 		}
 
@@ -93,7 +93,7 @@ public class Straw {
 	 */
 	public void onBackPressed() {
 		// post back key events to registered handlers
-		this.backKeyBus.post(new StrawEvent("backPressed"));
+		this.backKeyBus.post(new StrawEvent(StrawEvent.Type.BACK_PRESSED));
 	}
 
 }
