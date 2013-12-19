@@ -1,6 +1,6 @@
 package org.kt3k.straw;
 
-class StrawEvent {
+public class StrawEvent {
 
 	private final String type;
 
