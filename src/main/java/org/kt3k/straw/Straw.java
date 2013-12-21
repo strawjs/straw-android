@@ -93,7 +93,7 @@ public class Straw {
 	 */
 	public void onBackPressed() {
 		// post back key events to registered handlers
-		this.backKeyBus.post(new StrawEvent(StrawEvent.Type.BACK_PRESSED));
+		this.backKeyBus.post(new StrawEvent(StrawPlugin.EventType.BACK_PRESSED));
 	}
 
 }

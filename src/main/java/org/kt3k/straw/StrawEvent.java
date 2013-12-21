@@ -17,8 +17,4 @@ public class StrawEvent {
 		return "StrawEvent (type=" + this.type + ")";
 	}
 
-	public static class Type {
-		public static final String BACK_PRESSED = "backPressed";
-	}
-
 }

@@ -123,7 +123,7 @@ public class StrawTest {
 				return "dummy";
 			}
 
-			@EventHandler(StrawEvent.Type.BACK_PRESSED)
+			@EventHandler(StrawPlugin.EventType.BACK_PRESSED)
 			public void handler(StrawEvent e) {
 				// dummy call for verification
 				mock.getRegistry();

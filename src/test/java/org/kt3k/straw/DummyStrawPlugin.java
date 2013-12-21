@@ -110,7 +110,7 @@ public class DummyStrawPlugin extends StrawPlugin {
 
 
 	// for back pressed event test
-	@EventHandler(StrawEvent.Type.BACK_PRESSED)
+	@EventHandler(StrawPlugin.EventType.BACK_PRESSED)
 	public void onBackPressed(StrawEvent e) {
 		e.getClass();
 	}

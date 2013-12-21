@@ -16,6 +16,10 @@ abstract public class StrawPlugin {
 
 	protected Activity activity;
 
+	public static class EventType {
+		public static final String BACK_PRESSED = "backPressed";
+	}
+
 
 	public static class SingleStringParam {
 		public String value;
