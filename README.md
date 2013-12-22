@@ -1,4 +1,4 @@
-straw-android v0.6.0 [![Build Status](https://travis-ci.org/strawjs/straw-android.png?branch=master)](https://travis-ci.org/strawjs/straw-android) [![Coverage Status](https://coveralls.io/repos/strawjs/straw-android/badge.png)](https://coveralls.io/r/strawjs/straw-android)
+straw-android v0.6.1 [![Build Status](https://travis-ci.org/strawjs/straw-android.png?branch=master)](https://travis-ci.org/strawjs/straw-android) [![Coverage Status](https://coveralls.io/repos/strawjs/straw-android/badge.png)](https://coveralls.io/r/strawjs/straw-android)
 ===================
 
 `straw` is `Native & WebView` bridging library series for various platforms.
