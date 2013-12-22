@@ -1,5 +1,6 @@
 package org.kt3k.straw;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Test;
@@ -17,11 +18,22 @@ public class StrawEventHandlerFactoryTest {
 	public void testCreateWithPlugins() {
 		List<StrawEventHandler> handlers = StrawEventHandlerFactory.create(new StrawPlugin[]{new DummyStrawPlugin()});
 		
-		assertEquals(4, handlers.size());
-		assertEquals("backPressed", handlers.get(0).getEventName());
-		assertEquals("event1", handlers.get(1).getEventName());
-		assertEquals("event2", handlers.get(2).getEventName());
-		assertEquals("event3", handlers.get(3).getEventName());
+		// create handlerArray to sort its contents
+		StrawEventHandler[] handlerArray = handlers.toArray(new StrawEventHandler[handlers.size()]);
+		java.util.Arrays.sort(handlerArray, new Comparator<StrawEventHandler>() {
+
+			@Override
+			public int compare(StrawEventHandler arg0, StrawEventHandler arg1) {
+				return arg0.getEventName().compareTo(arg1.getEventName());
+			}
+			
+		});
+		
+		assertEquals(4, handlerArray.length);
+		assertEquals("backPressed", handlerArray[0].getEventName());
+		assertEquals("event1", handlerArray[1].getEventName());
+		assertEquals("event2", handlerArray[2].getEventName());
+		assertEquals("event3", handlerArray[3].getEventName());
 	}
 
 }
