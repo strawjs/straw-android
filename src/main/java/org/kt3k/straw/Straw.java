@@ -2,15 +2,11 @@ package org.kt3k.straw;
 
 import android.webkit.WebView;
 
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
-
 public class Straw {
 
 	private final WebView webView;
 	private final JsToNativeInterface jsInterface;
 	private final StrawPluginRegistry registry;
-	private Bus backKeyBus;
 
 
 	public static final String JS_TO_NATIVE_INTERFACE_NAME = "JS_TO_NATIVE_INTERFACE";
@@ -24,8 +20,6 @@ public class Straw {
 		this.jsInterface = new JsToNativeInterfaceImpl(this);
 
 		this.setUpJsInterface();
-
-		this.initEventBuses();
 	}
 
 	public StrawPluginRegistry getRegistry() {
@@ -64,21 +58,11 @@ public class Straw {
 		this.webView.addJavascriptInterface(this.jsInterface, JS_TO_NATIVE_INTERFACE_NAME);
 	}
 
-	/**
-	 * initialize event buses
-	 */
-	private void initEventBuses() {
-		this.backKeyBus = new Bus();
-
-		this.backKeyBus.register(this);
-	}
-
 
 	/**
-	 * handler root registered to otto event bus
-	 * @param e
+	 * handler root (called by each handler)
+	 * @param e event object
 	 */
-	@Subscribe
 	public void rootHandler(StrawEvent e) {
 
 		for (StrawEventHandler handler: this.registry.getHandlerRepository().get(e.getType())) {
@@ -92,8 +76,8 @@ public class Straw {
 	 * call this method inside the activity's `onBackPressed`
 	 */
 	public void onBackPressed() {
-		// post back key events to registered handlers
-		this.backKeyBus.post(new StrawEvent(StrawPlugin.EventType.BACK_PRESSED));
+		// call rootHandler with event object
+		this.rootHandler(new StrawEvent(StrawPlugin.EventType.BACK_PRESSED));
 	}
 
 }
