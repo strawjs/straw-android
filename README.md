@@ -6,3 +6,4 @@ straw-android v0.6.2 [![Build Status](https://travis-ci.org/strawjs/straw-androi
 straw-android is Android version of `straw`.
 
 API implementation is in [straw-android-plugin](https://github.com/strawjs/straw-android-plugin)
+
