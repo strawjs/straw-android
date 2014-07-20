@@ -2,15 +2,11 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'cobertura'
-apply plugin: 'coveralls'
+apply plugin: 'com.github.kt3k.coveralls'
 
 
 repositories {
     mavenCentral()
-
-    maven {
-        url 'http://kt3k.github.io/repository/maven/release'
-    }
 }
 
 dependencies {
@@ -27,11 +23,15 @@ buildscript {
 
         mavenCentral()
 
+        maven {
+            url 'http://dl.bintray.com/kt3k/gradle-plugins'
+        }
+
     }
 
     dependencies {
         classpath 'net.saliman:gradle-cobertura-plugin:2.0.0'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.2.5'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.6.6'
     }
 }
 
