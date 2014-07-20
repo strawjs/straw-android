@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'cobertura'
-apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'coveralls'
 
 
 repositories {
