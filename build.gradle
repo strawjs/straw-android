@@ -23,15 +23,11 @@ buildscript {
 
         mavenCentral()
 
-        maven {
-            url 'http://dl.bintray.com/kt3k/gradle-plugins'
-        }
-
     }
 
     dependencies {
         classpath 'net.saliman:gradle-cobertura-plugin:2.0.0'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.6.1'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.6.6'
     }
 }
 
