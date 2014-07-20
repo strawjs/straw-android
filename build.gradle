@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'cobertura'
-apply plugin: 'coveralls'
+apply plugin: 'com.github.kt3k.coveralls'
 
 
 repositories {
@@ -42,3 +42,8 @@ uploadArchives {
 }
 
 cobertura.coverageFormats = ['html', 'xml']
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
