@@ -8,8 +8,5 @@ jdk:
 env:
 - TERM=dumb
 
-before_install:
-- gradle --info assemble
-
 after_success:
-- gradle cobertura coveralls
+- ./gradlew cobertura coveralls
