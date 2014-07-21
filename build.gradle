@@ -23,10 +23,6 @@ buildscript {
 
         mavenCentral()
 
-        maven {
-            url 'http://dl.bintray.com/kt3k/gradle-plugins'
-        }
-
     }
 
     dependencies {
@@ -46,3 +42,8 @@ uploadArchives {
 }
 
 cobertura.coverageFormats = ['html', 'xml']
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
