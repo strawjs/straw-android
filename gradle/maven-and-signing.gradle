@@ -1,0 +1,92 @@
+
+apply plugin: 'signing'
+apply plugin: 'maven'
+
+def getRepoURL() {
+    return hasProperty('sonatypeURL') ? sonatypeURL : 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+}
+
+def getRepoUsername() {
+    return hasProperty('sonatypeUsername') ? sonatypeUsername : ''
+}
+
+def getRepoPassword() {
+    return hasProperty('sonatypePassword') ? sonatypePassword : ''
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+
+artifacts {
+    archives jar 
+
+    archives javadocJar
+    archives sourcesJar
+}
+
+
+// sign archives if signatory exists
+if (signing.signatory) {
+
+    signing {
+        sign configurations.archives
+    }
+
+}
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+
+            // sign pom if signatory exists
+            if (signing.signatory) {
+                beforeDeployment {
+                    signing.signPom(it)
+                }
+            }
+
+            repository(url: getRepoURL()) {
+
+                authentication userName: getRepoUsername(), password: getRepoPassword()
+            }
+
+            pom.project {
+
+                name POM_NAME
+                description POM_DESCRIPTION
+                url POM_URL
+
+                scm {
+                    url POM_SCM_URL
+                    connection POM_SCM_CONNECTION
+                    developerConnection POM_SCM_DEV_CONNECTION
+                }
+
+                licenses {
+                    license {
+                        name POM_LICENSE_NAME
+                        url POM_LICENSE_URL
+                        distribution POM_LICENSE_DISTRIBUTION
+                    }
+                }
+
+                developers {
+                    developer {
+                        id POM_DEVELOPER_ID
+                        name POM_DEVELOPER_NAME
+                    }
+                }
+            }
+        }
+    }
+}

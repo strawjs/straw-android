@@ -1,8 +1,8 @@
 apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'cobertura'
 apply plugin: 'com.github.kt3k.coveralls'
+apply from: 'gradle/maven-and-signing.gradle'
 
 
 repositories {
@@ -31,19 +31,4 @@ buildscript {
     }
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            if (project.hasProperty('deployPath')) {
-                repository url: project.deployPath
-            }
-        }
-    }
-}
-
 cobertura.coverageFormats = ['html', 'xml']
-
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
-}
