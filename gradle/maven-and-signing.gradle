@@ -1,23 +1,11 @@
 
 apply plugin: 'signing'
 apply plugin: 'maven'
-
-class My {
-    def aaa = 3
-}
-
-project.extensions.create('mavenConf', My)
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
 
 def getRepoURL() {
-    return hasProperty('sonatypeURL') ? sonatypeURL : 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-}
-
-def getRepoUsername() {
-    return hasProperty('sonatypeUsername') ? sonatypeUsername : ''
-}
-
-def getRepoPassword() {
-    return hasProperty('sonatypePassword') ? sonatypePassword : ''
+    return project.hasProperty('sonatype.url') ? project['sonatype.url'] : 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -63,7 +51,7 @@ uploadArchives {
 
             repository(url: getRepoURL()) {
 
-                authentication userName: getRepoUsername(), password: getRepoPassword()
+                authentication userName: project['sonatype.username'], password: project['sonatype.password']
             }
 
             pom.project {
@@ -94,5 +82,53 @@ uploadArchives {
                 }
             }
         }
+    }
+}
+
+
+def pomConfig = {
+    licenses {
+        name project['pom.license.name']
+        url project['pom.license.url']
+        distribution project['pom.license.distribution']
+    }
+
+    developers {
+        developer {
+            id project['pom.developer.id']
+            name project['pom.developer.name']
+        }
+    }
+}
+
+
+publishing {
+    publications {
+        my(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode 'name', project['pom.name']
+                root.appendNode 'description', project['pom.description']
+                root.appendNode 'url', project['pom.url']
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintray {
+    user = project['bintray.username']
+    key = project['bintray.apiKey']
+
+    publications = ['my']
+
+    pkg {
+        repo = project['bintray.repo']
+        name = project['bintray.name']
+        licenses = [project['pom.license.name']]
     }
 }
