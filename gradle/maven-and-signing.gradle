@@ -88,9 +88,11 @@ uploadArchives {
 
 def pomConfig = {
     licenses {
-        name project['pom.license.name']
-        url project['pom.license.url']
-        distribution project['pom.license.distribution']
+        license {
+            name project['pom.license.name']
+            url project['pom.license.url']
+            distribution project['pom.license.distribution']
+        }
     }
 
     developers {

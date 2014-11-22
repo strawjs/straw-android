@@ -3,5 +3,5 @@
 release-maven:
 	./gradlew clean uploadArchives
 
-release-maven:
+release-bintray:
 	./gradlew clean bintray
