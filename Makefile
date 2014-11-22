@@ -1,4 +1,7 @@
-.PHONY: release
+.PHONY: release-maven release-bintray
 
-release:
+release-maven:
 	./gradlew clean uploadArchives
+
+release-maven:
+	./gradlew clean bintray
