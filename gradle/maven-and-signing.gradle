@@ -2,6 +2,12 @@
 apply plugin: 'signing'
 apply plugin: 'maven'
 
+class My {
+    def aaa = 3
+}
+
+project.extensions.create('mavenConf', My)
+
 def getRepoURL() {
     return hasProperty('sonatypeURL') ? sonatypeURL : 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 }
@@ -62,28 +68,28 @@ uploadArchives {
 
             pom.project {
 
-                name POM_NAME
-                description POM_DESCRIPTION
-                url POM_URL
+                name project['pom.name']
+                description project['pom.description']
+                url project['pom.url']
 
                 scm {
-                    url POM_SCM_URL
-                    connection POM_SCM_CONNECTION
-                    developerConnection POM_SCM_DEV_CONNECTION
+                    url project['pom.scm.url']
+                    connection project['pom.scm.connection']
+                    developerConnection project['pom.scm.developer.connection']
                 }
 
                 licenses {
                     license {
-                        name POM_LICENSE_NAME
-                        url POM_LICENSE_URL
-                        distribution POM_LICENSE_DISTRIBUTION
+                        name project['pom.license.name']
+                        url project['pom.license.url']
+                        distribution project['pom.license.distribution']
                     }
                 }
 
                 developers {
                     developer {
-                        id POM_DEVELOPER_ID
-                        name POM_DEVELOPER_NAME
+                        id project['pom.developer.id']
+                        name project['pom.developer.name']
                     }
                 }
             }
