@@ -2,6 +2,8 @@ TODO
 ----
 
 - add debug log, add info log for debug & tuning purpose
+- Rename StrawDrink to StrawServiceCallContext
+- Rename StrawPlugin to StrawService
 
 
 DONE
