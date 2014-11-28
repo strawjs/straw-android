@@ -5,7 +5,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 def getRepoURL() {
-    return project.hasProperty('sonatype.url') ? project['sonatype.url'] : 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+    return properties.'sonatype.url' || 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -49,35 +49,39 @@ uploadArchives {
                 }
             }
 
+            if (0) {
+
             repository(url: getRepoURL()) {
 
-                authentication userName: project['sonatype.username'], password: project['sonatype.password']
+                authentication userName: properties['sonatype.username'], password: properties['sonatype.password']
+            }
+
             }
 
             pom.project {
 
-                name project['pom.name']
-                description project['pom.description']
-                url project['pom.url']
+                name properties.'pom.name'
+                description properties.'pom.description'
+                url properties.'pom.url'
 
                 scm {
-                    url project['pom.scm.url']
-                    connection project['pom.scm.connection']
-                    developerConnection project['pom.scm.developer.connection']
+                    url properties.'pom.scm.url'
+                    connection properties.'pom.scm.connection'
+                    developerConnection properties.'pom.scm.developer.connection'
                 }
 
                 licenses {
                     license {
-                        name project['pom.license.name']
-                        url project['pom.license.url']
-                        distribution project['pom.license.distribution']
+                        name properties.'pom.license.name'
+                        url properties.'pom.license.url'
+                        distribution properties.'pom.license.distribution'
                     }
                 }
 
                 developers {
                     developer {
-                        id project['pom.developer.id']
-                        name project['pom.developer.name']
+                        id properties.'pom.developer.id'
+                        name properties.'pom.developer.name'
                     }
                 }
             }
@@ -89,16 +93,16 @@ uploadArchives {
 def pomConfig = {
     licenses {
         license {
-            name project['pom.license.name']
-            url project['pom.license.url']
-            distribution project['pom.license.distribution']
+            name properties.'pom.license.name'
+            url properties.'pom.license.url'
+            distribution properties.'pom.license.distribution'
         }
     }
 
     developers {
         developer {
-            id project['pom.developer.id']
-            name project['pom.developer.name']
+            id properties.'pom.developer.id'
+            name properties.'pom.developer.name'
         }
     }
 }
@@ -113,9 +117,9 @@ publishing {
 
             pom.withXml {
                 def root = asNode()
-                root.appendNode 'name', project['pom.name']
-                root.appendNode 'description', project['pom.description']
-                root.appendNode 'url', project['pom.url']
+                root.appendNode 'name', properties.'pom.name'
+                root.appendNode 'description', properties.'pom.description'
+                root.appendNode 'url', properties.'pom.url'
                 root.children().last() + pomConfig
             }
         }
@@ -123,14 +127,14 @@ publishing {
 }
 
 bintray {
-    user = project['bintray.username']
-    key = project['bintray.apiKey']
+    user = properties.'bintray.username'
+    key = properties.'bintray.apiKey'
 
     publications = ['my']
 
     pkg {
-        repo = project['bintray.repo']
-        name = project['bintray.name']
-        licenses = [project['pom.license.name']]
+        repo = properties.'bintray.repo'
+        name = properties.'bintray.name'
+        licenses = [properties.'pom.license.name']
     }
 }
