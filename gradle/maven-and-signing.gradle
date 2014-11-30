@@ -47,15 +47,11 @@ uploadArchives {
                 beforeDeployment {
                     signing.signPom(it)
                 }
-            }
 
-            if (0) {
+                repository(url: getRepoURL()) {
 
-            repository(url: getRepoURL()) {
-
-                authentication userName: properties['sonatype.username'], password: properties['sonatype.password']
-            }
-
+                    authentication userName: properties['sonatype.username'], password: properties['sonatype.password']
+                }
             }
 
             pom.project {
