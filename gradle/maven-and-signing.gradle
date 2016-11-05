@@ -4,8 +4,8 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
-def getRepoURL() {
-    return properties.'sonatype.url' || 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+def getSonatypeURL() {
+    return 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -13,20 +13,17 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
-
 task sourcesJar(type: Jar) {
     classifier = 'sources'
     from sourceSets.main.allSource
 }
 
-
 artifacts {
-    archives jar 
+    archives jar
 
     archives javadocJar
     archives sourcesJar
 }
-
 
 // sign archives if signatory exists
 if (signing.signatory) {
@@ -37,19 +34,16 @@ if (signing.signatory) {
 
 }
 
-
 uploadArchives {
     repositories {
         mavenDeployer {
-
             // sign pom if signatory exists
             if (signing.signatory) {
                 beforeDeployment {
                     signing.signPom(it)
                 }
 
-                repository(url: getRepoURL()) {
-
+                repository(url: sonatypeURL) {
                     authentication userName: properties['sonatype.username'], password: properties['sonatype.password']
                 }
             }
@@ -85,7 +79,6 @@ uploadArchives {
     }
 }
 
-
 def pomConfig = {
     licenses {
         license {
@@ -102,7 +95,6 @@ def pomConfig = {
         }
     }
 }
-
 
 publishing {
     publications {
